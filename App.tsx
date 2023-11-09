@@ -1,9 +1,9 @@
 import React from 'react';
-import Wellcome from './src/screens/wellcome';
+import Splash from './src/screens/splash';
 import {SafeAreaView} from 'react-native';
 
 const App = () => {
-  return <Wellcome />;
+  return <Splash />;
 };
 
 export default App;
