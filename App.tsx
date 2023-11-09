@@ -5,9 +5,10 @@ import Welcome from './src/screens/welcome/welcome';
 import Signup from './src/screens/signUp/signup';
 import Login from './src/screens/login/login';
 import OnBoarding from './src/screens/onBoarding/onBoarding';
+import HomeScreen from './src/screens/homeScreen/homeScreen';
 
 const App = () => {
-  return <OnBoarding />;
+  return <HomeScreen />;
 };
 
 export default App;
