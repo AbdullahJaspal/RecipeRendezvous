@@ -1,6 +1,7 @@
 export const theme = {
   color: {
     primary: '#D7A63C',
+    lightPrimary: '#F0DDB6',
     seconndary: '#000000',
     darkBlue: '#1A205D',
     buttonBg: '#E5E5E5',
