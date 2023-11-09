@@ -12,7 +12,7 @@ const Splash = () => {
   return (
     <View style={{flex: 1}}>
       <ImageBackground
-        source={require('../assets/images/welcomeBG.png')}
+        source={require('../assets/images/splashBg.png')}
         style={styles.imageBg}
         resizeMode="contain">
         <View style={{marginTop: '20%'}}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: theme.color.buttonBg,
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 4,
     borderRadius: 50,
     borderWidth: 1,
   },
