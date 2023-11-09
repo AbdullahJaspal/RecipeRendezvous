@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Syne-Bold.ttf",
+      "sha1": "2830f4a34f1c36916b5a49bdf9bce409e123f28f"
+    },
+    {
+      "path": "assets/fonts/Syne-ExtraBold.ttf",
+      "sha1": "5cb28faab7bb8e42fe1c2cdac39f7ad13f91b275"
+    },
+    {
+      "path": "assets/fonts/Syne-Medium.ttf",
+      "sha1": "132da5831d2cb1cf0775971fb1cc8a24e48ed5a5"
+    },
+    {
+      "path": "assets/fonts/Syne-Regular.ttf",
+      "sha1": "ee7d729930a2e813f62df6205d5f0558fef66961"
+    },
+    {
+      "path": "assets/fonts/Syne-SemiBold.ttf",
+      "sha1": "d41ca670a1e7fda88747fc54a709a5cb50febb46"
+    }
+  ]
+}
