@@ -7,9 +7,10 @@ import Login from './src/screens/login/login';
 import OnBoarding from './src/screens/onBoarding/onBoarding';
 import HomeScreen from './src/screens/homeScreen/homeScreen';
 import CategoryRecipies from './src/screens/categoryRecipies/categoryRecipies';
+import Search from './src/screens/search/search';
 
 const App = () => {
-  return <CategoryRecipies />;
+  return <Search />;
 };
 
 export default App;
