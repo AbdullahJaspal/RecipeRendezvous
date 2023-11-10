@@ -3,6 +3,7 @@ import {
   Dimensions,
   ImageBackground,
   SafeAreaView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -18,57 +19,12 @@ const HomeScreen = () => {
         <ImageBackground
           style={{height: height / 2.8, width: '100%'}}
           source={require('../../assets/images/homeTop.png')}>
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(96,96,96,0.32)',
-              justifyContent: 'flex-end',
-            }}>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.semiBBold,
-                fontSize: 26,
-                color: 'white',
-                width: '60%',
-                marginLeft: 10,
-              }}>
-              20 Weekend Dinner Recipes
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '95%',
-                alignSelf: 'center',
-                justifyContent: 'space-between',
-                marginVertical: 6,
-              }}>
-              <Text
-                style={{
-                  fontFamily: theme.fontFamily.semiBBold,
-                  fontSize: 12,
-                  color: 'white',
-                  width: '60%',
-                }}>
-                20 easy to cook for you
-              </Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: 'white',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 50,
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                }}>
-                <Text
-                  style={{
-                    fontFamily: theme.fontFamily.semiBBold,
-                    fontSize: 12,
-                    color: 'black',
-                  }}>
-                  View More
-                </Text>
+          <View style={styles.overlay}>
+            <Text style={styles.topTitle}>20 Weekend Dinner Recipes</Text>
+            <View style={lowerWrapper}>
+              <Text style={styles.lowerRight}>20 easy to cook for you</Text>
+              <TouchableOpacity style={styles.viewMoreButton}>
+                <Text style={styles.buttonText}>View More</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -78,4 +34,45 @@ const HomeScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  overlay: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(96,96,96,0.32)',
+    justifyContent: 'flex-end',
+  },
+  topTitle: {
+    fontFamily: theme.fontFamily.semiBBold,
+    fontSize: 26,
+    color: 'white',
+    width: '60%',
+    marginLeft: 10,
+  },
+  lowerWrapper: {
+    flexDirection: 'row',
+    width: '95%',
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 6,
+  },
+  lowerRight: {
+    fontFamily: theme.fontFamily.semiBBold,
+    fontSize: 12,
+    color: 'white',
+    width: '60%',
+  },
+  viewMoreButton: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+  },
+  buttonText: {
+    fontFamily: theme.fontFamily.semiBBold,
+    fontSize: 12,
+    color: 'black',
+  },
+});
 export default HomeScreen;
