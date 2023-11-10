@@ -6,6 +6,7 @@ export const theme = {
     darkBlue: '#1A205D',
     buttonBg: '#E5E5E5',
     grey: '#F4F4F4',
+    darkGrey: '#9C9C9C',
   },
   fontFamily: {
     bold: 'Syne-Bold',

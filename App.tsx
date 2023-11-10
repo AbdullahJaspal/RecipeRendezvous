@@ -8,9 +8,10 @@ import OnBoarding from './src/screens/onBoarding/onBoarding';
 import HomeScreen from './src/screens/homeScreen/homeScreen';
 import CategoryRecipies from './src/screens/categoryRecipies/categoryRecipies';
 import Search from './src/screens/search/search';
+import RecipeDetails from './src/screens/RecipeDetails/RecipeDetails';
 
 const App = () => {
-  return <Search />;
+  return <RecipeDetails />;
 };
 
 export default App;

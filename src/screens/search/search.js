@@ -152,6 +152,42 @@ const Search = () => {
       view: '6.6K',
       stars: 55,
     },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 3,
+    },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 2,
+    },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 55,
+    },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 3,
+    },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 2,
+    },
+    {
+      name: 'Chicken Salad',
+      des: 'Special Diets',
+      view: '6.6K',
+      stars: 55,
+    },
   ];
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -199,7 +235,7 @@ const Search = () => {
         />
       </View>
 
-      <View style={{flexGrow: 1}}>
+      <View style={{height: height / 1.8}}>
         <Text
           style={{
             fontFamily: theme.fontFamily.semiBBold,
