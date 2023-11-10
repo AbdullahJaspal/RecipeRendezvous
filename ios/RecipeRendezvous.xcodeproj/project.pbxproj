@@ -12,13 +12,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		278FDD420A6C4DFAA5E40B7C /* Syne-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */; };
+		47EAADA3378D40A8BA06BCF5 /* Syne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */; };
+		48AB78A65AFC4F32B62CBDEA /* Syne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-RecipeRendezvous-RecipeRendezvousTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-RecipeRendezvous-RecipeRendezvousTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F5DE98C2B3E94A848EB25D5F /* Syne-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E582440CA7D3457E99727358 /* Syne-Bold.ttf */; };
-		278FDD420A6C4DFAA5E40B7C /* Syne-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */; };
 		9C1FE9130D354CAABCBD05F3 /* Syne-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9734F858BF2D4A47BCCE8F5B /* Syne-Medium.ttf */; };
-		48AB78A65AFC4F32B62CBDEA /* Syne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */; };
-		47EAADA3378D40A8BA06BCF5 /* Syne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */; };
+		F5DE98C2B3E94A848EB25D5F /* Syne-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E582440CA7D3457E99727358 /* Syne-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,18 +42,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RecipeRendezvous/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RecipeRendezvous/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-RecipeRendezvous-RecipeRendezvousTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RecipeRendezvous-RecipeRendezvousTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-SemiBold.ttf"; path = "../assets/fonts/Syne-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RecipeRendezvous.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous.debug.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous/Pods-RecipeRendezvous.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-RecipeRendezvous.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous.release.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous/Pods-RecipeRendezvous.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-RecipeRendezvous-RecipeRendezvousTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous-RecipeRendezvousTests.debug.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous-RecipeRendezvousTests/Pods-RecipeRendezvous-RecipeRendezvousTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-RecipeRendezvous.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RecipeRendezvous.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RecipeRendezvous/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-RecipeRendezvous-RecipeRendezvousTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous-RecipeRendezvousTests.release.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous-RecipeRendezvousTests/Pods-RecipeRendezvous-RecipeRendezvousTests.release.xcconfig"; sourceTree = "<group>"; };
+		8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-ExtraBold.ttf"; path = "../assets/fonts/Syne-ExtraBold.ttf"; sourceTree = "<group>"; };
+		9734F858BF2D4A47BCCE8F5B /* Syne-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-Medium.ttf"; path = "../assets/fonts/Syne-Medium.ttf"; sourceTree = "<group>"; };
+		E582440CA7D3457E99727358 /* Syne-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-Bold.ttf"; path = "../assets/fonts/Syne-Bold.ttf"; sourceTree = "<group>"; };
+		E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-Regular.ttf"; path = "../assets/fonts/Syne-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		E582440CA7D3457E99727358 /* Syne-Bold.ttf */ = {isa = PBXFileReference; name = "Syne-Bold.ttf"; path = "../assets/fonts/Syne-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Syne-ExtraBold.ttf"; path = "../assets/fonts/Syne-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		9734F858BF2D4A47BCCE8F5B /* Syne-Medium.ttf */ = {isa = PBXFileReference; name = "Syne-Medium.ttf"; path = "../assets/fonts/Syne-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */ = {isa = PBXFileReference; name = "Syne-Regular.ttf"; path = "../assets/fonts/Syne-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */ = {isa = PBXFileReference; name = "Syne-SemiBold.ttf"; path = "../assets/fonts/Syne-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +148,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B330D57473144195885D12EF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E582440CA7D3457E99727358 /* Syne-Bold.ttf */,
+				8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */,
+				9734F858BF2D4A47BCCE8F5B /* Syne-Medium.ttf */,
+				E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */,
+				31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,19 +171,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		B330D57473144195885D12EF /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				E582440CA7D3457E99727358 /* Syne-Bold.ttf */,
-				8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */,
-				9734F858BF2D4A47BCCE8F5B /* Syne-Medium.ttf */,
-				E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */,
-				31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

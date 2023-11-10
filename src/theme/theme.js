@@ -5,6 +5,7 @@ export const theme = {
     seconndary: '#000000',
     darkBlue: '#1A205D',
     buttonBg: '#E5E5E5',
+    grey: '#F4F4F4',
   },
   fontFamily: {
     bold: 'Syne-Bold',
