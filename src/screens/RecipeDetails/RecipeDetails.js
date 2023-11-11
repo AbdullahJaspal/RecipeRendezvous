@@ -190,19 +190,7 @@ const RecipeDetails = () => {
         )}
         <View style={{height: 50}} />
       </Animated.ScrollView>
-      <Animated.View
-        style={[
-          {
-            width: width,
-            height: height / 1.5,
-            position: 'absolute',
-            top: 0,
-            resizeMode: 'stretch',
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
-          },
-          animatedStyles,
-        ]}>
+      <Animated.View style={[styles.imageWrap, animatedStyles]}>
         <ImageBackground
           style={styles.topImage}
           borderBottomLeftRadius={15}
@@ -215,13 +203,7 @@ const RecipeDetails = () => {
             }}>
             <Image
               source={require('../../assets/icons/left.png')}
-              style={{
-                width: 20,
-                height: 20,
-                marginTop: 50,
-                resizeMode: 'contain',
-                tintColor: theme.color.primary,
-              }}
+              style={styles.icon}
             />
           </View>
         </ImageBackground>
@@ -233,6 +215,22 @@ const RecipeDetails = () => {
 const styles = StyleSheet.create({
   topImage: {
     flex: 1,
+  },
+  imageWrap: {
+    width: width,
+    height: height / 1.5,
+    position: 'absolute',
+    top: 0,
+    resizeMode: 'stretch',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginTop: 50,
+    resizeMode: 'contain',
+    tintColor: theme.color.primary,
   },
   nameWrapper: {
     flexDirection: 'row',
