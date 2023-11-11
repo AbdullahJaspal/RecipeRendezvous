@@ -9,9 +9,10 @@ import HomeScreen from './src/screens/homeScreen/homeScreen';
 import CategoryRecipies from './src/screens/categoryRecipies/categoryRecipies';
 import Search from './src/screens/search/search';
 import RecipeDetails from './src/screens/RecipeDetails/RecipeDetails';
+import MyCookBook from './src/screens/myCookBook/myCookBook';
 
 const App = () => {
-  return <RecipeDetails />;
+  return <MyCookBook />;
 };
 
 export default App;
