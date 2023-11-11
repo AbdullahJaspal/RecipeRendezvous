@@ -14,18 +14,29 @@ import {theme} from '../../theme/theme';
 
 const {width, height} = Dimensions.get('screen');
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ImageBackground
         source={require('../../assets/images/signupTop.png')}
         style={styles.bgImage}>
         <View style={styles.topTab}>
-          <Image
-            source={require('../../assets/icons/left.png')}
-            style={styles.topTabIcon}
-          />
-          <Text style={styles.topTabText}>Signup</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Image
+              source={require('../../assets/icons/left.png')}
+              style={styles.topTabIcon}
+            />
+          </TouchableOpacity>
+          <Text
+            style={styles.topTabText}
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}>
+            Signup
+          </Text>
         </View>
       </ImageBackground>
       <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
@@ -41,7 +52,11 @@ const Login = () => {
         style={styles.passwordInput}
       />
       <Text style={styles.forget}>Forget?</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate('BottomTab');
+        }}>
         <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
       </TouchableOpacity>
     </SafeAreaView>

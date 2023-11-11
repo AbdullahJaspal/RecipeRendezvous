@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import Carousel from 'react-native-snap-carousel';
@@ -16,7 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('screen');
 
-const CategoryRecipies = ({}) => {
+const CategoryRecipies = ({navigation}) => {
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const {currentPage} = sliderState;
   const {currentPage: pageIndex} = sliderState;
@@ -34,7 +35,11 @@ const CategoryRecipies = ({}) => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={{width: width / 1.7, height: height / 2}}>
+      <TouchableOpacity
+        style={{width: width / 1.7, height: height / 2}}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}>
         <ImageBackground
           source={item.img}
           style={{
@@ -71,13 +76,17 @@ const CategoryRecipies = ({}) => {
             </Text>
           </LinearGradient>
         </ImageBackground>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const renderBottom = () => {
     return (
-      <View style={{height: height / 5, marginLeft: 14}}>
+      <TouchableOpacity
+        style={{height: height / 5, marginLeft: 14}}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}>
         <Image
           source={require('../../assets/images/grilledSalmon.png')}
           style={{borderRadius: 10, borderWidth: 1}}
@@ -101,16 +110,21 @@ const CategoryRecipies = ({}) => {
             12 min
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
       <View style={styles.topTab}>
-        <Image
-          source={require('../../assets/icons/left.png')}
-          style={styles.iconLeft}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            source={require('../../assets/icons/left.png')}
+            style={styles.iconLeft}
+          />
+        </TouchableOpacity>
         <Text style={styles.title}>Good Food</Text>
         <Image source={require('../../assets/icons/left.png')} />
       </View>

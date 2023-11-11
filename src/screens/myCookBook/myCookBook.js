@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import Carousel from 'react-native-snap-carousel';
@@ -43,7 +44,7 @@ const belowData = [
   },
 ];
 
-const MyCookBook = ({}) => {
+const MyCookBook = ({navigation}) => {
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const {currentPage} = sliderState;
   const {currentPage: pageIndex} = sliderState;
@@ -61,7 +62,11 @@ const MyCookBook = ({}) => {
 
   const _renderItem = ({item, index}) => {
     return (
-      <View style={styles.topWrapper}>
+      <TouchableOpacity
+        style={styles.topWrapper}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}>
         <ImageBackground
           source={item.img}
           style={styles.imageBgTop}
@@ -92,13 +97,17 @@ const MyCookBook = ({}) => {
             <Stars rating={item.stars} num={5} />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const renderBottom = ({item}) => {
     return (
-      <View style={styles.renderBottomWrap}>
+      <TouchableOpacity
+        style={styles.renderBottomWrap}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}>
         <Image
           source={require('../../assets/images/belowImg1.png')}
           style={styles.imageBelow}
@@ -123,17 +132,23 @@ const MyCookBook = ({}) => {
           {'\n'}
           {'Cooked'}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
       <View style={styles.topTab}>
-        <Image
-          source={require('../../assets/icons/left.png')}
-          style={styles.iconLeft}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('RecipeDetails');
+          }}>
+          <Image
+            source={require('../../assets/icons/left.png')}
+            style={styles.iconLeft}
+          />
+        </TouchableOpacity>
+
         <Text style={styles.title}>My Cook Book</Text>
         <Image source={require('../../assets/icons/left.png')} />
       </View>

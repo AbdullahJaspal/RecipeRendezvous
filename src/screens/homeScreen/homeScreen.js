@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('screen');
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [category, setCategory] = useState('Featured');
   const dishes = [
     {
@@ -42,13 +42,16 @@ const HomeScreen = () => {
 
   const renderItem = ({item}) => {
     return (
-      <View
+      <TouchableOpacity
         style={{
           flexDirection: 'row',
           width: '100%',
           alignSelf: 'center',
           alignItems: 'center',
           height: 85,
+        }}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
         }}>
         <Image
           source={require('../../assets/images/belowImg1.png')}
@@ -114,7 +117,7 @@ const HomeScreen = () => {
           {'\n'}
           {'Cooked'}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -153,7 +156,11 @@ const HomeScreen = () => {
           <Text style={styles.topTitle}>20 Weekend Dinner Recipes</Text>
           <View style={styles.lowerWrapper}>
             <Text style={styles.lowerRight}>20 easy to cook for you</Text>
-            <TouchableOpacity style={styles.viewMoreButton}>
+            <TouchableOpacity
+              style={styles.viewMoreButton}
+              onPress={() => {
+                navigation.navigate('CategoryRecipies');
+              }}>
               <Text style={styles.buttonText}>View More</Text>
             </TouchableOpacity>
           </View>
@@ -205,58 +212,25 @@ const HomeScreen = () => {
           renderItem={({item}) => {
             return (
               <TouchableOpacity
-                style={{
-                  width: width / 1.8,
-                  height: width / 2.7,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: theme.color.grey,
-                  marginVertical: 10,
-                  marginHorizontal: 10,
-                  borderRadius: 20,
-                }}
+                style={styles.uperRenderWrap}
                 onPress={() => {
                   setCategory(item);
+                  navigation.navigate('RecipeDetails');
                 }}>
                 <ImageBackground
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderWidth: 1,
-                    borderRadius: 20,
-                  }}
+                  style={styles.upperBg}
                   resizeMode="contain"
                   source={item.img}>
                   <LinearGradient
-                    style={{
-                      width: '100%',
-                      height: 60,
-                      paddingHorizontal: 10,
-                      paddingTop: 6,
-                      borderRadius: 20,
-                    }}
+                    style={styles.upperGradient}
                     colors={[
                       'rgba(0,0,0,0.65)',
                       'rgba(0,0,0,0.45)',
                       'rgba(0,0,0,0.45)',
                       'rgba(225,225,225,0)',
                     ]}>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: theme.fontFamily.regular,
-                        fontSize: 14,
-                      }}>
-                      {item.name}
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: theme.fontFamily.semiBBold,
-                        fontSize: 16,
-                      }}>
-                      {item.des}
-                    </Text>
+                    <Text style={styles.upperName}>{item.name}</Text>
+                    <Text style={styles.upperDes}>{item.des}</Text>
                   </LinearGradient>
                 </ImageBackground>
               </TouchableOpacity>
@@ -315,6 +289,39 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.semiBBold,
     fontSize: 12,
     color: 'black',
+  },
+  uperRenderWrap: {
+    width: width / 1.8,
+    height: width / 2.7,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.color.grey,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    borderRadius: 20,
+  },
+  upperBg: {
+    width: '100%',
+    height: '100%',
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  upperGradient: {
+    width: '100%',
+    height: 60,
+    paddingHorizontal: 10,
+    paddingTop: 6,
+    borderRadius: 20,
+  },
+  upperName: {
+    color: 'white',
+    fontFamily: theme.fontFamily.regular,
+    fontSize: 14,
+  },
+  upperDes: {
+    color: 'white',
+    fontFamily: theme.fontFamily.semiBBold,
+    fontSize: 16,
   },
 });
 export default HomeScreen;

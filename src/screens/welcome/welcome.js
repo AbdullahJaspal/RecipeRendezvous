@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -28,7 +28,11 @@ const Welcome = () => {
               ingredients.
             </Text>
           </View>
-          <TouchableOpacity style={styles.buttoCont}>
+          <TouchableOpacity
+            style={styles.buttoCont}
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}>
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
@@ -38,7 +42,13 @@ const Welcome = () => {
           </TouchableOpacity>
           <View style={{alignItems: 'center'}}>
             <Text style={styles.already}>Already have an account?</Text>
-            <Text style={styles.login}>LOGIN</Text>
+            <Text
+              style={styles.login}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              LOGIN
+            </Text>
           </View>
         </View>
       </ImageBackground>

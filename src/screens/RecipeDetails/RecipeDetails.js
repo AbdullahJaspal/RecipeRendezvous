@@ -20,7 +20,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-const RecipeDetails = () => {
+const RecipeDetails = ({navigation}) => {
   const [tab, setTab] = useState('Ingredients');
   const imageHeight = useSharedValue(0);
 
@@ -201,10 +201,15 @@ const RecipeDetails = () => {
               width: '95%',
               alignSelf: 'center',
             }}>
-            <Image
-              source={require('../../assets/icons/left.png')}
-              style={styles.icon}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../../assets/icons/left.png')}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </Animated.View>

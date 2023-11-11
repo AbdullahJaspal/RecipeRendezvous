@@ -8,50 +8,48 @@ import {
   Text,
   TextInput,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 
 const {width, height} = Dimensions.get('screen');
 
-const Search = () => {
+const Search = ({navigation}) => {
+  const Stars = ({rating, num}) => {
+    return (
+      <Image
+        source={require('../../assets/icons/stars.png')}
+        style={{
+          tintColor: rating >= num ? '#FFE601' : '#C4C4C4',
+        }}
+      />
+    );
+  };
   const renderBottom = () => {
     return (
-      <View style={{marginLeft: 20}}>
+      <TouchableOpacity
+        style={{marginLeft: 20}}
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}>
         <Image
           source={require('../../assets/images/grilledSalmon.png')}
-          style={{
-            borderRadius: 30,
-            borderWidth: 1,
-            width: width / 2,
-            height: height / 6,
-          }}
+          style={styles.bottomImage}
         />
         <View style={{marginLeft: 3}}>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.medium,
-              fontSize: 15,
-              marginTop: 5,
-              marginLeft: 3,
-            }}>
-            Miso-grilled Salmon
-          </Text>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.medium,
-              fontSize: 12,
-              marginLeft: 3,
-            }}>
-            12 min
-          </Text>
+          <Text style={styles.bottomName}>Miso-grilled Salmon</Text>
+          <Text style={styles.bottomTime}>12 min</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const renderItem = ({item}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('RecipeDetails');
+        }}
         style={{
           flexDirection: 'row',
           width: '100%',
@@ -75,43 +73,12 @@ const Search = () => {
           <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
             Special Diets
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '45%',
-              justifyContent: 'space-between',
-            }}>
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 1 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 2 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 3 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 4 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 5 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
+          <View style={styles.starsCont}>
+            <Stars rating={item.stars} num={1} />
+            <Stars rating={item.stars} num={2} />
+            <Stars rating={item.stars} num={3} />
+            <Stars rating={item.stars} num={4} />
+            <Stars rating={item.stars} num={5} />
           </View>
         </View>
         <Text
@@ -123,7 +90,7 @@ const Search = () => {
           {'\n'}
           {'Cooked'}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -190,7 +157,7 @@ const Search = () => {
     },
   ];
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.topTab}>
         <Image
           source={require('../../assets/icons/left.png')}
@@ -199,33 +166,14 @@ const Search = () => {
         <Text style={styles.title}>Search</Text>
         <Image source={require('../../assets/icons/left.png')} />
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '90%',
-          alignSelf: 'center',
-          borderWidth: 1,
-          height: 30,
-          borderRadius: 10,
-          paddingHorizontal: 10,
-        }}>
+      <View style={styles.searchBar}>
         <Image
           source={require('../../assets/icons/search.png')}
           style={{width: 18, height: 18, resizeMode: 'contain'}}
         />
         <TextInput placeholder="Search" style={{width: '92%'}} />
       </View>
-      <Text
-        style={{
-          fontFamily: theme.fontFamily.semiBBold,
-          marginLeft: 30,
-          marginTop: 20,
-          fontSize: 18,
-        }}>
-        Most Liked Recipes
-      </Text>
+      <Text style={styles.titleBlack}>Most Liked Recipes</Text>
       <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>
         <FlatList
           renderItem={renderBottom}
@@ -236,15 +184,7 @@ const Search = () => {
       </View>
 
       <View style={{height: height / 1.8}}>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.semiBBold,
-            marginLeft: 30,
-            marginVertical: 20,
-            fontSize: 18,
-          }}>
-          New Recipes
-        </Text>
+        <Text style={styles.titleBlack}>New Recipes</Text>
         <FlatList
           renderItem={renderItem}
           data={belowData}
@@ -275,6 +215,46 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.bold,
     fontSize: 24,
     color: theme.color.primary,
+  },
+  bottomImage: {
+    borderRadius: 30,
+    borderWidth: 1,
+    width: width / 2,
+    height: height / 6,
+  },
+  bottomName: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 15,
+    marginTop: 5,
+    marginLeft: 3,
+  },
+  bottomTime: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 12,
+    marginLeft: 3,
+  },
+  starsCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '45%',
+    justifyContent: 'space-between',
+  },
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+    borderWidth: 1,
+    height: 30,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+  },
+  titleBlack: {
+    fontFamily: theme.fontFamily.semiBBold,
+    marginLeft: 30,
+    marginTop: 20,
+    fontSize: 18,
   },
 });
 

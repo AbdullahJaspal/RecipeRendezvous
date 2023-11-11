@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {theme} from '../theme/theme';
 
-const Splash = () => {
+const Splash = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -20,7 +20,11 @@ const Splash = () => {
           <Text style={styles.slang}>Deliciously Simple.</Text>
         </View>
 
-        <TouchableOpacity style={styles.buttoCont}>
+        <TouchableOpacity
+          style={styles.buttoCont}
+          onPress={() => {
+            navigation.navigate('Welcome');
+          }}>
           <Text
             style={{
               fontFamily: theme.fontFamily.regular,
