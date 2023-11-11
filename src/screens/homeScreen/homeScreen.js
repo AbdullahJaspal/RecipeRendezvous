@@ -43,26 +43,21 @@ const HomeScreen = ({navigation}) => {
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignSelf: 'center',
-          alignItems: 'center',
-          height: 85,
-        }}
+        style={styles.bottomCont}
         onPress={() => {
           navigation.navigate('RecipeDetails');
         }}>
         <Image
           source={require('../../assets/images/belowImg1.png')}
           style={{
-            width: '30%',
+            width: 70,
             height: 70,
             resizeMode: 'contain',
             borderRadius: 20,
           }}
         />
-        <View style={{height: '90%', justifyContent: 'space-evenly'}}>
+        <View
+          style={{height: '90%', justifyContent: 'space-evenly', width: '60%'}}>
           <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 18}}>
             Chicken Salad
           </Text>
@@ -243,6 +238,9 @@ const HomeScreen = ({navigation}) => {
           renderItem={renderItem}
           data={belowData}
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={() => {
+            return <View style={{height: 140}}></View>;
+          }}
           keyExtractor={(item, index) => item.index}
         />
       </View>
@@ -322,6 +320,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: theme.fontFamily.semiBBold,
     fontSize: 16,
+  },
+  bottomCont: {
+    flexDirection: 'row',
+    width: '95%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: 85,
+    justifyContent: 'space-between',
   },
 });
 export default HomeScreen;

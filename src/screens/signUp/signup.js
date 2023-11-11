@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -9,81 +9,158 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
+import auth from '@react-native-firebase/auth';
+import ShowSnackBar from '../../components/SnackBar';
+import Animated, {
+  useSharedValue,
+  interpolate,
+  useAnimatedScrollHandler,
+  Extrapolation,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+import {Loading} from '../../components/Loading';
 
 const Signup = ({navigation}) => {
+  const [load, setLoad] = useState(false);
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  const imageHeight = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      imageHeight.value = e.contentOffset.y;
+    },
+  });
+
+  const animatedStyles = useAnimatedStyle(() => {
+    const Image_Height = interpolate(
+      imageHeight.value,
+      [0, height / 3 - 100],
+      [height / 3, 100],
+      {
+        extrapolateRight: Extrapolation.CLAMP,
+      },
+    );
+
+    return {
+      height: Image_Height,
+    };
+  });
+
+  useEffect(() => {
+    setLoad(false);
+  }, []);
+  const handleSignup = () => {
+    if (email === '' || pass === '') {
+      ShowSnackBar('Enter all fields please');
+    } else {
+      setLoad(true);
+      auth()
+        .createUserWithEmailAndPassword(email, pass)
+        .then(() => {
+          setLoad(false);
+          ShowSnackBar('User account created & signed in!', 'green');
+          navigation.navigate('Login');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            setLoad(false);
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            setLoad(false);
+            console.log('That email address is invalid!');
+            setLoad(false);
+          }
+
+          setLoad(false);
+          console.error(error);
+        });
+    }
+  };
+
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ImageBackground
-        source={require('../../assets/images/signupTop.png')}
-        style={styles.bgImage}>
-        <View style={styles.topTab}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <Image
-              source={require('../../assets/icons/left.png')}
-              style={styles.topTabIcon}
-            />
-          </TouchableOpacity>
+    <SafeAreaView style={{height: height, width: width}}>
+      <Animated.View
+        style={[{width: '100%', height: height / 3}, animatedStyles]}>
+        <ImageBackground
+          source={require('../../assets/images/signupTop.png')}
+          style={styles.bgImage}>
+          <View style={styles.topTab}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../../assets/icons/left.png')}
+                style={styles.topTabIcon}
+              />
+            </TouchableOpacity>
 
-          <Text
-            style={styles.topTabText}
-            onPress={() => {
-              navigation.navigate('Login');
-            }}>
-            Login
+            <Text
+              style={styles.topTabText}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              Login
+            </Text>
+          </View>
+        </ImageBackground>
+      </Animated.View>
+      <Animated.ScrollView onScroll={scrollHandler} contentContainerStyle={{}}>
+        <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
+        <TextInput
+          placeholder="Your Email"
+          placeholderTextColor={theme.color.seconndary}
+          keyboardType="email-address"
+          style={styles.emailInput}
+          onChangeText={setEmail}
+          value={email}
+        />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor={theme.color.seconndary}
+          style={styles.passwordInput}
+          onChangeText={setPass}
+          value={pass}
+        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handleSignup();
+          }}>
+          <Text style={{fontFamily: theme.fontFamily.regular}}>
+            Create Account
           </Text>
+        </TouchableOpacity>
+        <View style={styles.orWrapper}>
+          <View style={styles.line} />
+          <Text style={styles.or}>OR</Text>
+          <View style={styles.line} />
         </View>
-      </ImageBackground>
-      <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
-      <TextInput
-        placeholder="Your Email"
-        placeholderTextColor={theme.color.seconndary}
-        keyboardType="email-address"
-        style={styles.emailInput}
-      />
-      <TextInput
-        placeholder="Password"
-        placeholderTextColor={theme.color.seconndary}
-        style={styles.passwordInput}
-      />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={{fontFamily: theme.fontFamily.regular}}>
-          Create Account
-        </Text>
-      </TouchableOpacity>
-      <View style={styles.orWrapper}>
-        <View style={styles.line} />
-        <Text style={styles.or}>OR</Text>
-        <View style={styles.line} />
-      </View>
-
-      <TouchableOpacity style={styles.belowButton}>
-        <Image
-          source={require('../../assets/icons/facebook.png')}
-          style={styles.buttonIcon}
-        />
-        <Text style={styles.buttonTitle}>Sign Up with Facebook</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.belowButton}>
-        <Image
-          source={require('../../assets/icons/google.png')}
-          style={styles.buttonIcon}
-        />
-        <Text style={styles.buttonTitle}>Sign Up with Google</Text>
-      </TouchableOpacity>
-      <Text style={styles.terms}>Term of Use and Privacy Policy</Text>
+        <TouchableOpacity style={styles.belowButton}>
+          <Image
+            source={require('../../assets/icons/google.png')}
+            style={styles.buttonIcon}
+          />
+          <Text style={styles.buttonTitle}>Sign Up with Google</Text>
+        </TouchableOpacity>
+        <Text style={styles.terms}>Term of Use and Privacy Policy</Text>
+      </Animated.ScrollView>
+      <Loading visible={load} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  bgImage: {width: '100%', height: height / 3.5},
+  bgImage: {width: '100%', height: '100%'},
   topTab: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -106,15 +183,18 @@ const styles = StyleSheet.create({
     borderColor: theme.color.primary,
     width: '80%',
     alignSelf: 'center',
-    marginTop: 35,
-    marginVertical: 20,
+    padding: 0,
+    height: 40,
+    marginTop: 20,
   },
   passwordInput: {
     borderBottomWidth: 1,
     borderColor: theme.color.primary,
     width: '80%',
     alignSelf: 'center',
-    marginVertical: 20,
+    height: 40,
+    padding: 0,
+    marginVertical: 10,
   },
   button: {
     backgroundColor: theme.color.lightPrimary,

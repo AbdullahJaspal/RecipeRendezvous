@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "199388735458",
+    "project_id": "reciperendezvous-1b5b3",
+    "storage_bucket": "reciperendezvous-1b5b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199388735458:android:913d940e17e0ca18bb7bbb",
+        "android_client_info": {
+          "package_name": "com.reciperendezvous"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_bXqiXDjcyYqmbL8oyUILgoZKS-1EXGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

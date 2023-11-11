@@ -36,7 +36,7 @@ const CategoryRecipies = ({navigation}) => {
   const _renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-        style={{width: width / 1.7, height: height / 2}}
+        style={{width: width / 1.7, height: '90%'}}
         onPress={() => {
           navigation.navigate('RecipeDetails');
         }}>
@@ -83,7 +83,7 @@ const CategoryRecipies = ({navigation}) => {
   const renderBottom = () => {
     return (
       <TouchableOpacity
-        style={{height: height / 5, marginLeft: 14}}
+        style={{marginLeft: 14}}
         onPress={() => {
           navigation.navigate('RecipeDetails');
         }}>
@@ -92,15 +92,7 @@ const CategoryRecipies = ({navigation}) => {
           style={{borderRadius: 10, borderWidth: 1}}
         />
         <View style={{marginLeft: 3}}>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.medium,
-              fontSize: 15,
-              marginTop: 5,
-              marginLeft: 3,
-            }}>
-            Miso-grilled Salmon
-          </Text>
+          <Text style={styles.renderBottomName}>Miso-grilled Salmon</Text>
           <Text
             style={{
               fontFamily: theme.fontFamily.medium,
@@ -114,53 +106,56 @@ const CategoryRecipies = ({navigation}) => {
     );
   };
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
-      <View style={styles.topTab}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}>
-          <Image
-            source={require('../../assets/icons/left.png')}
-            style={styles.iconLeft}
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{height: '65%'}}>
+        <View style={styles.topTab}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Image
+              source={require('../../assets/icons/left.png')}
+              style={styles.iconLeft}
+            />
+          </TouchableOpacity>
+          <Text style={styles.title}>Good Food</Text>
+          <Image source={require('../../assets/icons/left.png')} />
+        </View>
+
+        <View style={{height: '90%'}}>
+          <Carousel
+            ref={c => {
+              this._carousel = c;
+            }}
+            data={[
+              {img: require('../../assets/images/goodFood1.png')},
+              {img: require('../../assets/images/goodFood2.png')},
+              {img: require('../../assets/images/goodFood3.png')},
+            ]}
+            sliderWidth={width}
+            itemWidth={width / 1.5}
+            renderItem={_renderItem}
           />
-        </TouchableOpacity>
-        <Text style={styles.title}>Good Food</Text>
-        <Image source={require('../../assets/icons/left.png')} />
+        </View>
       </View>
-
-      <View>
-        <Carousel
-          ref={c => {
-            this._carousel = c;
-          }}
-          data={[
-            {img: require('../../assets/images/goodFood1.png')},
-            {img: require('../../assets/images/goodFood2.png')},
-            {img: require('../../assets/images/goodFood3.png')},
-          ]}
-          sliderWidth={width}
-          itemWidth={width / 1.5}
-          renderItem={_renderItem}
-        />
-      </View>
-
-      <Text
-        style={{
-          fontFamily: theme.fontFamily.semiBBold,
-          marginLeft: 30,
-          marginTop: 20,
-          fontSize: 18,
-        }}>
-        Health Vegan Life
-      </Text>
-      <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>
-        <FlatList
-          renderItem={renderBottom}
-          showsHorizontalScrollIndicator={false}
-          data={[{}, {}, {}, {}]}
-          horizontal
-        />
+      <View style={{}}>
+        <Text
+          style={{
+            fontFamily: theme.fontFamily.semiBBold,
+            marginLeft: 30,
+            fontSize: 18,
+            marginVertical: 10,
+          }}>
+          Health Vegan Life
+        </Text>
+        <View style={{width: '90%', alignSelf: 'center'}}>
+          <FlatList
+            renderItem={renderBottom}
+            showsHorizontalScrollIndicator={false}
+            data={[{}, {}, {}, {}]}
+            horizontal
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -185,6 +180,12 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.bold,
     fontSize: 24,
     color: theme.color.primary,
+  },
+  renderBottomName: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 15,
+    marginTop: 5,
+    marginLeft: 3,
   },
 });
 

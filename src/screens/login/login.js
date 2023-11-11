@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -11,10 +11,46 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {theme} from '../../theme/theme';
+import {Loading} from '../../components/Loading';
+import ShowSnackBar from '../../components/SnackBar';
+import auth from '@react-native-firebase/auth';
 
 const {width, height} = Dimensions.get('screen');
 
 const Login = ({navigation}) => {
+  const [load, setLoad] = useState(false);
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  const handleSignIn = () => {
+    if (email === '' || pass === '') {
+      ShowSnackBar('Enter all fields please');
+    } else {
+      setLoad(true);
+      auth()
+        .signInWithEmailAndPassword(email, pass)
+        .then(() => {
+          setLoad(false);
+          navigation.navigate('BottomTab');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            setLoad(false);
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            setLoad(false);
+            console.log('That email address is invalid!');
+            setLoad(false);
+          }
+
+          setLoad(false);
+          console.error(error);
+        });
+    }
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <ImageBackground
@@ -45,20 +81,25 @@ const Login = ({navigation}) => {
         placeholderTextColor={theme.color.seconndary}
         keyboardType="email-address"
         style={styles.emailInput}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         placeholder="Password"
         placeholderTextColor={theme.color.seconndary}
         style={styles.passwordInput}
+        value={pass}
+        onChangeText={setPass}
       />
       <Text style={styles.forget}>Forget?</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate('BottomTab');
+          handleSignIn();
         }}>
         <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
       </TouchableOpacity>
+      <Loading visible={load} />
     </SafeAreaView>
   );
 };

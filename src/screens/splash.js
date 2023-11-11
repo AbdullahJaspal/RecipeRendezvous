@@ -1,4 +1,4 @@
-import react from 'react';
+import react, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -7,14 +7,29 @@ import {
   View,
 } from 'react-native';
 import {theme} from '../theme/theme';
+import auth from '@react-native-firebase/auth';
 
 const Splash = ({navigation}) => {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    console.log(user);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <ImageBackground
         source={require('../assets/images/splashBg.png')}
-        style={styles.imageBg}
-        resizeMode="contain">
+        style={styles.imageBg}>
         <View style={{marginTop: '20%'}}>
           <Text style={styles.name}>RecipeRendezvous</Text>
           <Text style={styles.slang}>Deliciously Simple.</Text>
@@ -23,7 +38,11 @@ const Splash = ({navigation}) => {
         <TouchableOpacity
           style={styles.buttoCont}
           onPress={() => {
-            navigation.navigate('Welcome');
+            if (!user) {
+              navigation.navigate('Welcome');
+            } else {
+              navigation.navigate('Login');
+            }
           }}>
           <Text
             style={{
