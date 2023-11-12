@@ -161,6 +161,7 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
       </ImageBackground>
+
       <View>
         <FlatList
           data={['Featured', 'Popular', 'New', 'Recent']}
@@ -199,41 +200,47 @@ const HomeScreen = ({navigation}) => {
           }}
         />
       </View>
-      <View style={{width: '100%'}}>
-        <FlatList
-          data={dishes}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                style={styles.uperRenderWrap}
-                onPress={() => {
-                  setCategory(item);
-                  navigation.navigate('RecipeDetails');
-                }}>
-                <ImageBackground
-                  style={styles.upperBg}
-                  resizeMode="contain"
-                  source={item.img}>
-                  <LinearGradient
-                    style={styles.upperGradient}
-                    colors={[
-                      'rgba(0,0,0,0.65)',
-                      'rgba(0,0,0,0.45)',
-                      'rgba(0,0,0,0.45)',
-                      'rgba(225,225,225,0)',
-                    ]}>
-                    <Text style={styles.upperName}>{item.name}</Text>
-                    <Text style={styles.upperDes}>{item.des}</Text>
-                  </LinearGradient>
-                </ImageBackground>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-      <View style={{height: height / 3}}>
+
+      {category === 'Featured' && (
+        <View style={{width: '100%'}}>
+          <FlatList
+            data={dishes}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  style={styles.uperRenderWrap}
+                  onPress={() => {
+                    setCategory(item);
+                    navigation.navigate('RecipeDetails');
+                  }}>
+                  <ImageBackground
+                    style={styles.upperBg}
+                    resizeMode="contain"
+                    source={item.img}>
+                    <LinearGradient
+                      style={styles.upperGradient}
+                      colors={[
+                        'rgba(0,0,0,0.65)',
+                        'rgba(0,0,0,0.45)',
+                        'rgba(0,0,0,0.45)',
+                        'rgba(225,225,225,0)',
+                      ]}>
+                      <Text style={styles.upperName}>{item.name}</Text>
+                      <Text style={styles.upperDes}>{item.des}</Text>
+                    </LinearGradient>
+                  </ImageBackground>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      )}
+      <View
+        style={{
+          height: category === 'Featured' ? height / 3 : height / 2,
+        }}>
         <FlatList
           renderItem={renderItem}
           data={belowData}

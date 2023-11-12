@@ -73,11 +73,11 @@ const MyCookBook = ({navigation}) => {
           borderTopLeftRadius={20}
           borderTopRightRadius={20}
         />
-        <View style={{marginTop: -25, marginLeft: 10}}>
+        <View style={{marginTop: -30, marginLeft: 10}}>
           <Text
             style={{
               fontFamily: theme.fontFamily.bold,
-              width: '65%',
+              width: '80%',
             }}>
             Lighter Creamy Cajun Chicken Pasta
           </Text>
@@ -164,7 +164,7 @@ const MyCookBook = ({navigation}) => {
             {img: require('../../assets/images/goodFood3.png')},
           ]}
           sliderWidth={width}
-          itemWidth={width / 1.5}
+          itemWidth={width / 1.3}
           renderItem={_renderItem}
         />
       </View>
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
   },
   topWrapper: {
-    width: width / 1.5,
+    width: width / 1.8,
     height: height / 2.2,
     borderRadius: 20,
     shadowColor: '#000',

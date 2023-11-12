@@ -41,7 +41,7 @@ const Splash = ({navigation}) => {
             if (!user) {
               navigation.navigate('Welcome');
             } else {
-              navigation.navigate('Login');
+              navigation.navigate('BottomTab');
             }
           }}>
           <Text

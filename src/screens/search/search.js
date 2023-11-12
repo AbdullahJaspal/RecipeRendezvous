@@ -47,38 +47,64 @@ const Search = ({navigation}) => {
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
+        style={styles.bottomCont}
         onPress={() => {
           navigation.navigate('RecipeDetails');
-        }}
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignSelf: 'center',
-          alignItems: 'center',
-          height: 85,
         }}>
         <Image
           source={require('../../assets/images/belowImg1.png')}
           style={{
-            width: '30%',
+            width: 70,
             height: 70,
             resizeMode: 'contain',
             borderRadius: 20,
           }}
         />
-        <View style={{height: '90%', justifyContent: 'space-evenly'}}>
+        <View
+          style={{height: '90%', justifyContent: 'space-evenly', width: '60%'}}>
           <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 18}}>
             Chicken Salad
           </Text>
           <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
             Special Diets
           </Text>
-          <View style={styles.starsCont}>
-            <Stars rating={item.stars} num={1} />
-            <Stars rating={item.stars} num={2} />
-            <Stars rating={item.stars} num={3} />
-            <Stars rating={item.stars} num={4} />
-            <Stars rating={item.stars} num={5} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '45%',
+              justifyContent: 'space-between',
+            }}>
+            <Image
+              source={require('../../assets/icons/stars.png')}
+              style={{
+                tintColor: item.stars >= 1 ? '#FFE601' : '#C4C4C4',
+              }}
+            />
+            <Image
+              source={require('../../assets/icons/stars.png')}
+              style={{
+                tintColor: item.stars >= 2 ? '#FFE601' : '#C4C4C4',
+              }}
+            />
+            <Image
+              source={require('../../assets/icons/stars.png')}
+              style={{
+                tintColor: item.stars >= 3 ? '#FFE601' : '#C4C4C4',
+              }}
+            />
+            <Image
+              source={require('../../assets/icons/stars.png')}
+              style={{
+                tintColor: item.stars >= 4 ? '#FFE601' : '#C4C4C4',
+              }}
+            />
+            <Image
+              source={require('../../assets/icons/stars.png')}
+              style={{
+                tintColor: item.stars >= 5 ? '#FFE601' : '#C4C4C4',
+              }}
+            />
           </View>
         </View>
         <Text
@@ -255,6 +281,14 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 20,
     fontSize: 18,
+  },
+  bottomCont: {
+    flexDirection: 'row',
+    width: '95%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: 85,
+    justifyContent: 'space-between',
   },
 });
 
