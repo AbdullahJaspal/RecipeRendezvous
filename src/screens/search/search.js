@@ -197,7 +197,7 @@ const Search = ({navigation}) => {
           source={require('../../assets/icons/search.png')}
           style={{width: 18, height: 18, resizeMode: 'contain'}}
         />
-        <TextInput placeholder="Search" style={{width: '92%'}} />
+        <TextInput placeholder="Search" style={{width: '92%', padding: 0}} />
       </View>
       <Text style={styles.titleBlack}>Most Liked Recipes</Text>
       <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>

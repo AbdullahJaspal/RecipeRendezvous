@@ -5,58 +5,78 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
-const Profile = () => {
+import auth from '@react-native-firebase/auth';
+import ShowSnackBar from '../../components/SnackBar';
+
+const Profile = ({navigation}) => {
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <ImageBackground
         source={require('../../assets/images/profileBg.png')}
-        style={style.topBg}>
-        <View style={style.overLay}>
+        style={styles.topBg}>
+        <View style={styles.overLay}>
           <Image
             source={require('../../assets/images/profile.png')}
-            style={style.profileImage}
+            style={styles.profileImage}
           />
-          <Text style={style.name}>Kelly Hudson</Text>
-          <Text style={style.email}>KellyHudson@gmail.com</Text>
+          <Text style={styles.name}>Kelly Hudson</Text>
+          <Text style={styles.email}>KellyHudson@gmail.com</Text>
         </View>
       </ImageBackground>
-      <View style={style.tabWrap}>
-        <View style={style.iconWrap}>
+      <View style={styles.tabWrap}>
+        <View style={styles.iconWrap}>
           <Image
             source={require('../../assets/icons/edit.png')}
-            style={style.icon}
+            style={styles.icon}
           />
         </View>
 
-        <Text style={style.tabTitle}>Edit profile</Text>
+        <Text style={styles.tabTitle}>Edit profile</Text>
         <Image
           source={require('../../assets/icons/right.png')}
-          style={style.rightIcon}
+          style={styles.rightIcon}
         />
       </View>
-      <View style={style.tabWrap}>
-        <View style={style.iconWrap}>
+      <View style={styles.tabWrap}>
+        <View style={styles.iconWrap}>
           <Image
             source={require('../../assets/icons/recipe.png')}
-            style={style.icon}
+            style={styles.icon}
           />
         </View>
 
-        <Text style={style.tabTitle}>My Recipe</Text>
+        <Text style={styles.tabTitle}>My Recipe</Text>
         <Image
           source={require('../../assets/icons/right.png')}
-          style={style.rightIcon}
+          style={styles.rightIcon}
         />
       </View>
+
+      <TouchableOpacity
+        style={styles.buttoCont}
+        onPress={() => {
+          auth()
+            .signOut()
+            .then(() => ShowSnackBar('User signed out!'));
+          navigation.replace('Splash');
+        }}>
+        <Text
+          style={{
+            fontFamily: theme.fontFamily.regular,
+          }}>
+          Logout
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   topBg: {
     width: '100%',
     height: height / 2.555,
@@ -114,6 +134,16 @@ const style = StyleSheet.create({
     height: 20,
     resizeMode: 'contain',
     tintColor: theme.color.primary,
+  },
+  buttoCont: {
+    alignSelf: 'center',
+    backgroundColor: theme.color.buttonBg,
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    borderRadius: 50,
+    borderWidth: 1,
+    position: 'absolute',
+    bottom: 10,
   },
 });
 
