@@ -25,6 +25,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {Loading} from '../../components/Loading';
 import useKeyboard from '../../components/Keyboard';
+import {validateEmail} from '../../utils/utils';
 
 const Signup = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -61,29 +62,29 @@ const Signup = ({navigation}) => {
   const handleSignup = () => {
     if (email === '' || pass === '') {
       ShowSnackBar('Enter all fields please');
+    } else if (!validateEmail(email)) {
+      ShowSnackBar('Enter enter correct email');
     } else {
       setLoad(true);
       auth()
         .createUserWithEmailAndPassword(email, pass)
         .then(() => {
           setLoad(false);
-          ShowSnackBar('User account created & signed in!', 'green');
+          ShowSnackBar('User account created.', 'green');
           navigation.navigate('Login');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             setLoad(false);
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
+            ShowSnackBar('User is already registered with this email.');
             setLoad(false);
-            console.log('That email address is invalid!');
+          } else if (error.code === 'auth/weak-password') {
+            setLoad(false);
+            ShowSnackBar('Password should be at least 6 characters');
             setLoad(false);
           }
-
+          console.log(error);
           setLoad(false);
-          console.error(error);
         });
     }
   };

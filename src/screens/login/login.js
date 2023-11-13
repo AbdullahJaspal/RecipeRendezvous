@@ -22,6 +22,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import useKeyboard from '../../components/Keyboard';
+import {validateEmail} from '../../utils/utils';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -56,6 +57,8 @@ const Login = ({navigation}) => {
   const handleSignIn = () => {
     if (email === '' || pass === '') {
       ShowSnackBar('Enter all fields please');
+    } else if (!validateEmail(email)) {
+      ShowSnackBar('Enter enter correct email');
     } else {
       setLoad(true);
       auth()
@@ -70,14 +73,13 @@ const Login = ({navigation}) => {
             console.log('That email address is already in use!');
           }
 
-          if (error.code === 'auth/invalid-email') {
+          if (error.code === 'auth/invalid-login') {
             setLoad(false);
-            console.log('That email address is invalid!');
+            ShowSnackBar('Invalid credetails');
             setLoad(false);
           }
 
           setLoad(false);
-          console.error(error);
         });
     }
   };
