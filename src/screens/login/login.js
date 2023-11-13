@@ -14,6 +14,14 @@ import {theme} from '../../theme/theme';
 import {Loading} from '../../components/Loading';
 import ShowSnackBar from '../../components/SnackBar';
 import auth from '@react-native-firebase/auth';
+import Animated, {
+  useSharedValue,
+  interpolate,
+  useAnimatedScrollHandler,
+  Extrapolation,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+import useKeyboard from '../../components/Keyboard';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -22,6 +30,29 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
+  const imageHeight = useSharedValue(0);
+  const isKeyboardOpen = useKeyboard();
+
+  const animatedStyles = useAnimatedStyle(() => {
+    const Image_Height = interpolate(
+      imageHeight.value,
+      [0, height / 3],
+      [height / 3, 50],
+      {
+        extrapolateRight: Extrapolation.CLAMP,
+      },
+    );
+
+    return {
+      height: Image_Height,
+    };
+  });
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      imageHeight.value = e.contentOffset.y;
+    },
+  });
   const handleSignIn = () => {
     if (email === '' || pass === '') {
       ShowSnackBar('Enter all fields please');
@@ -53,59 +84,79 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ImageBackground
-        source={require('../../assets/images/signupTop.png')}
-        style={styles.bgImage}>
-        <View style={styles.topTab}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <Image
-              source={require('../../assets/icons/left.png')}
-              style={styles.topTabIcon}
-            />
-          </TouchableOpacity>
-          <Text
-            style={styles.topTabText}
-            onPress={() => {
-              navigation.navigate('Signup');
-            }}>
-            Signup
-          </Text>
-        </View>
-      </ImageBackground>
-      <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
-      <TextInput
-        placeholder="Your Email"
-        placeholderTextColor={theme.color.seconndary}
-        keyboardType="email-address"
-        style={styles.emailInput}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        placeholder="Password"
-        placeholderTextColor={theme.color.seconndary}
-        style={styles.passwordInput}
-        value={pass}
-        onChangeText={setPass}
-      />
-      <Text style={styles.forget}>Forget?</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          handleSignIn();
-        }}>
-        <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
-      </TouchableOpacity>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        contentContainerStyle={{paddingTop: height / 3}}>
+        <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
+        <TextInput
+          placeholder="Your Email"
+          placeholderTextColor={theme.color.seconndary}
+          keyboardType="email-address"
+          style={styles.emailInput}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor={theme.color.seconndary}
+          style={styles.passwordInput}
+          value={pass}
+          onChangeText={setPass}
+        />
+        <Text style={styles.forget}>Forget?</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handleSignIn();
+          }}>
+          <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
+        </TouchableOpacity>
+        <View style={{height: isKeyboardOpen ? 150 : 20}}></View>
+      </Animated.ScrollView>
+      <Animated.View
+        style={[
+          {
+            width: '100%',
+            height: height / 3,
+            position: 'absolute',
+            top: 0,
+            resizeMode: 'stretch',
+          },
+          animatedStyles,
+        ]}>
+        <ImageBackground
+          source={require('../../assets/images/signupTop.png')}
+          style={styles.bgImage}>
+          <View style={styles.topTab}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../../assets/icons/left.png')}
+                style={styles.topTabIcon}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={styles.topTabText}
+              onPress={() => {
+                navigation.navigate('Signup');
+              }}>
+              Signup
+            </Text>
+          </View>
+        </ImageBackground>
+      </Animated.View>
+
       <Loading visible={load} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  bgImage: {width: '100%', height: height / 3.5},
+  bgImage: {width: '100%', height: '100%'},
   topTab: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -128,15 +179,18 @@ const styles = StyleSheet.create({
     borderColor: theme.color.primary,
     width: '80%',
     alignSelf: 'center',
-    marginTop: 35,
-    marginVertical: 20,
+    padding: 0,
+    height: 40,
+    marginTop: 20,
   },
   passwordInput: {
     borderBottomWidth: 1,
     borderColor: theme.color.primary,
     width: '80%',
     alignSelf: 'center',
-    marginVertical: 20,
+    height: 40,
+    padding: 0,
+    marginVertical: 10,
   },
   forget: {
     color: theme.color.seconndary,

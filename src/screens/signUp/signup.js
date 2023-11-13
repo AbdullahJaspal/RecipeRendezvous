@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
@@ -23,11 +24,14 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import {Loading} from '../../components/Loading';
+import useKeyboard from '../../components/Keyboard';
 
 const Signup = ({navigation}) => {
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+
+  const isKeyboardOpen = useKeyboard();
 
   const imageHeight = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler({
@@ -39,8 +43,8 @@ const Signup = ({navigation}) => {
   const animatedStyles = useAnimatedStyle(() => {
     const Image_Height = interpolate(
       imageHeight.value,
-      [0, height / 3 - 100],
-      [height / 3, 100],
+      [0, height / 3],
+      [height / 3, 50],
       {
         extrapolateRight: Extrapolation.CLAMP,
       },
@@ -86,33 +90,10 @@ const Signup = ({navigation}) => {
 
   return (
     <SafeAreaView style={{height: height, width: width}}>
-      <Animated.View
-        style={[{width: '100%', height: height / 3}, animatedStyles]}>
-        <ImageBackground
-          source={require('../../assets/images/signupTop.png')}
-          style={styles.bgImage}>
-          <View style={styles.topTab}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}>
-              <Image
-                source={require('../../assets/icons/left.png')}
-                style={styles.topTabIcon}
-              />
-            </TouchableOpacity>
-
-            <Text
-              style={styles.topTabText}
-              onPress={() => {
-                navigation.navigate('Login');
-              }}>
-              Login
-            </Text>
-          </View>
-        </ImageBackground>
-      </Animated.View>
-      <Animated.ScrollView onScroll={scrollHandler} contentContainerStyle={{}}>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        contentContainerStyle={{paddingTop: height / 3}}>
         <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
         <TextInput
           placeholder="Your Email"
@@ -153,7 +134,44 @@ const Signup = ({navigation}) => {
           <Text style={styles.buttonTitle}>Sign Up with Google</Text>
         </TouchableOpacity>
         <Text style={styles.terms}>Term of Use and Privacy Policy</Text>
+        <View style={{height: isKeyboardOpen ? 350 : 20}}></View>
       </Animated.ScrollView>
+      <Animated.View
+        style={[
+          {
+            width: '100%',
+            height: height / 3,
+            position: 'absolute',
+            top: 0,
+            resizeMode: 'stretch',
+          },
+          animatedStyles,
+        ]}>
+        <ImageBackground
+          source={require('../../assets/images/signupTop.png')}
+          style={styles.bgImage}>
+          <View style={styles.topTab}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../../assets/icons/left.png')}
+                style={styles.topTabIcon}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={styles.topTabText}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              Login
+            </Text>
+          </View>
+        </ImageBackground>
+      </Animated.View>
+
       <Loading visible={load} />
     </SafeAreaView>
   );
