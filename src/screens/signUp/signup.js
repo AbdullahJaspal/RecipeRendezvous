@@ -26,11 +26,17 @@ import Animated, {
 import {Loading} from '../../components/Loading';
 import useKeyboard from '../../components/Keyboard';
 import {validateEmail} from '../../utils/utils';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 const Signup = ({navigation}) => {
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [state, setState] = useState(null);
 
   const isKeyboardOpen = useKeyboard();
 
@@ -58,6 +64,10 @@ const Signup = ({navigation}) => {
 
   useEffect(() => {
     setLoad(false);
+    GoogleSignin.configure({
+      webClientId:
+        '199388735458-v5c4bgck3hk65upeg6ek8fkmdpecljq5.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    });
   }, []);
   const handleSignup = () => {
     if (email === '' || pass === '') {
@@ -86,6 +96,32 @@ const Signup = ({navigation}) => {
           console.log(error);
           setLoad(false);
         });
+    }
+  };
+
+  const signupwithGoogle = async () => {
+    try {
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      // Get the users ID token
+      const {idToken} = await GoogleSignin.signIn();
+
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      // Sign-in the user with the credential
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      console.log(error);
+      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      //   // user cancelled the login flow
+      // } else if (error.code === statusCodes.IN_PROGRESS) {
+      //   // operation (e.g. sign in) is in progress already
+      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      //   // play services not available or outdated
+      // } else {
+      //   // some other error happened
+      // }
     }
   };
 
@@ -127,7 +163,14 @@ const Signup = ({navigation}) => {
           <View style={styles.line} />
         </View>
 
-        <TouchableOpacity style={styles.belowButton}>
+        <TouchableOpacity
+          style={styles.belowButton}
+          onPress={() => {
+            signupwithGoogle().then(() => {
+              ShowSnackBar('User account created.', 'green');
+              navigation.navigate('Login');
+            });
+          }}>
           <Image
             source={require('../../assets/icons/google.png')}
             style={styles.buttonIcon}
