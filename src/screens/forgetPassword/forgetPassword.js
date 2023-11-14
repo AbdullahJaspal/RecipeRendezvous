@@ -29,25 +29,15 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import {firebase} from '@react-native-firebase/auth';
-
 const {width, height} = Dimensions.get('screen');
 
-const Login = ({navigation}) => {
+const ForgetPassword = ({navigation}) => {
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
   const imageHeight = useSharedValue(0);
   const isKeyboardOpen = useKeyboard();
-
-  useEffect(() => {
-    setLoad(false);
-    GoogleSignin.configure({
-      webClientId:
-        '199388735458-v5c4bgck3hk65upeg6ek8fkmdpecljq5.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-    });
-  }, []);
 
   const animatedStyles = useAnimatedStyle(() => {
     const Image_Height = interpolate(
@@ -69,63 +59,51 @@ const Login = ({navigation}) => {
       imageHeight.value = e.contentOffset.y;
     },
   });
-  const handleSignIn = () => {
-    if (email === '' || pass === '') {
+
+  const passwordReset = async email => {
+    return await auth.sendPasswordResetEmail(email);
+  };
+  const handleNav = async () => {
+    if (email === '') {
       ShowSnackBar('Enter all fields please');
     } else if (!validateEmail(email)) {
       ShowSnackBar('Enter enter correct email');
     } else {
       setLoad(true);
-      auth()
-        .signInWithEmailAndPassword(email, pass)
-        .then(() => {
+      try {
+        await passwordReset(email);
+        setLoad(false);
+        setLoad(true);
+      } catch (error) {
+        console.log(error);
+        if (error.code === 'auth/user-not-found') {
+          alert('User not found, try again!');
+          setEmail('');
           setLoad(false);
-          navigation.navigate('BottomTab');
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            setLoad(false);
-            console.log('That email address is already in use!');
-          }
+        }
+      }
 
-          if (error.code === 'auth/invalid-login') {
-            setLoad(false);
-            ShowSnackBar('Invalid credetails');
-            setLoad(false);
-          }
+      //   auth()
+      //     .sendPasswordResetEmail(email)
+      //     .then(() => {
+      //       setLoad(false);
+      //       //   navigation.navigate('BottomTab');
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //       if (error.code === 'auth/email-already-in-use') {
+      //         setLoad(false);
+      //         console.log('That email address is already in use!');
+      //       }
 
-          setLoad(false);
-        });
-    }
-  };
+      //       if (error.code === 'auth/invalid-login') {
+      //         setLoad(false);
+      //         ShowSnackBar('Invalid credetails');
+      //         setLoad(false);
+      //       }
 
-  const signupwithGoogle = async () => {
-    try {
-      // Check if your device supports Google Play
-      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      // Get the users ID token
-      const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential  // Link the user with the credential
-      const firebaseUserCredential =
-        await auth().currentUser.linkWithCredential(googleCredential);
-      // You can store in your app that the account was linked.
-
-      return auth().signInWithCredential(googleCredential);
-    } catch (error) {
-      console.log(error);
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+      //       setLoad(false);
+      //     });
     }
   };
 
@@ -135,7 +113,7 @@ const Login = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
         contentContainerStyle={{paddingTop: height / 3}}>
-        <Text style={styles.bottomTitle}>Let’s start making good meals</Text>
+        <Text style={styles.bottomTitle}>Enter Your Email</Text>
         <TextInput
           placeholder="Your Email"
           placeholderTextColor={theme.color.seconndary}
@@ -144,46 +122,14 @@ const Login = ({navigation}) => {
           value={email}
           onChangeText={setEmail}
         />
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor={theme.color.seconndary}
-          style={styles.passwordInput}
-          value={pass}
-          onChangeText={setPass}
-        />
-        <Text
-          onPress={() => {
-            navigation.navigate('ForgetPassword');
-          }}
-          style={styles.forget}>
-          Forget?
-        </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            handleSignIn();
+            handleNav();
           }}>
-          <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
+          <Text style={{fontFamily: theme.fontFamily.regular}}>Send</Text>
         </TouchableOpacity>
-        <View style={styles.orWrapper}>
-          <View style={styles.line} />
-          <Text style={styles.or}>OR</Text>
-          <View style={styles.line} />
-        </View>
 
-        <TouchableOpacity
-          style={styles.belowButton}
-          onPress={() => {
-            signupwithGoogle().then(() => {
-              navigation.navigate('BottomTab');
-            });
-          }}>
-          <Image
-            source={require('../../assets/icons/google.png')}
-            style={styles.buttonIcon}
-          />
-          <Text style={styles.buttonTitle}>Sign Up with Google</Text>
-        </TouchableOpacity>
         <View style={{height: isKeyboardOpen ? 150 : 20}}></View>
       </Animated.ScrollView>
       <Animated.View
@@ -210,14 +156,6 @@ const Login = ({navigation}) => {
                 style={styles.topTabIcon}
               />
             </TouchableOpacity>
-
-            <Text
-              style={styles.topTabText}
-              onPress={() => {
-                navigation.navigate('Signup');
-              }}>
-              Signup
-            </Text>
           </View>
         </ImageBackground>
       </Animated.View>
@@ -314,4 +252,4 @@ const styles = StyleSheet.create({
   buttonIcon: {height: 20, width: 20, resizeMode: 'contain', marginLeft: 10},
 });
 
-export default Login;
+export default ForgetPassword;

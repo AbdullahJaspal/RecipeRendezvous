@@ -7,6 +7,7 @@ import Login from '../screens/login/login';
 import Signup from '../screens/signUp/signup';
 import BottomTab from './bottomTab/bottomTab';
 import RecipeDetails from '../screens/RecipeDetails/RecipeDetails';
+import ForgetPassword from '../screens/forgetPassword/forgetPassword';
 
 const MainNav = () => {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const MainNav = () => {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="BottomTab" component={BottomTab} />
       </Stack.Navigator>
     </NavigationContainer>
