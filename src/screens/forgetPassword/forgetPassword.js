@@ -13,7 +13,7 @@ import {
 import {theme} from '../../theme/theme';
 import {Loading} from '../../components/Loading';
 import ShowSnackBar from '../../components/SnackBar';
-import auth from '@react-native-firebase/auth';
+// import auth from '@react-native-firebase/auth';
 import Animated, {
   useSharedValue,
   interpolate,
@@ -28,6 +28,8 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -59,10 +61,26 @@ const ForgetPassword = ({navigation}) => {
       imageHeight.value = e.contentOffset.y;
     },
   });
+  useEffect(() => {
+    setLoad(false);
+  }, []);
 
-  const passwordReset = async email => {
-    return await auth.sendPasswordResetEmail(email);
-  };
+  function resetPassword(email) {
+    return firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(a => {
+        setLoad(false);
+        ShowSnackBar(
+          'We have sent you reset link on your provided email.',
+          'green',
+        );
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
   const handleNav = async () => {
     if (email === '') {
       ShowSnackBar('Enter all fields please');
@@ -71,16 +89,9 @@ const ForgetPassword = ({navigation}) => {
     } else {
       setLoad(true);
       try {
-        await passwordReset(email);
-        setLoad(false);
-        setLoad(true);
+        await resetPassword(email);
       } catch (error) {
         console.log(error);
-        if (error.code === 'auth/user-not-found') {
-          alert('User not found, try again!');
-          setEmail('');
-          setLoad(false);
-        }
       }
 
       //   auth()
