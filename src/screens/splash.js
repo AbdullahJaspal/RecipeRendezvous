@@ -8,19 +8,21 @@ import {
 } from 'react-native';
 import {theme} from '../theme/theme';
 import auth from '@react-native-firebase/auth';
+import {useDispatch} from 'react-redux';
+import {saveUser} from '../redux/actions/auth';
 
 const Splash = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
+  const dispatch = useDispatch();
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
+    dispatch(saveUser(user));
     if (initializing) setInitializing(false);
   }
-
   useEffect(() => {
-    console.log(user);
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
