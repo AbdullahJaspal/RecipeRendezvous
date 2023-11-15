@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -12,11 +12,13 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import LinearGradient from 'react-native-linear-gradient';
+import database from '@react-native-firebase/database';
 
 const {width, height} = Dimensions.get('screen');
 
 const HomeScreen = ({navigation}) => {
   const [category, setCategory] = useState('Featured');
+  const [data, setData] = useState(dishes);
   const dishes = [
     {
       img: require('../../assets/images/tofuSoup.png'),
@@ -39,6 +41,22 @@ const HomeScreen = ({navigation}) => {
       des: 'Seafood Salad',
     },
   ];
+
+  useEffect(() => {
+    const reference = database().ref('/pizzaCrust');
+    reference
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        console.log('Pizza Crust Data:', pizzaCrustData);
+        setData([pizzaCrustData]);
+        console.log('data');
+        console.log(data);
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+      });
+  }, []);
 
   const renderItem = ({item}) => {
     return (
@@ -204,7 +222,7 @@ const HomeScreen = ({navigation}) => {
       {category === 'Featured' && (
         <View style={{width: '100%'}}>
           <FlatList
-            data={dishes}
+            data={data}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
@@ -213,12 +231,13 @@ const HomeScreen = ({navigation}) => {
                   style={styles.uperRenderWrap}
                   onPress={() => {
                     setCategory(item);
-                    navigation.navigate('RecipeDetails');
+                    navigation.navigate('RecipeDetails', {item: item});
                   }}>
                   <ImageBackground
                     style={styles.upperBg}
                     resizeMode="contain"
-                    source={item.img}>
+                    borderRadius={20}
+                    source={{uri: item.image}}>
                     <LinearGradient
                       style={styles.upperGradient}
                       colors={[
@@ -228,7 +247,7 @@ const HomeScreen = ({navigation}) => {
                         'rgba(225,225,225,0)',
                       ]}>
                       <Text style={styles.upperName}>{item.name}</Text>
-                      <Text style={styles.upperDes}>{item.des}</Text>
+                      <Text style={styles.upperDes}>{item.title}</Text>
                     </LinearGradient>
                   </ImageBackground>
                 </TouchableOpacity>

@@ -20,9 +20,13 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-const RecipeDetails = ({navigation}) => {
+const RecipeDetails = ({navigation, route}) => {
   const [tab, setTab] = useState('Ingredients');
   const imageHeight = useSharedValue(0);
+
+  const {item} = route.params;
+
+  console.log(item.ingredients);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
@@ -54,8 +58,8 @@ const RecipeDetails = ({navigation}) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.nameWrapper}>
           <View>
-            <Text style={styles.name}>Egg Benedict</Text>
-            <Text style={styles.des}>Master the king of breakfast dishes</Text>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.des}>{item.title}</Text>
             <Text style={styles.review}>(2.564 Review)</Text>
           </View>
           <View style={{justifyContent: 'space-between', paddingVertical: 5}}>
@@ -68,24 +72,26 @@ const RecipeDetails = ({navigation}) => {
         <View style={styles.timeCont}>
           <View style={styles.timeWrapper}>
             <Text style={styles.time}>Serving</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>2 pp</Text>
+            <Text style={{fontFamily: theme.fontFamily.medium}}>
+              {item.serving}
+            </Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'center'}}>
             <Text style={styles.time}>Prep Time</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>25 min</Text>
+            <Text style={{fontFamily: theme.fontFamily.medium}}>
+              {item.preparationTime}
+            </Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'flex-end'}}>
             <Text style={styles.time}>Cook Time</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>20 min</Text>
+            <Text style={{fontFamily: theme.fontFamily.medium}}>
+              {item.cookTime}
+            </Text>
           </View>
         </View>
         <View style={styles.detailWrapper}>
           <Text style={styles.detailTitle}>Description</Text>
-          <Text style={styles.detail}>
-            The classic pile-up of toasted English mufffins topped with Canadian
-            bacon, poached eggs and creamy hollandaise sauce you usually reserve
-            for weekend brunch plans.
-          </Text>
+          <Text style={styles.detail}>{item.description}</Text>
         </View>
         <View style={styles.buttonsWrapper}>
           <TouchableOpacity
@@ -135,30 +141,16 @@ const RecipeDetails = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
+
         {tab === 'Ingredients' ? (
           <View>
             <FlatList
-              data={[
-                '2 - stick unsalted butter',
-                '3 - English muffins, opened',
-                '6 - Eggs, plus 3 egg yolks, divided',
-                '2 - Tablespoons lemon juice',
-                '3 - English muffins, opened',
-                '2 - stick unsalted butter',
-                '3 - English muffins, opened',
-                '6 - Eggs, plus 3 egg yolks, divided',
-                '2 - Tablespoons lemon juice',
-                '3 - English muffins, opened',
-                '2 - stick unsalted butter',
-                '3 - English muffins, opened',
-                '6 - Eggs, plus 3 egg yolks, divided',
-                '2 - Tablespoons lemon juice',
-                '3 - English muffins, opened',
-              ]}
-              renderItem={({item}) => {
+              data={JSON.parse(item.ingredients)}
+              renderItem={({item, index}) => {
                 return (
                   <View style={styles.ingredientWrap}>
                     <Text style={{fontFamily: theme.fontFamily.medium}}>
+                      {index + 1} - {'   '}
                       {item}
                     </Text>
                   </View>
@@ -169,21 +161,15 @@ const RecipeDetails = ({navigation}) => {
         ) : (
           <View>
             <View style={{width: '95%', alignSelf: 'center', marginTop: 10}}>
-              <Text style={styles.DirectionTitle}>
-                1. Make the clarified butter
-              </Text>
+              <Text style={styles.DirectionTitle}>1.{'Preparations'}</Text>
               <Text style={styles.directionDetail}>
-                The classic pile-up of toasted English mufffins topped with
-                Canadian bacon, poached eggs and creamy hollandaise sauce you
-                usually reserve for weekend brunch plans.
+                {item.directions.preps}
               </Text>
             </View>
             <View style={{width: '95%', alignSelf: 'center', marginTop: 10}}>
               <Text style={styles.DirectionTitle}>2. Make the sauce</Text>
               <Text style={styles.directionDetail}>
-                The classic pile-up of toasted English mufffins topped with
-                Canadian bacon, poached eggs and creamy hollandaise sauce you
-                usually reserve for weekend brunch plans.
+                {item.directions.variations}
               </Text>
             </View>
           </View>
@@ -195,7 +181,7 @@ const RecipeDetails = ({navigation}) => {
           style={styles.topImage}
           borderBottomLeftRadius={15}
           borderBottomRightRadius={15}
-          source={require('../../assets/images/egg.png')}>
+          source={{uri: item.image}}>
           <View
             style={{
               width: '95%',

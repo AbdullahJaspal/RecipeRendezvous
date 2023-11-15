@@ -80,8 +80,9 @@ const Login = ({navigation}) => {
         .signInWithEmailAndPassword(email, pass)
         .then(() => {
           setLoad(false);
-          navigation.navigate('BottomTab');
+          navigation.replace('BottomTab');
         })
+
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             setLoad(false);
