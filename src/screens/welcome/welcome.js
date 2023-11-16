@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -28,17 +28,28 @@ const Welcome = () => {
               ingredients.
             </Text>
           </View>
-          <TouchableOpacity style={styles.buttoCont}>
+          <TouchableOpacity
+            style={styles.buttoCont}
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}>
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
+                color: theme.color.darkGrey,
               }}>
               Create Account
             </Text>
           </TouchableOpacity>
           <View style={{alignItems: 'center'}}>
             <Text style={styles.already}>Already have an account?</Text>
-            <Text style={styles.login}>LOGIN</Text>
+            <Text
+              style={styles.login}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              LOGIN
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -80,6 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
+    color: theme.color.seconndary,
   },
   description: {
     fontFamily: theme.fontFamily.semiBBold,
@@ -88,18 +100,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
   already: {
     fontFamily: theme.fontFamily.regular,
     fontSize: 12,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
   login: {
     fontFamily: theme.fontFamily.semiBBold,
     fontSize: 14,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
 });
 export default Welcome;

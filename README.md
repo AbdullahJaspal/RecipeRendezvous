@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
@@ -77,3 +78,7 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+=======
+# RecipeRendezvous
+Welcome to my recipe application, RecipeRendezvous! 🍽️🌟 This repo houses the code for a user-friendly recipe app that brings delicious dishes right to your fingertips. Browse through a wide range of mouthwatering recipes, save your favorites, and even contribute your own culinary creations. Get ready to embark on a flavorful journey with RecipeRendezvous!
+>>>>>>> a92d45ae6de2ed0e0075385a68622b423c84377e

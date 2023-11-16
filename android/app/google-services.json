@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "199388735458",
+    "project_id": "reciperendezvous-1b5b3",
+    "storage_bucket": "reciperendezvous-1b5b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199388735458:android:913d940e17e0ca18bb7bbb",
+        "android_client_info": {
+          "package_name": "com.reciperendezvous"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199388735458-af8o18h7t3fpfef2he8sv7hb5mesn9lo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reciperendezvous",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "199388735458-v5c4bgck3hk65upeg6ek8fkmdpecljq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_bXqiXDjcyYqmbL8oyUILgoZKS-1EXGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199388735458-v5c4bgck3hk65upeg6ek8fkmdpecljq5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "199388735458-ugoquvino0d052bic45jabjcso0c6cp4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.RecipeRendezvous"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
