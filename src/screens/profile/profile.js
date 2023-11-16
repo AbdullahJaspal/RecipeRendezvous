@@ -59,6 +59,21 @@ const Profile = ({navigation}) => {
         />
       </View>
 
+      <View style={styles.tabWrap}>
+        <View style={styles.iconWrap}>
+          <Image
+            source={require('../../assets/icons/recipe.png')}
+            style={styles.icon}
+          />
+        </View>
+
+        <Text style={styles.tabTitle}>My Recipe</Text>
+        <Image
+          source={require('../../assets/icons/right.png')}
+          style={styles.rightIcon}
+        />
+      </View>
+
       <TouchableOpacity
         style={styles.buttoCont}
         onPress={() => {
@@ -144,8 +159,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 50,
     borderWidth: 1,
-    position: 'absolute',
-    bottom: 10,
+    marginVertical: 20,
   },
 });
 
