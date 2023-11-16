@@ -56,7 +56,7 @@ const Profile = ({navigation}) => {
           style={styles.topBg}>
           <View style={styles.overLay}>
             <Image
-              source={require('../../assets/images/profile.png')}
+              source={{uri: userData._user.photoURL}}
               style={styles.profileImage}
             />
             <Text style={styles.name}>{userData._user.displayName}</Text>
