@@ -42,39 +42,12 @@ const CategoryRecipies = ({navigation, route}) => {
         }}>
         <ImageBackground
           source={{uri: item.image}}
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: 20,
-            borderWidth: 1,
-          }}
+          style={styles.topImage}
           borderRadius={20}>
           <LinearGradient
-            style={{
-              width: '100%',
-              paddingHorizontal: 10,
-              paddingTop: 6,
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-            }}
-            colors={[
-              'rgba(0,0,0,0.8)',
-              'rgba(0,0,0,0.7)',
-              'rgba(0,0,0,0.6)',
-              'rgba(0,0,0,0.5)',
-              'rgba(0,0,0,0.1)',
-            ]}>
-            <Text
-              style={{
-                marginLeft: 10,
-                marginTop: 10,
-                fontFamily: theme.fontFamily.medium,
-                fontSize: 18,
-                width: '80%',
-                color: 'white',
-              }}>
-              {item.name}
-            </Text>
+            style={theme.color.gradient}
+            colors={styles.gradietColor}>
+            <Text style={styles.topName}>{item.name}</Text>
           </LinearGradient>
         </ImageBackground>
       </TouchableOpacity>
@@ -84,48 +57,20 @@ const CategoryRecipies = ({navigation, route}) => {
   const renderBottom = ({item}) => {
     return (
       <TouchableOpacity
-        style={{marginLeft: 14, width: width / 2.7}}
+        style={styles.renderWrapBottom}
         onPress={() => {
           navigation.navigate('RecipeDetails', {item: item});
         }}>
         <View style={{borderWidth: 1, borderRadius: 10}}>
-          <Image
-            source={{uri: item.image}}
-            style={{
-              borderRadius: 10,
-              height: 120,
-              width: '100%',
-            }}
-          />
+          <Image source={{uri: item.image}} style={styles.bottomImage} />
         </View>
         <View style={{marginLeft: 3}}>
           <Text style={styles.renderBottomName} numberOfLines={2}>
             {item.name}
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.medium,
-                fontSize: 12,
-                marginLeft: 3,
-                color: theme.color.darkGrey,
-              }}>
-              {item.times.Preparation}
-            </Text>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.medium,
-                fontSize: 12,
-                marginLeft: 3,
-                color: theme.color.primary,
-              }}>
-              {item.vote_count} cooked
-            </Text>
+          <View style={styles.timeCont}>
+            <Text style={styles.prepTime}>{item.times.Preparation}</Text>
+            <Text style={styles.noOfTimeCooked}>{item.vote_count} cooked</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -147,16 +92,7 @@ const CategoryRecipies = ({navigation, route}) => {
           <Text style={styles.title}>{type.replace('\n', ' ')}</Text>
           <Image source={require('../../assets/icons/left.png')} />
         </View>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.semiBBold,
-            marginLeft: 30,
-            fontSize: 18,
-            marginVertical: 10,
-            color: theme.color.seconndary,
-          }}>
-          Top Recipies
-        </Text>
+        <Text style={styles.topTitle}>Top Recipies</Text>
         <View style={{height: '90%'}}>
           <Carousel
             ref={c => {
@@ -170,18 +106,8 @@ const CategoryRecipies = ({navigation, route}) => {
         </View>
       </View>
       <View style={{}}>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.semiBBold,
-            marginLeft: 30,
-            fontSize: 18,
-            marginTop: 20,
-            marginBottom: 10,
-            color: theme.color.seconndary,
-          }}>
-          All others
-        </Text>
-        <View style={{width: '98%', alignSelf: 'center', marginBottom: 20}}>
+        <Text style={styles.bottomTitle}>All others</Text>
+        <View style={styles.bottomListWrap}>
           <FlatList
             renderItem={renderBottom}
             showsHorizontalScrollIndicator={false}
@@ -220,6 +146,66 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 3,
     color: 'black',
+  },
+  gradient: {
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingTop: 6,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  renderWrapBottom: {marginLeft: 14, width: width / 2.7},
+  topTitle: {
+    fontFamily: theme.fontFamily.semiBBold,
+    marginLeft: 30,
+    fontSize: 18,
+    marginVertical: 10,
+    color: theme.color.seconndary,
+  },
+  bottomTitle: {
+    fontFamily: theme.fontFamily.semiBBold,
+    marginLeft: 30,
+    fontSize: 18,
+    marginTop: 20,
+    marginBottom: 10,
+    color: theme.color.seconndary,
+  },
+  bottomListWrap: {width: '98%', alignSelf: 'center', marginBottom: 20},
+  noOfTimeCooked: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 12,
+    marginLeft: 3,
+    color: theme.color.primary,
+  },
+  prepTime: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 12,
+    marginLeft: 3,
+    color: theme.color.darkGrey,
+  },
+  timeCont: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  bottomImage: {
+    borderRadius: 10,
+    height: 120,
+    width: '100%',
+  },
+  topImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  topName: {
+    marginLeft: 10,
+    marginTop: 10,
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 18,
+    width: '80%',
+    color: 'white',
   },
 });
 

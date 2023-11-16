@@ -244,11 +244,7 @@ const HomeScreen = ({navigation}) => {
             return (
               <TouchableOpacity
                 style={{
-                  width: width / 3,
-                  height: 35,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: theme.color.grey,
+                  ...styles.categoryTab,
                   borderColor:
                     category === item
                       ? theme.color.primary
@@ -309,12 +305,7 @@ const HomeScreen = ({navigation}) => {
                     source={{uri: item.image}}>
                     <LinearGradient
                       style={styles.upperGradient}
-                      colors={[
-                        'rgba(0,0,0,0.65)',
-                        'rgba(0,0,0,0.45)',
-                        'rgba(0,0,0,0.45)',
-                        'rgba(225,225,225,0)',
-                      ]}>
+                      colors={theme.color.gradient2}>
                       <Text style={styles.upperName}>{item.name}</Text>
                       <Text style={styles.upperDes}>{item.author}</Text>
                     </LinearGradient>
@@ -424,6 +415,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     justifyContent: 'space-between',
+  },
+  categoryTab: {
+    width: width / 3,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.color.grey,
   },
 });
 export default HomeScreen;

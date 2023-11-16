@@ -116,6 +116,21 @@ const Login = ({navigation}) => {
       });
     }
   };
+  const handleGoogleSignin = () => {
+    const net = isConnectedToInternet();
+    console.log('.............', net, '............');
+    isConnectedToInternet().then(onResolved => {
+      // Some task on success
+      if (onResolved) {
+        dispatch(connectionCheck(true));
+      } else {
+        dispatch(connectionCheck(false));
+        signupwithGoogle().then(() => {
+          navigation.navigate('BottomTab');
+        });
+      }
+    });
+  };
 
   const signupwithGoogle = async () => {
     try {
@@ -181,7 +196,7 @@ const Login = ({navigation}) => {
           onPress={() => {
             handleSignIn();
           }}>
-          <Text style={{fontFamily: theme.fontFamily.regular}}>Login</Text>
+          <Text style={styles.loginButtonTitle}>Login</Text>
         </TouchableOpacity>
         <View style={styles.orWrapper}>
           <View style={styles.line} />
@@ -192,19 +207,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.belowButton}
           onPress={() => {
-            const net = isConnectedToInternet();
-            console.log('.............', net, '............');
-            isConnectedToInternet().then(onResolved => {
-              // Some task on success
-              if (onResolved) {
-                dispatch(connectionCheck(true));
-              } else {
-                dispatch(connectionCheck(false));
-                signupwithGoogle().then(() => {
-                  navigation.navigate('BottomTab');
-                });
-              }
-            });
+            handleGoogleSignin();
           }}>
           <Image
             source={require('../../assets/icons/google.png')}
@@ -214,17 +217,7 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
         <View style={{height: isKeyboardOpen ? 150 : 20}}></View>
       </Animated.ScrollView>
-      <Animated.View
-        style={[
-          {
-            width: '100%',
-            height: height / 3,
-            position: 'absolute',
-            top: 0,
-            resizeMode: 'stretch',
-          },
-          animatedStyles,
-        ]}>
+      <Animated.View style={[styles.topImageWrap, animatedStyles]}>
         <ImageBackground
           source={require('../../assets/images/signupTop.png')}
           style={styles.bgImage}>
@@ -282,6 +275,7 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 40,
     marginTop: 20,
+    color: theme.color.seconndary,
   },
   passwordInput: {
     borderBottomWidth: 1,
@@ -291,6 +285,7 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 0,
     marginVertical: 10,
+    color: theme.color.seconndary,
   },
   forget: {
     color: theme.color.seconndary,
@@ -322,6 +317,7 @@ const styles = StyleSheet.create({
     width: 40,
     textAlign: 'center',
     fontFamily: theme.fontFamily.regular,
+    color: theme.color.seconndary,
   },
   belowButton: {
     width: '50%',
@@ -338,8 +334,20 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     width: '80%',
     fontSize: 14,
+    color: theme.color.seconndary,
   },
   buttonIcon: {height: 20, width: 20, resizeMode: 'contain', marginLeft: 10},
+  loginButtonTitle: {
+    fontFamily: theme.fontFamily.regular,
+    color: theme.color.seconndary,
+  },
+  topImageWrap: {
+    width: '100%',
+    height: height / 3,
+    position: 'absolute',
+    top: 0,
+    resizeMode: 'stretch',
+  },
 });
 
 export default Login;

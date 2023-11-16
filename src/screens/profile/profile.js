@@ -20,10 +20,12 @@ import Animated, {
   Extrapolation,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 
 // PK25UIL0109000299210904
 
 const Profile = ({navigation}) => {
+  const {userData} = useSelector(state => state);
   const imageHeight = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -57,8 +59,8 @@ const Profile = ({navigation}) => {
               source={require('../../assets/images/profile.png')}
               style={styles.profileImage}
             />
-            <Text style={styles.name}>Kelly Hudson</Text>
-            <Text style={styles.email}>KellyHudson@gmail.com</Text>
+            <Text style={styles.name}>{userData._user.displayName}</Text>
+            <Text style={styles.email}>{userData._user.email}</Text>
           </View>
         </ImageBackground>
       </Animated.View>
@@ -128,6 +130,7 @@ const Profile = ({navigation}) => {
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
+                color: theme.color.darkGrey,
               }}>
               Logout
             </Text>
@@ -143,6 +146,7 @@ const Profile = ({navigation}) => {
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
+                color: theme.color.darkGrey,
               }}>
               Delete
             </Text>
@@ -214,7 +218,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     tintColor: theme.color.primary,
   },
-  tabTitle: {fontFamily: theme.fontFamily.bold, width: '70%'},
+  tabTitle: {
+    fontFamily: theme.fontFamily.bold,
+    width: '70%',
+    color: theme.color.seconndary,
+  },
   rightIcon: {
     width: 20,
     height: 20,

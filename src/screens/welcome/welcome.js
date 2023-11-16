@@ -36,6 +36,7 @@ const Welcome = ({navigation}) => {
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
+                color: theme.color.darkGrey,
               }}>
               Create Account
             </Text>
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
+    color: theme.color.seconndary,
   },
   description: {
     fontFamily: theme.fontFamily.semiBBold,
@@ -98,18 +100,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
   already: {
     fontFamily: theme.fontFamily.regular,
     fontSize: 12,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
   login: {
     fontFamily: theme.fontFamily.semiBBold,
     fontSize: 14,
     width: '80%',
     textAlign: 'center',
+    color: theme.color.seconndary,
   },
 });
 export default Welcome;

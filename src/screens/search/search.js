@@ -25,6 +25,17 @@ const Search = ({navigation}) => {
   const [load, setLoad] = useState(true);
   const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
+  const Star = ({ratting, cond}) => {
+    return (
+      <Image
+        source={require('../../assets/icons/stars.png')}
+        style={{
+          tintColor: ratting >= cond ? '#FFE601' : '#C4C4C4',
+        }}
+      />
+    );
+  };
+
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -32,105 +43,28 @@ const Search = ({navigation}) => {
         onPress={() => {
           navigation.navigate('RecipeDetails', {item: item});
         }}>
-        <ShimmerPlaceHolder
-          visible={load}
-          style={{
-            width: 72,
-            height: 72,
-            borderRadius: 20,
-          }}>
-          <View style={{borderWidth: 1, borderRadius: 20}}>
-            <Image
-              source={{uri: item.image}}
-              style={{
-                width: 70,
-                height: 70,
-                resizeMode: 'contain',
-                borderRadius: 20,
-              }}
-            />
-          </View>
-        </ShimmerPlaceHolder>
+        <View style={styles.imageWrap}>
+          <Image source={{uri: item.image}} style={styles.image} />
+        </View>
         <View
           style={{
             height: '90%',
             justifyContent: 'space-evenly',
             width: '60%',
           }}>
-          <ShimmerPlaceHolder
-            // visible
-            visible={load}>
-            <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 16}}>
-              {item.name}
-            </Text>
-          </ShimmerPlaceHolder>
-          <ShimmerPlaceHolder visible={load}>
-            <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
-              {item.author}
-            </Text>
-          </ShimmerPlaceHolder>
-          <ShimmerPlaceHolder visible={load} style={{width: '60%'}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '45%',
-                justifyContent: 'space-between',
-              }}>
-              <Image
-                source={require('../../assets/icons/stars.png')}
-                style={{
-                  tintColor: item.rattings >= 1 ? '#FFE601' : '#C4C4C4',
-                }}
-              />
-              <Image
-                source={require('../../assets/icons/stars.png')}
-                style={{
-                  tintColor: item.rattings >= 2 ? '#FFE601' : '#C4C4C4',
-                }}
-              />
-              <Image
-                source={require('../../assets/icons/stars.png')}
-                style={{
-                  tintColor: item.rattings >= 3 ? '#FFE601' : '#C4C4C4',
-                }}
-              />
-              <Image
-                source={require('../../assets/icons/stars.png')}
-                style={{
-                  tintColor: item.rattings >= 4 ? '#FFE601' : '#C4C4C4',
-                }}
-              />
-              <Image
-                source={require('../../assets/icons/stars.png')}
-                style={{
-                  tintColor: item.rattings >= 5 ? '#FFE601' : '#C4C4C4',
-                }}
-              />
-            </View>
-          </ShimmerPlaceHolder>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.author}>{item.author}</Text>
+          <View style={styles.starsCont}>
+            <Star ratting={item.rattings} cond={1} />
+            <Star ratting={item.rattings} cond={2} />
+            <Star ratting={item.rattings} cond={3} />
+            <Star ratting={item.rattings} cond={4} />
+            <Star ratting={item.rattings} cond={5} />
+          </View>
         </View>
         <View style={{width: 50, alignItems: 'center'}}>
-          <ShimmerPlaceHolder visible={load} style={{width: '90%'}}>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.regular,
-                textAlign: 'center',
-              }}>
-              {item.vote_count}
-            </Text>
-          </ShimmerPlaceHolder>
-
-          <ShimmerPlaceHolder visible={load} style={{width: '90%'}}>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.regular,
-                textAlign: 'center',
-                fontSize: 12,
-              }}>
-              {'Cooked'}
-            </Text>
-          </ShimmerPlaceHolder>
+          <Text style={styles.count}>{item.vote_count}</Text>
+          <Text style={styles.cooked}>{'Cooked'}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -149,12 +83,12 @@ const Search = ({navigation}) => {
       <View style={styles.searchBar}>
         <Image
           source={require('../../assets/icons/search.png')}
-          style={{width: 18, height: 18, resizeMode: 'contain'}}
+          style={styles.leftIcon}
         />
 
         <TextInput
           placeholder="Search"
-          style={{width: '92%', padding: 0}}
+          style={styles.searchInput}
           onChangeText={val => {
             const filtered = allRecipieData.allRecipies.all.filter(item => {
               return item.name.includes(val);
@@ -176,22 +110,9 @@ const Search = ({navigation}) => {
       </View> */}
 
       <View style={{height: height / 1.22}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
-          }}>
+        <View style={styles.titleWrap}>
           <Text style={styles.titleBlack}>New Recipes</Text>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.semiBBold,
-              marginRight: 10,
-              marginTop: 20,
-              fontSize: 13,
-            }}>
-            All ({data.length})
-          </Text>
+          <Text style={styles.num}>All ({data.length})</Text>
         </View>
         <FlatList
           renderItem={renderItem}
@@ -258,15 +179,27 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     borderWidth: 1,
-    height: 30,
+    height: 35,
     borderRadius: 10,
     paddingHorizontal: 10,
+  },
+  titleWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '95%',
   },
   titleBlack: {
     fontFamily: theme.fontFamily.semiBBold,
     marginLeft: 10,
     marginTop: 20,
     fontSize: 18,
+    color: theme.color.darkGrey,
+  },
+  num: {
+    fontFamily: theme.fontFamily.semiBBold,
+    marginRight: 10,
+    marginTop: 20,
+    fontSize: 13,
   },
   bottomCont: {
     flexDirection: 'row',
@@ -276,6 +209,48 @@ const styles = StyleSheet.create({
     height: 85,
     justifyContent: 'space-between',
     marginTop: 10,
+  },
+  imageWrap: {borderWidth: 1, borderRadius: 20},
+  image: {
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
+    borderRadius: 20,
+  },
+  name: {
+    fontFamily: theme.fontFamily.bold,
+    fontSize: 16,
+    color: theme.color.seconndary,
+  },
+  author: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: 14,
+    color: theme.color.darkGrey,
+  },
+  starsCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '45%',
+    justifyContent: 'space-between',
+  },
+  count: {
+    fontFamily: theme.fontFamily.regular,
+    textAlign: 'center',
+    color: theme.color.seconndary,
+    fontSize: 12,
+  },
+  cooked: {
+    fontFamily: theme.fontFamily.regular,
+    textAlign: 'center',
+    fontSize: 12,
+    color: theme.color.darkGrey,
+  },
+  leftIcon: {width: 18, height: 18, resizeMode: 'contain'},
+  searchInput: {
+    width: '92%',
+    padding: 0,
+    color: theme.color.seconndary,
+    height: '100%',
   },
 });
 

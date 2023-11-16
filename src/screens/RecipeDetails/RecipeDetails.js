@@ -74,21 +74,15 @@ const RecipeDetails = ({navigation, route}) => {
         <View style={styles.timeCont}>
           <View style={styles.timeWrapper}>
             <Text style={styles.time}>Serving</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.serves}
-            </Text>
+            <Text style={styles.serveVal}>{item.serves}</Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'center'}}>
             <Text style={styles.time}>Prep Time</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.times.Preparation}
-            </Text>
+            <Text style={styles.serveVal}>{item.times.Preparation}</Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'flex-end'}}>
             <Text style={styles.time}>Cook Time</Text>
-            <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.times.Cooking}
-            </Text>
+            <Text style={styles.serveVal}>{item.times.Cooking}</Text>
           </View>
         </View>
         <View style={styles.detailWrapper}>
@@ -151,7 +145,7 @@ const RecipeDetails = ({navigation, route}) => {
               renderItem={({item, index}) => {
                 return (
                   <View style={styles.ingredientWrap}>
-                    <Text style={{fontFamily: theme.fontFamily.medium}}>
+                    <Text style={styles.ingdVal}>
                       <Text style={{color: theme.color.primary}}>
                         {index}-{'  '}
                       </Text>
@@ -294,13 +288,21 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.medium,
     color: theme.color.darkGrey,
   },
+  serveVal: {
+    fontFamily: theme.fontFamily.medium,
+    color: theme.color.seconndary,
+  },
   detailWrapper: {width: '95%', alignSelf: 'center', marginTop: 10},
   detailTitle: {
     fontFamily: theme.fontFamily.medium,
     color: theme.color.darkGrey,
     fontSize: 18,
   },
-  detail: {fontFamily: theme.fontFamily.medium, marginTop: 5},
+  detail: {
+    fontFamily: theme.fontFamily.medium,
+    marginTop: 5,
+    color: theme.color.seconndary,
+  },
   buttonsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -324,6 +326,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
+  ingdVal: {
+    fontFamily: theme.fontFamily.medium,
+    color: theme.color.seconndary,
+  },
   DirectionTitle: {
     fontFamily: theme.fontFamily.medium,
     color: theme.color.primary,
@@ -334,6 +340,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     marginTop: 5,
     fontSize: 12,
+    color: theme.color.seconndary,
   },
 });
 

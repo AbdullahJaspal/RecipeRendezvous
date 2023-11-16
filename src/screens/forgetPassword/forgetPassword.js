@@ -138,22 +138,18 @@ const ForgetPassword = ({navigation}) => {
           onPress={() => {
             handleNav();
           }}>
-          <Text style={{fontFamily: theme.fontFamily.regular}}>Send</Text>
+          <Text
+            style={{
+              fontFamily: theme.fontFamily.regular,
+              color: theme.color.seconndary,
+            }}>
+            Send
+          </Text>
         </TouchableOpacity>
 
         <View style={{height: isKeyboardOpen ? 150 : 20}}></View>
       </Animated.ScrollView>
-      <Animated.View
-        style={[
-          {
-            width: '100%',
-            height: height / 3,
-            position: 'absolute',
-            top: 0,
-            resizeMode: 'stretch',
-          },
-          animatedStyles,
-        ]}>
+      <Animated.View style={[styles.topImageWrap, animatedStyles]}>
         <ImageBackground
           source={require('../../assets/images/signupTop.png')}
           style={styles.bgImage}>
@@ -203,6 +199,7 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 40,
     marginTop: 20,
+    color: 'black',
   },
   passwordInput: {
     borderBottomWidth: 1,
@@ -212,6 +209,7 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 0,
     marginVertical: 10,
+    color: 'black',
   },
   forget: {
     color: theme.color.seconndary,
@@ -243,6 +241,7 @@ const styles = StyleSheet.create({
     width: 40,
     textAlign: 'center',
     fontFamily: theme.fontFamily.regular,
+    color: theme.color.seconndary,
   },
   belowButton: {
     width: '50%',
@@ -259,8 +258,16 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     width: '80%',
     fontSize: 14,
+    color: theme.color.seconndary,
   },
   buttonIcon: {height: 20, width: 20, resizeMode: 'contain', marginLeft: 10},
+  topImageWrap: {
+    width: '100%',
+    height: height / 3,
+    position: 'absolute',
+    top: 0,
+    resizeMode: 'stretch',
+  },
 });
 
 export default ForgetPassword;
