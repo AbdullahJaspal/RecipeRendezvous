@@ -17,11 +17,11 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('screen');
 
-const CategoryRecipies = ({navigation}) => {
+const CategoryRecipies = ({navigation, route}) => {
+  const {data, type} = route.params;
   const [sliderState, setSliderState] = useState({currentPage: 0});
   const {currentPage} = sliderState;
   const {currentPage: pageIndex} = sliderState;
-
   const setSliderPage = (event: any) => {
     const {x} = event.nativeEvent.contentOffset;
     const indexOfNextScreen = Math.floor(x / width);
@@ -36,12 +36,12 @@ const CategoryRecipies = ({navigation}) => {
   const _renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-        style={{width: width / 1.7, height: '90%'}}
+        style={{width: width / 1.7, height: '90%', backgroundColor: 'white'}}
         onPress={() => {
-          navigation.navigate('RecipeDetails');
+          navigation.navigate('RecipeDetails', {item: item});
         }}>
         <ImageBackground
-          source={item.img}
+          source={{uri: item.image}}
           style={{
             width: '100%',
             height: '100%',
@@ -58,11 +58,11 @@ const CategoryRecipies = ({navigation}) => {
               borderTopLeftRadius: 20,
             }}
             colors={[
-              'rgba(225,225,225,0.8)',
-              'rgba(225,225,225,0.7)',
-              'rgba(225,225,225,0.6)',
-              'rgba(225,225,225,0.5)',
-              'rgba(225,225,225,0.1)',
+              'rgba(0,0,0,0.8)',
+              'rgba(0,0,0,0.7)',
+              'rgba(0,0,0,0.6)',
+              'rgba(0,0,0,0.5)',
+              'rgba(0,0,0,0.1)',
             ]}>
             <Text
               style={{
@@ -70,9 +70,10 @@ const CategoryRecipies = ({navigation}) => {
                 marginTop: 10,
                 fontFamily: theme.fontFamily.medium,
                 fontSize: 18,
-                width: '60%',
+                width: '80%',
+                color: 'white',
               }}>
-              Family Vegan Salad Tips
+              {item.name}
             </Text>
           </LinearGradient>
         </ImageBackground>
@@ -80,27 +81,51 @@ const CategoryRecipies = ({navigation}) => {
     );
   };
 
-  const renderBottom = () => {
+  const renderBottom = ({item}) => {
     return (
       <TouchableOpacity
-        style={{marginLeft: 14}}
+        style={{marginLeft: 14, width: width / 2.7}}
         onPress={() => {
           navigation.navigate('RecipeDetails');
         }}>
-        <Image
-          source={require('../../assets/images/grilledSalmon.png')}
-          style={{borderRadius: 10, borderWidth: 1}}
-        />
-        <View style={{marginLeft: 3}}>
-          <Text style={styles.renderBottomName}>Miso-grilled Salmon</Text>
-          <Text
+        <View style={{borderWidth: 1, borderRadius: 10}}>
+          <Image
+            source={{uri: item.image}}
             style={{
-              fontFamily: theme.fontFamily.medium,
-              fontSize: 12,
-              marginLeft: 3,
-            }}>
-            12 min
+              borderRadius: 10,
+              height: 120,
+              width: '100%',
+            }}
+          />
+        </View>
+        <View style={{marginLeft: 3}}>
+          <Text style={styles.renderBottomName} numberOfLines={2}>
+            {item.name}
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-between',
+            }}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.medium,
+                fontSize: 12,
+                marginLeft: 3,
+              }}>
+              12 min
+            </Text>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.medium,
+                fontSize: 12,
+                marginLeft: 3,
+                color: theme.color.primary,
+              }}>
+              {item.vote_count} cooked
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -118,20 +143,24 @@ const CategoryRecipies = ({navigation}) => {
               style={styles.iconLeft}
             />
           </TouchableOpacity>
-          <Text style={styles.title}>Good Food</Text>
+          <Text style={styles.title}>{type.replace('\n', ' ')}</Text>
           <Image source={require('../../assets/icons/left.png')} />
         </View>
-
+        <Text
+          style={{
+            fontFamily: theme.fontFamily.semiBBold,
+            marginLeft: 30,
+            fontSize: 18,
+            marginVertical: 10,
+          }}>
+          Top Recipies
+        </Text>
         <View style={{height: '90%'}}>
           <Carousel
             ref={c => {
               this._carousel = c;
             }}
-            data={[
-              {img: require('../../assets/images/goodFood1.png')},
-              {img: require('../../assets/images/goodFood2.png')},
-              {img: require('../../assets/images/goodFood3.png')},
-            ]}
+            data={data.slice(0, 5)}
             sliderWidth={width}
             itemWidth={width / 1.5}
             renderItem={_renderItem}
@@ -144,15 +173,15 @@ const CategoryRecipies = ({navigation}) => {
             fontFamily: theme.fontFamily.semiBBold,
             marginLeft: 30,
             fontSize: 18,
-            marginVertical: 10,
+            marginTop: 20,
           }}>
-          Health Vegan Life
+          All others
         </Text>
-        <View style={{width: '90%', alignSelf: 'center'}}>
+        <View style={{width: '98%', alignSelf: 'center', marginBottom: 20}}>
           <FlatList
             renderItem={renderBottom}
             showsHorizontalScrollIndicator={false}
-            data={[{}, {}, {}, {}]}
+            data={data.slice(5)}
             horizontal
           />
         </View>

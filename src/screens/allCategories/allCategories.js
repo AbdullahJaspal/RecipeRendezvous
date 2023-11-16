@@ -18,7 +18,10 @@ const AllCategories = ({navigation}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('CategoryRecipies', {data: item.data});
+          navigation.navigate('CategoryRecipies', {
+            data: item.data,
+            type: item.title,
+          });
         }}
         style={{
           borderWidth: 1,
