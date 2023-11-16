@@ -190,13 +190,13 @@ const HomeScreen = ({navigation}) => {
               Explore all the available categories
             </Text>
             <View style={styles.lowerWrapper}>
-              <Text style={styles.lowerRight}>20 easy to cook for you</Text>
+              <Text style={styles.lowerRight}>5097 easy to cook for you</Text>
               <TouchableOpacity
                 style={styles.viewMoreButton}
                 onPress={() => {
                   navigation.navigate('AllCategories');
                 }}>
-                <Text style={styles.buttonText}>View More</Text>
+                <Text style={styles.buttonText}>View all</Text>
               </TouchableOpacity>
             </View>
           </View>
