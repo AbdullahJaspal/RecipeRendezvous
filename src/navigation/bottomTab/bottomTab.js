@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/homeScreen/homeScreen';
 import CategoryRecipies from '../../screens/categoryRecipies/categoryRecipies';
@@ -12,7 +12,7 @@ import Profile from '../../screens/profile/profile';
 
 const Tab = createBottomTabNavigator();
 
-function BottomTab() {
+function BottomTab({navigation}) {
   return (
     <Tab.Navigator
       initialRouteName="Splash"
@@ -21,7 +21,6 @@ function BottomTab() {
         headerShown: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
-
           if (route.name === 'HomeStack') {
             iconName = require('../../assets/icons/home.png');
           } else if (route.name === 'Search') {
@@ -33,15 +32,26 @@ function BottomTab() {
           }
           // You can return any component that you like here!
           return (
-            <Image
-              source={iconName}
+            <TouchableOpacity
               style={{
-                height: 20,
-                width: 20,
-                resizeMode: 'contain',
-                tintColor: focused ? theme.color.primary : 'gray',
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-            />
+              onPress={() => {
+                navigation.navigate(route.name);
+              }}>
+              <Image
+                source={iconName}
+                style={{
+                  height: 20,
+                  width: 20,
+                  resizeMode: 'contain',
+                  tintColor: focused ? theme.color.primary : 'gray',
+                }}
+              />
+            </TouchableOpacity>
           );
         },
         tabBarActiveTintColor: theme.color.primary,
@@ -49,7 +59,7 @@ function BottomTab() {
       })}>
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="MyCookBook" component={MyCookBook} />
+      {/* <Tab.Screen name="MyCookBook" component={MyCookBook} /> */}
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

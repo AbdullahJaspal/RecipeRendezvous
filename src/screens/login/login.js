@@ -22,7 +22,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import useKeyboard from '../../components/Keyboard';
-import {validateEmail} from '../../utils/utils';
+import {isConnectedToInternet, validateEmail} from '../../utils/utils';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -76,27 +76,44 @@ const Login = ({navigation}) => {
       ShowSnackBar('Enter enter correct email');
     } else {
       setLoad(true);
-      auth()
-        .signInWithEmailAndPassword(email, pass)
-        .then(() => {
-          setLoad(false);
-          navigation.replace('BottomTab');
-        })
 
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            setLoad(false);
-            console.log('That email address is already in use!');
+      const net = isConnectedToInternet();
+      console.log('.............', net, '............');
+      isConnectedToInternet().then(onResolved => {
+        // Some task on success
+        if (onResolved) {
+          try {
+            auth()
+              .signInWithEmailAndPassword(email, pass)
+              .then(() => {
+                setLoad(false);
+                navigation.replace('BottomTab');
+              })
+
+              .catch(error => {
+                console.log(error);
+                if (error.code === 'auth/email-already-in-use') {
+                  setLoad(false);
+                  console.log('That email address is already in use!');
+                }
+
+                if (error.code === 'auth/invalid-login') {
+                  setLoad(false);
+                  ShowSnackBar('Invalid credetails');
+                  setLoad(false);
+                }
+
+                setLoad(false);
+              });
+          } catch (err) {
+            // dispatch(authLoad(false));
+            console.log(err);
           }
-
-          if (error.code === 'auth/invalid-login') {
-            setLoad(false);
-            ShowSnackBar('Invalid credetails');
-            setLoad(false);
-          }
-
-          setLoad(false);
-        });
+        } else {
+          // dispatch(connectionCheck(false));
+          // dispatch(authLoad(false));
+        }
+      });
     }
   };
 
@@ -175,8 +192,18 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.belowButton}
           onPress={() => {
-            signupwithGoogle().then(() => {
-              navigation.navigate('BottomTab');
+            const net = isConnectedToInternet();
+            console.log('.............', net, '............');
+            isConnectedToInternet().then(onResolved => {
+              // Some task on success
+              if (onResolved) {
+                dispatch(connectionCheck(true));
+              } else {
+                dispatch(connectionCheck(false));
+                signupwithGoogle().then(() => {
+                  navigation.navigate('BottomTab');
+                });
+              }
             });
           }}>
           <Image

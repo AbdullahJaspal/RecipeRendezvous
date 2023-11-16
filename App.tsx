@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import {store, persister} from './src/redux/store';
 
-export default App = () => {
+const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persister}>
@@ -13,3 +13,5 @@ export default App = () => {
     </Provider>
   );
 };
+
+export default App;

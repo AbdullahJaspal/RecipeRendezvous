@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -11,177 +11,131 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {theme} from '../../theme/theme';
+import LinearGradient from 'react-native-linear-gradient';
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import database from '@react-native-firebase/database';
+import {useDispatch, useSelector} from 'react-redux';
+import {saveAllRecipies} from '../../redux/actions/auth';
+import allRecipieData from '../data/myRecipies.json';
 
 const {width, height} = Dimensions.get('screen');
 
 const Search = ({navigation}) => {
-  const Stars = ({rating, num}) => {
-    return (
-      <Image
-        source={require('../../assets/icons/stars.png')}
-        style={{
-          tintColor: rating >= num ? '#FFE601' : '#C4C4C4',
-        }}
-      />
-    );
-  };
-  const renderBottom = () => {
-    return (
-      <TouchableOpacity
-        style={{marginLeft: 20}}
-        onPress={() => {
-          navigation.navigate('RecipeDetails');
-        }}>
-        <Image
-          source={require('../../assets/images/grilledSalmon.png')}
-          style={styles.bottomImage}
-        />
-        <View style={{marginLeft: 3}}>
-          <Text style={styles.bottomName}>Miso-grilled Salmon</Text>
-          <Text style={styles.bottomTime}>12 min</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  const [data, setData] = useState(allRecipieData.allRecipies.all);
+  const [load, setLoad] = useState(true);
+  const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.bottomCont}
         onPress={() => {
-          navigation.navigate('RecipeDetails');
+          navigation.navigate('RecipeDetails', {item: item});
         }}>
-        <Image
-          source={require('../../assets/images/belowImg1.png')}
+        <ShimmerPlaceHolder
+          visible={load}
           style={{
-            width: 70,
-            height: 70,
-            resizeMode: 'contain',
+            width: 72,
+            height: 72,
             borderRadius: 20,
-          }}
-        />
-        <View
-          style={{height: '90%', justifyContent: 'space-evenly', width: '60%'}}>
-          <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 18}}>
-            Chicken Salad
-          </Text>
-          <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
-            Special Diets
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '45%',
-              justifyContent: 'space-between',
-            }}>
+          }}>
+          <View style={{borderWidth: 1, borderRadius: 20}}>
             <Image
-              source={require('../../assets/icons/stars.png')}
+              source={{uri: item.image}}
               style={{
-                tintColor: item.stars >= 1 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 2 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 3 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 4 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 5 ? '#FFE601' : '#C4C4C4',
+                width: 70,
+                height: 70,
+                resizeMode: 'contain',
+                borderRadius: 20,
               }}
             />
           </View>
-        </View>
-        <Text
+        </ShimmerPlaceHolder>
+        <View
           style={{
-            fontFamily: theme.fontFamily.regular,
-            textAlign: 'center',
+            height: '90%',
+            justifyContent: 'space-evenly',
+            width: '60%',
           }}>
-          {item.view}
-          {'\n'}
-          {'Cooked'}
-        </Text>
+          <ShimmerPlaceHolder
+            // visible
+            visible={load}>
+            <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 16}}>
+              {item.name}
+            </Text>
+          </ShimmerPlaceHolder>
+          <ShimmerPlaceHolder visible={load}>
+            <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
+              {item.author}
+            </Text>
+          </ShimmerPlaceHolder>
+          <ShimmerPlaceHolder visible={load} style={{width: '60%'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '45%',
+                justifyContent: 'space-between',
+              }}>
+              <Image
+                source={require('../../assets/icons/stars.png')}
+                style={{
+                  tintColor: item.rattings >= 1 ? '#FFE601' : '#C4C4C4',
+                }}
+              />
+              <Image
+                source={require('../../assets/icons/stars.png')}
+                style={{
+                  tintColor: item.rattings >= 2 ? '#FFE601' : '#C4C4C4',
+                }}
+              />
+              <Image
+                source={require('../../assets/icons/stars.png')}
+                style={{
+                  tintColor: item.rattings >= 3 ? '#FFE601' : '#C4C4C4',
+                }}
+              />
+              <Image
+                source={require('../../assets/icons/stars.png')}
+                style={{
+                  tintColor: item.rattings >= 4 ? '#FFE601' : '#C4C4C4',
+                }}
+              />
+              <Image
+                source={require('../../assets/icons/stars.png')}
+                style={{
+                  tintColor: item.rattings >= 5 ? '#FFE601' : '#C4C4C4',
+                }}
+              />
+            </View>
+          </ShimmerPlaceHolder>
+        </View>
+        <View style={{width: 50, alignItems: 'center'}}>
+          <ShimmerPlaceHolder visible={load} style={{width: '90%'}}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+                textAlign: 'center',
+              }}>
+              {item.vote_count}
+            </Text>
+          </ShimmerPlaceHolder>
+
+          <ShimmerPlaceHolder visible={load} style={{width: '90%'}}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+                textAlign: 'center',
+                fontSize: 12,
+              }}>
+              {'Cooked'}
+            </Text>
+          </ShimmerPlaceHolder>
+        </View>
       </TouchableOpacity>
     );
   };
 
-  const belowData = [
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 4,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 3,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 2,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 55,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 3,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 2,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 55,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 3,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 2,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 55,
-    },
-  ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.topTab}>
@@ -197,9 +151,21 @@ const Search = ({navigation}) => {
           source={require('../../assets/icons/search.png')}
           style={{width: 18, height: 18, resizeMode: 'contain'}}
         />
-        <TextInput placeholder="Search" style={{width: '92%', padding: 0}} />
+
+        <TextInput
+          placeholder="Search"
+          style={{width: '92%', padding: 0}}
+          onChangeText={val => {
+            const filtered = allRecipieData.allRecipies.all.filter(item => {
+              return item.name.includes(val);
+            });
+            val === ''
+              ? setData(allRecipieData.allRecipies.all)
+              : setData(filtered);
+          }}
+        />
       </View>
-      <Text style={styles.titleBlack}>Most Liked Recipes</Text>
+      {/* <Text style={styles.titleBlack}>Most Liked Recipes</Text>
       <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>
         <FlatList
           renderItem={renderBottom}
@@ -207,14 +173,34 @@ const Search = ({navigation}) => {
           data={[{}, {}, {}, {}]}
           horizontal
         />
-      </View>
+      </View> */}
 
-      <View style={{height: height / 1.8}}>
-        <Text style={styles.titleBlack}>New Recipes</Text>
+      <View style={{height: height / 1.22}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '95%',
+          }}>
+          <Text style={styles.titleBlack}>New Recipes</Text>
+          <Text
+            style={{
+              fontFamily: theme.fontFamily.semiBBold,
+              marginRight: 10,
+              marginTop: 20,
+              fontSize: 13,
+            }}>
+            All ({data.length})
+          </Text>
+        </View>
         <FlatList
           renderItem={renderItem}
-          data={belowData}
+          data={data}
           showsVerticalScrollIndicator={false}
+          maxToRenderPerBatch={2}
+          ListFooterComponent={() => {
+            return <View style={{height: 20}}></View>;
+          }}
           keyExtractor={(item, index) => item.index}
         />
       </View>
@@ -278,7 +264,7 @@ const styles = StyleSheet.create({
   },
   titleBlack: {
     fontFamily: theme.fontFamily.semiBBold,
-    marginLeft: 30,
+    marginLeft: 10,
     marginTop: 20,
     fontSize: 18,
   },

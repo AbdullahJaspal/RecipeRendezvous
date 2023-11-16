@@ -44,3 +44,42 @@ export const saveUser = data => {
     payload: data,
   };
 };
+
+export const saveRecipies = data => {
+  return {
+    type: types.SAVE_RECIPIES,
+    payload: data,
+  };
+};
+
+export const saveAllRecipies = data => {
+  return {
+    type: types.SAVE_ALL_RECIPIES,
+    payload: data,
+  };
+};
+export const saveLunchRecipies = data => {
+  return {
+    type: types.SAVE_LUNCH_RECIPIES,
+    payload: data,
+  };
+};
+export const saveDinnerRecipies = data => {
+  return {
+    type: types.SAVE_DINNER_RECIPIES,
+    payload: data,
+  };
+};
+export const saveBreakfastRecipies = data => {
+  return {
+    type: types.SAVE_BREAKFAST_RECIPIES,
+    payload: data,
+  };
+};
+
+export const saveHotRecipies = data => {
+  return {
+    type: types.SAVE_HOT_RECIPIES,
+    payload: data,
+  };
+};

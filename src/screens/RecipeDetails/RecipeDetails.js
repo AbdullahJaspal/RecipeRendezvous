@@ -26,8 +26,6 @@ const RecipeDetails = ({navigation, route}) => {
 
   const {item} = route.params;
 
-  console.log(item.ingredients);
-
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       imageHeight.value = e.contentOffset.y;
@@ -59,11 +57,16 @@ const RecipeDetails = ({navigation, route}) => {
         <View style={styles.nameWrapper}>
           <View>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.des}>{item.title}</Text>
-            <Text style={styles.review}>(2.564 Review)</Text>
+            <Text style={styles.des}>
+              by <Text style={{color: theme.color.primary}}>{item.author}</Text>
+            </Text>
+            {/* <Text style={styles.review}>(2.564 Review)</Text> */}
           </View>
           <View style={{justifyContent: 'space-between', paddingVertical: 5}}>
-            <Text style={styles.views}>8.3 K{'\n'}Cooked</Text>
+            <Text style={styles.views}>
+              {item.vote_count}
+              {'\n'}Cooked
+            </Text>
             <View style={styles.favButton}>
               <Text style={styles.favButtonText}>Add to fav</Text>
             </View>
@@ -73,19 +76,19 @@ const RecipeDetails = ({navigation, route}) => {
           <View style={styles.timeWrapper}>
             <Text style={styles.time}>Serving</Text>
             <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.serving}
+              {item.serves}
             </Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'center'}}>
             <Text style={styles.time}>Prep Time</Text>
             <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.preparationTime}
+              {item.times.Preparation}
             </Text>
           </View>
           <View style={{...styles.timeWrapper, alignItems: 'flex-end'}}>
             <Text style={styles.time}>Cook Time</Text>
             <Text style={{fontFamily: theme.fontFamily.medium}}>
-              {item.cookTime}
+              {item.times.Cooking}
             </Text>
           </View>
         </View>
@@ -145,12 +148,14 @@ const RecipeDetails = ({navigation, route}) => {
         {tab === 'Ingredients' ? (
           <View>
             <FlatList
-              data={JSON.parse(item.ingredients)}
+              data={item.ingredients}
               renderItem={({item, index}) => {
                 return (
                   <View style={styles.ingredientWrap}>
                     <Text style={{fontFamily: theme.fontFamily.medium}}>
-                      {index + 1} - {'   '}
+                      <Text style={{color: theme.color.primary}}>
+                        {index}-{'  '}
+                      </Text>
                       {item}
                     </Text>
                   </View>
@@ -159,20 +164,18 @@ const RecipeDetails = ({navigation, route}) => {
             />
           </View>
         ) : (
-          <View>
-            <View style={{width: '95%', alignSelf: 'center', marginTop: 10}}>
-              <Text style={styles.DirectionTitle}>1.{'Preparations'}</Text>
-              <Text style={styles.directionDetail}>
-                {item.directions.preps}
-              </Text>
-            </View>
-            <View style={{width: '95%', alignSelf: 'center', marginTop: 10}}>
-              <Text style={styles.DirectionTitle}>2. Make the sauce</Text>
-              <Text style={styles.directionDetail}>
-                {item.directions.variations}
-              </Text>
-            </View>
-          </View>
+          item.steps.map((item, index) => {
+            return (
+              <View style={{width: '95%', alignSelf: 'center', marginTop: 10}}>
+                <Text style={styles.directionDetail}>
+                  <Text style={styles.DirectionTitle}>
+                    {index + 1} {'  '}{' '}
+                  </Text>
+                  {item}
+                </Text>
+              </View>
+            );
+          })
         )}
         <View style={{height: 50}} />
       </Animated.ScrollView>
@@ -186,8 +189,18 @@ const RecipeDetails = ({navigation, route}) => {
             style={{
               width: '95%',
               alignSelf: 'center',
+              justifyContent: 'center',
+              height: 50,
             }}>
             <TouchableOpacity
+              style={{
+                backgroundColor: 'white',
+                height: 25,
+                width: 25,
+                justifyContent: 'center',
+                borderBottomLeftRadius: 100,
+                borderTopLeftRadius: 100,
+              }}
               onPress={() => {
                 navigation.goBack();
               }}>
@@ -219,7 +232,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-    marginTop: 50,
     resizeMode: 'contain',
     tintColor: theme.color.primary,
   },
@@ -233,8 +245,9 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: theme.fontFamily.medium,
-    fontSize: 26,
+    fontSize: 22,
     color: theme.color.primary,
+    width: '80%',
   },
   des: {
     fontFamily: theme.fontFamily.medium,

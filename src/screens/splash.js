@@ -8,17 +8,22 @@ import {
 } from 'react-native';
 import {theme} from '../theme/theme';
 import auth from '@react-native-firebase/auth';
-import {useDispatch} from 'react-redux';
-import {saveUser} from '../redux/actions/auth';
+import {useDispatch, useSelector} from 'react-redux';
+import {saveRecipies, saveUser} from '../redux/actions/auth';
+import database from '@react-native-firebase/database';
+import {Loading} from '../components/Loading';
 
 const Splash = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const allRecipies = useSelector(state => state.recipies);
 
   const dispatch = useDispatch();
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
+    // getData();
     dispatch(saveUser(user));
     if (initializing) setInitializing(false);
   }
@@ -27,6 +32,43 @@ const Splash = ({navigation}) => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
+  useEffect(() => {
+    // console.log(allRecipies);
+    // // setLoading(true);
+    // const reference = database().ref('/allRecipies');
+    // reference
+    //   .once('value')
+    //   .then(snapshot => {
+    //     const pizzaCrustData = snapshot.val();
+    //     console.log('Pizza Crust Data:', pizzaCrustData);
+    //     console.log(pizzaCrustData);
+    //     dispatch(saveRecipies(pizzaCrustData));
+    //     setLoading(false);
+    //   })
+    //   .catch(error => {
+    //     console.log('Error fetching Pizza Crust data:', error);
+    //     setLoading(false);
+    //   });
+  }, []);
+
+  const getData = () => {
+    console.log('startxs');
+    const reference = database().ref('/allRecipies');
+    reference
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        console.log('Pizza Crust Data:', pizzaCrustData);
+        console.log(pizzaCrustData);
+        dispatch(saveRecipies(pizzaCrustData));
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+        setLoading(false);
+      });
+    console.log('last');
+  };
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -53,6 +95,7 @@ const Splash = ({navigation}) => {
             Start Coking
           </Text>
         </TouchableOpacity>
+        <Loading visible={loading} />
       </ImageBackground>
     </View>
   );

@@ -13,50 +13,26 @@ import {
 import {theme} from '../../theme/theme';
 import LinearGradient from 'react-native-linear-gradient';
 import database from '@react-native-firebase/database';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  saveAllRecipies,
+  saveBreakfastRecipies,
+  saveDinnerRecipies,
+  saveHotRecipies,
+  saveLunchRecipies,
+  saveRecipies,
+} from '../../redux/actions/auth';
+import {Loading} from '../../components/Loading';
+import allRecipieData from '../data/myRecipies.json';
 
 const {width, height} = Dimensions.get('screen');
 
 const HomeScreen = ({navigation}) => {
-  const [category, setCategory] = useState('Featured');
-  const [data, setData] = useState(dishes);
-  const dishes = [
-    {
-      img: require('../../assets/images/tofuSoup.png'),
-      name: 'World Food',
-      des: 'Tofu Noodle Soup',
-    },
-    {
-      img: require('../../assets/images/seaFood.png'),
-      name: 'Healthy Food',
-      des: 'Seafood Salad',
-    },
-    {
-      img: require('../../assets/images/tofuSoup.png'),
-      name: 'World Food',
-      des: 'Tofu Noodle Soup',
-    },
-    {
-      img: require('../../assets/images/seaFood.png'),
-      name: 'Healthy Food',
-      des: 'Seafood Salad',
-    },
-  ];
+  const [load, setLoad] = useState(false);
+  const {breakfast, quickluch, dinerToLuch} = useSelector(state => state);
+  const [category, setCategory] = useState('Breakfast');
 
-  useEffect(() => {
-    const reference = database().ref('/pizzaCrust');
-    reference
-      .once('value')
-      .then(snapshot => {
-        const pizzaCrustData = snapshot.val();
-        console.log('Pizza Crust Data:', pizzaCrustData);
-        setData([pizzaCrustData]);
-        console.log('data');
-        console.log(data);
-      })
-      .catch(error => {
-        console.log('Error fetching Pizza Crust data:', error);
-      });
-  }, []);
+  const dispatch = useDispatch();
 
   const renderItem = ({item}) => {
     return (
@@ -133,7 +109,50 @@ const HomeScreen = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+  console.log(breakfast);
+  useEffect(() => {
+    // getData();
+  }, []);
 
+  const getData = async () => {
+    console.log('start');
+    setLoad(true);
+    const all = database().ref('/allRecipies');
+    const breakfast = database().ref('/allRecipies/breakfast');
+    const lunch = database().ref('/allRecipies/quickLunch');
+    const dinner = database().ref('/allRecipies/dinerToLunch');
+    await breakfast
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        dispatch(saveBreakfastRecipies(pizzaCrustData));
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+        setLoad(false);
+      });
+    await lunch
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        dispatch(saveLunchRecipies(pizzaCrustData));
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+        setLoad(false);
+      });
+    await dinner
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        dispatch(saveDinnerRecipies(pizzaCrustData));
+        setLoad(false);
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+        setLoad(false);
+      });
+  };
   const belowData = [
     {
       name: 'Chicken Salad',
@@ -162,34 +181,70 @@ const HomeScreen = ({navigation}) => {
   ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <ImageBackground
-        style={{height: height / 2.8, width: '100%'}}
-        source={require('../../assets/images/homeTop.png')}>
-        <View style={styles.overlay}>
-          <Text style={styles.topTitle}>20 Weekend Dinner Recipes</Text>
-          <View style={styles.lowerWrapper}>
-            <Text style={styles.lowerRight}>20 easy to cook for you</Text>
-            <TouchableOpacity
-              style={styles.viewMoreButton}
-              onPress={() => {
-                navigation.navigate('CategoryRecipies');
-              }}>
-              <Text style={styles.buttonText}>View More</Text>
-            </TouchableOpacity>
+      <View style={{height: height / 4}}>
+        <ImageBackground
+          style={{height: '100%', width: '100%'}}
+          source={require('../../assets/images/homeTop.png')}>
+          <View style={styles.overlay}>
+            <Text style={styles.topTitle}>
+              Explore all the available categories
+            </Text>
+            <View style={styles.lowerWrapper}>
+              <Text style={styles.lowerRight}>20 easy to cook for you</Text>
+              <TouchableOpacity
+                style={styles.viewMoreButton}
+                onPress={() => {
+                  navigation.navigate('CategoryRecipies');
+                }}>
+                <Text style={styles.buttonText}>View More</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ImageBackground>
-
-      <View>
-        <FlatList
-          data={['Featured', 'Popular', 'New', 'Recent']}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
+        </ImageBackground>
+      </View>
+      <View style={{height: height - height / 4}}>
+        <View style={{flexDirection: 'row'}}>
+          {/* <FlatList
+            data={['Breakfast', 'Lunch', 'Dinner']}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    width: 100,
+                    height: 35,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: theme.color.grey,
+                    borderColor:
+                      category === item
+                        ? theme.color.primary
+                        : theme.color.seconndary,
+                    borderBottomWidth: category === item ? 1 : 0,
+                  }}
+                  onPress={() => {
+                    setCategory(item);
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: theme.fontFamily.medium,
+                      color:
+                        category === item
+                          ? theme.color.primary
+                          : theme.color.seconndary,
+                    }}>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+          /> */}
+          {['Breakfast', 'Lunch', 'Dinner'].map(item => {
             return (
               <TouchableOpacity
                 style={{
-                  width: 100,
+                  width: width / 3,
                   height: 35,
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -215,22 +270,36 @@ const HomeScreen = ({navigation}) => {
                 </Text>
               </TouchableOpacity>
             );
-          }}
-        />
-      </View>
+          })}
+        </View>
 
-      {category === 'Featured' && (
-        <View style={{width: '100%'}}>
+        <View style={{width: '100%', marginTop: 10}}>
           <FlatList
-            data={data}
-            horizontal
+            data={
+              category === 'Breakfast'
+                ? allRecipieData.allRecipies.breakfast
+                : category === 'Lunch'
+                ? allRecipieData.allRecipies.quickLunch
+                : allRecipieData.allRecipies.dinerToLunch
+              // : []
+
+              // category === 'Baking'
+              // ? baking
+              // : others
+            }
+            // horizontal
+            numColumns={2}
             showsHorizontalScrollIndicator={false}
+            maxToRenderPerBatch={12}
+            ListFooterComponent={() => {
+              return <View style={{height: 160}}></View>;
+            }}
+            columnWrapperStyle={{justifyContent: 'space-between'}}
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
                   style={styles.uperRenderWrap}
                   onPress={() => {
-                    setCategory(item);
                     navigation.navigate('RecipeDetails', {item: item});
                   }}>
                   <ImageBackground
@@ -247,7 +316,7 @@ const HomeScreen = ({navigation}) => {
                         'rgba(225,225,225,0)',
                       ]}>
                       <Text style={styles.upperName}>{item.name}</Text>
-                      <Text style={styles.upperDes}>{item.title}</Text>
+                      <Text style={styles.upperDes}>{item.author}</Text>
                     </LinearGradient>
                   </ImageBackground>
                 </TouchableOpacity>
@@ -255,8 +324,8 @@ const HomeScreen = ({navigation}) => {
             }}
           />
         </View>
-      )}
-      <View
+      </View>
+      {/* <View
         style={{
           height: category === 'Featured' ? height / 3 : height / 2,
         }}>
@@ -269,7 +338,8 @@ const HomeScreen = ({navigation}) => {
           }}
           keyExtractor={(item, index) => item.index}
         />
-      </View>
+      </View> */}
+      <Loading visible={load} />
     </SafeAreaView>
   );
 };
@@ -285,7 +355,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.semiBBold,
     fontSize: 26,
     color: 'white',
-    width: '60%',
+    width: '70%',
     marginLeft: 10,
   },
   lowerWrapper: {
@@ -315,8 +385,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   uperRenderWrap: {
-    width: width / 1.8,
-    height: width / 2.7,
+    width: width / 2.2,
+    height: width / 2.8,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: theme.color.grey,
@@ -332,7 +402,7 @@ const styles = StyleSheet.create({
   },
   upperGradient: {
     width: '100%',
-    height: 60,
+    height: 80,
     paddingHorizontal: 10,
     paddingTop: 6,
     borderRadius: 20,
