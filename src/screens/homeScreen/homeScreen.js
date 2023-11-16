@@ -194,7 +194,7 @@ const HomeScreen = ({navigation}) => {
               <TouchableOpacity
                 style={styles.viewMoreButton}
                 onPress={() => {
-                  navigation.navigate('CategoryRecipies');
+                  navigation.navigate('AllCategories');
                 }}>
                 <Text style={styles.buttonText}>View More</Text>
               </TouchableOpacity>
