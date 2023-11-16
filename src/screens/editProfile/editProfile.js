@@ -11,16 +11,50 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import {useSelector} from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
+
 const {width, height} = Dimensions.get('screen');
+
 const EditProfile = () => {
   const {userData} = useSelector(state => state);
-  const {email, setEmail} = useState(userData._user.providerData.email);
+  const {email, setEmail} = useState(userData._user.email);
   const {username, setUsername} = useState(userData._user.displayName);
   const {image, setImage} = useState(userData._user.photoURL);
   const {number, setNumber} = useState(userData._user.phoneNumber);
-  const {password, setPassword} = useState(userData._user.email);
+  const {password, setPassword} = useState('');
 
   console.log(userData._user.email);
+
+  const gallery = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+    });
+  };
+
+  const updateUser = () => {
+    getAuth()
+      .updateUser(uid, {
+        email: 'modifiedUser@example.com',
+        phoneNumber: '+11234567890',
+        emailVerified: true,
+        password: 'newPassword',
+        displayName: 'Jane Doe',
+        photoURL: 'http://www.example.com/12345678/photo.png',
+        disabled: true,
+      })
+      .then(userRecord => {
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log('Successfully updated user', userRecord.toJSON());
+      })
+      .catch(error => {
+        console.log('Error updating user:', error);
+      });
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.topView} />
@@ -29,11 +63,21 @@ const EditProfile = () => {
           <View style={styles.imageWrapper}>
             <Image source={{uri: image}} style={styles.image} />
           </View>
-          <Text style={styles.changeText}>Change Photo</Text>
+          <Text
+            style={styles.changeText}
+            onPress={() => {
+              gallery();
+            }}>
+            Change Photo
+          </Text>
         </View>
 
         <TextInput
-          placeholder="Username"
+          placeholder={
+            userData._user.displayName === null
+              ? 'Email'
+              : userData._user.displayName
+          }
           placeholderTextColor={theme.color.seconndary}
           style={styles.emailInput}
           value={username}
@@ -41,7 +85,9 @@ const EditProfile = () => {
         />
 
         <TextInput
-          placeholder="Email"
+          placeholder={
+            userData._user.email === null ? 'Email' : userData._user.email
+          }
           placeholderTextColor={theme.color.seconndary}
           keyboardType="email-address"
           style={styles.emailInput}
@@ -49,7 +95,11 @@ const EditProfile = () => {
           onChangeText={setEmail}
         />
         <TextInput
-          placeholder="Phone number"
+          placeholder={
+            userData._user.phoneNumber === null
+              ? 'Phone number'
+              : userData._user.phoneNumber
+          }
           placeholderTextColor={theme.color.seconndary}
           style={styles.emailInput}
           value={number}
@@ -66,7 +116,7 @@ const EditProfile = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            handleSignIn();
+            updateUser();
           }}>
           <Text
             style={{
