@@ -86,7 +86,7 @@ const CategoryRecipies = ({navigation, route}) => {
       <TouchableOpacity
         style={{marginLeft: 14, width: width / 2.7}}
         onPress={() => {
-          navigation.navigate('RecipeDetails');
+          navigation.navigate('RecipeDetails', {item: item});
         }}>
         <View style={{borderWidth: 1, borderRadius: 10}}>
           <Image
@@ -113,8 +113,9 @@ const CategoryRecipies = ({navigation, route}) => {
                 fontFamily: theme.fontFamily.medium,
                 fontSize: 12,
                 marginLeft: 3,
+                color: theme.color.darkGrey,
               }}>
-              12 min
+              {item.times.Preparation}
             </Text>
             <Text
               style={{
@@ -152,6 +153,7 @@ const CategoryRecipies = ({navigation, route}) => {
             marginLeft: 30,
             fontSize: 18,
             marginVertical: 10,
+            color: theme.color.seconndary,
           }}>
           Top Recipies
         </Text>
@@ -174,6 +176,8 @@ const CategoryRecipies = ({navigation, route}) => {
             marginLeft: 30,
             fontSize: 18,
             marginTop: 20,
+            marginBottom: 10,
+            color: theme.color.seconndary,
           }}>
           All others
         </Text>
@@ -215,6 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
     marginLeft: 3,
+    color: 'black',
   },
 });
 

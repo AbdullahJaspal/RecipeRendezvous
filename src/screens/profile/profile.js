@@ -68,7 +68,11 @@ const Profile = ({navigation}) => {
           paddingTop: height / 2.3,
         }}
         showsVerticalScrollIndicator={false}>
-        <View style={styles.tabWrap}>
+        <TouchableOpacity
+          style={styles.tabWrap}
+          onPress={() => {
+            navigation.navigate('EditProfile');
+          }}>
           <View style={styles.iconWrap}>
             <Image
               source={require('../../assets/icons/edit.png')}
@@ -81,7 +85,7 @@ const Profile = ({navigation}) => {
             source={require('../../assets/icons/right.png')}
             style={styles.rightIcon}
           />
-        </View>
+        </TouchableOpacity>
         <View style={styles.tabWrap}>
           <View style={styles.iconWrap}>
             <Image

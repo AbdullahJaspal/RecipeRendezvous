@@ -9,6 +9,7 @@ import MyCookBook from '../../screens/myCookBook/myCookBook';
 import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import HomeStack from '../stacks/homeStack';
 import Profile from '../../screens/profile/profile';
+import ProfileStack from '../stacks/profileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +61,7 @@ function BottomTab({navigation}) {
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="Search" component={Search} />
       {/* <Tab.Screen name="MyCookBook" component={MyCookBook} /> */}
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="ProfileStack" component={ProfileStack} />
     </Tab.Navigator>
   );
 }

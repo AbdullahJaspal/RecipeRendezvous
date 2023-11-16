@@ -16,7 +16,7 @@ import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
 import database from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
 import {saveAllRecipies} from '../../redux/actions/auth';
-import allRecipieData from '../data/myRecipies.json';
+import allRecipieData from '../../data/myRecipies.json';
 
 const {width, height} = Dimensions.get('screen');
 

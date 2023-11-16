@@ -11,9 +11,55 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
-import allRecipieData from '../data/myRecipies.json';
+import allRecipieData from '../../data/myRecipies.json';
 
 const AllCategories = ({navigation}) => {
+  const data = [
+    {
+      title: ' Baking:\nOven Delights',
+      image: require('../../assets/images/baking.jpeg'),
+      total: allRecipieData.allRecipies.breakfast.length,
+      data: allRecipieData.allRecipies.breakfast,
+    },
+    {
+      title: ' Breakfast:\nMorning Fuel',
+      image: require('../../assets/images/breakfast.jpeg'),
+      total: allRecipieData.allRecipies.breakfast.length,
+      data: allRecipieData.allRecipies.quickLunch,
+    },
+    {
+      title: ' Lunch:\nMidday Munchies',
+      image: require('../../assets/images/lunch.jpeg'),
+      total: allRecipieData.allRecipies.quickLunch.length,
+      data: allRecipieData.allRecipies.quickLunch,
+    },
+    {
+      title: ' Dinner:\nEvening Feast',
+      image: require('../../assets/images/dinner.jpeg'),
+      total: allRecipieData.allRecipies.dinerToLunch.length,
+      data: allRecipieData.allRecipies.dinerToLunch,
+    },
+
+    {
+      title: ' Healthy:\nNourish & Thrive',
+      image: require('../../assets/images/healthy.jpeg'),
+      total: allRecipieData.allRecipies.health.length,
+      data: allRecipieData.allRecipies.health,
+    },
+    {
+      title: ' Budgeted:\nThrifty Eats',
+      image: require('../../assets/images/budget.jpeg'),
+      total: allRecipieData.allRecipies.budgeted.length,
+      data: allRecipieData.allRecipies.budgeted,
+    },
+    {
+      title: ' Others:\nFood Adventures',
+      image: require('../../assets/images/others.jpeg'),
+      total: allRecipieData.allRecipies.others.length,
+      data: allRecipieData.allRecipies.others,
+    },
+  ];
+
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
@@ -31,30 +77,11 @@ const AllCategories = ({navigation}) => {
           height: index === 0 ? height / 1.8 : height / 4,
         }}>
         <ImageBackground
-          style={{width: '100%', height: '100%', justifyContent: 'flex-end'}}
+          style={styles.imageBg}
           borderRadius={25}
           source={item.image}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: theme.fontFamily.bold,
-              width: '85%',
-              fontSize: 28,
-              marginLeft: 10,
-            }}>
-            {item.title}
-          </Text>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: theme.fontFamily.regular,
-              width: '65%',
-              fontSize: 14,
-              marginLeft: 10,
-              marginBottom: 10,
-            }}>
-            {item.total} different ideas
-          </Text>
+          <Text style={styles.topTitle}>{item.title}</Text>
+          <Text style={styles.des}>{item.total} different ideas</Text>
         </ImageBackground>
       </TouchableOpacity>
     );
@@ -79,50 +106,7 @@ const AllCategories = ({navigation}) => {
       <View>
         <FlatList
           renderItem={renderItem}
-          data={[
-            {
-              title: ' Baking:\nOven Delights',
-              image: require('../../assets/images/baking.jpeg'),
-              total: allRecipieData.allRecipies.breakfast.length,
-              data: allRecipieData.allRecipies.breakfast,
-            },
-            {
-              title: ' Breakfast:\nMorning Fuel',
-              image: require('../../assets/images/breakfast.jpeg'),
-              total: allRecipieData.allRecipies.breakfast.length,
-            },
-            {
-              title: ' Lunch:\nMidday Munchies',
-              image: require('../../assets/images/lunch.jpeg'),
-              total: allRecipieData.allRecipies.quickLunch.length,
-              data: allRecipieData.allRecipies.quickLunch,
-            },
-            {
-              title: ' Dinner:\nEvening Feast',
-              image: require('../../assets/images/dinner.jpeg'),
-              total: allRecipieData.allRecipies.dinerToLunch.length,
-              data: allRecipieData.allRecipies.dinerToLunch,
-            },
-
-            {
-              title: ' Healthy:\nNourish & Thrive',
-              image: require('../../assets/images/healthy.jpeg'),
-              total: allRecipieData.allRecipies.health.length,
-              data: allRecipieData.allRecipies.health,
-            },
-            {
-              title: ' Budgeted:\nThrifty Eats',
-              image: require('../../assets/images/budget.jpeg'),
-              total: allRecipieData.allRecipies.budgeted.length,
-              data: allRecipieData.allRecipies.budgeted,
-            },
-            {
-              title: ' Others:\nFood Adventures',
-              image: require('../../assets/images/others.jpeg'),
-              total: allRecipieData.allRecipies.others.length,
-              data: allRecipieData.allRecipies.others,
-            },
-          ]}
+          data={data}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => {
             return <View style={{height: 20}} />;
@@ -162,5 +146,21 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 3,
   },
+  topTitle: {
+    color: 'white',
+    fontFamily: theme.fontFamily.bold,
+    width: '85%',
+    fontSize: 28,
+    marginLeft: 10,
+  },
+  des: {
+    color: 'white',
+    fontFamily: theme.fontFamily.regular,
+    width: '65%',
+    fontSize: 14,
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  imageBg: {width: '100%', height: '100%', justifyContent: 'flex-end'},
 });
 export default AllCategories;

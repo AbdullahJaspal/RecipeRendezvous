@@ -23,7 +23,7 @@ import {
   saveRecipies,
 } from '../../redux/actions/auth';
 import {Loading} from '../../components/Loading';
-import allRecipieData from '../data/myRecipies.json';
+import allRecipieData from '../../data/myRecipies.json';
 
 const {width, height} = Dimensions.get('screen');
 

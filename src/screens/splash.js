@@ -90,6 +90,7 @@ const Splash = ({navigation}) => {
           <Text
             style={{
               fontFamily: theme.fontFamily.regular,
+              color: theme.color.darkGrey,
             }}>
             Start Coking
           </Text>
@@ -106,11 +107,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: theme.fontFamily.bold,
     fontSize: 20,
+    color: theme.color.seconndary,
   },
   slang: {
     alignSelf: 'center',
     fontFamily: theme.fontFamily.medium,
     marginTop: 5,
+    color: theme.color.darkGrey,
   },
   buttoCont: {
     marginBottom: '20%',
