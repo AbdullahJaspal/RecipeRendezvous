@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -10,20 +11,23 @@ import {
   View,
 } from 'react-native';
 import {theme} from '../../theme/theme';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
+import auth from '@react-native-firebase/auth';
+import {Loading} from '../../components/Loading';
+import useKeyboard from '../../components/Keyboard';
 
 const {width, height} = Dimensions.get('screen');
 
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
   const {userData} = useSelector(state => state);
-  const {email, setEmail} = useState(userData._user.email);
-  const {username, setUsername} = useState(userData._user.displayName);
-  const {image, setImage} = useState(userData._user.photoURL);
-  const {number, setNumber} = useState(userData._user.phoneNumber);
-  const {password, setPassword} = useState('');
-
-  console.log(userData._user.email);
+  const [load, setLoad] = useState(false);
+  const [email, setEmail] = useState(userData._user.email);
+  const [username, setUsername] = useState(userData._user.displayName);
+  const [image, setImage] = useState(userData._user.photoURL);
+  const [number, setNumber] = useState(userData._user.phoneNumber);
+  const [password, setPassword] = useState('');
+  const isKeyboardOpen = useKeyboard();
 
   const gallery = () => {
     ImagePicker.openPicker({
@@ -32,106 +36,138 @@ const EditProfile = () => {
       cropping: true,
     }).then(image => {
       console.log(image);
+      setImage(image.path);
     });
   };
-
-  const updateUser = () => {
-    getAuth()
-      .updateUser(uid, {
-        email: 'modifiedUser@example.com',
-        phoneNumber: '+11234567890',
-        emailVerified: true,
-        password: 'newPassword',
-        displayName: 'Jane Doe',
-        photoURL: 'http://www.example.com/12345678/photo.png',
-        disabled: true,
+  const dispatch = useDispatch();
+  const handleUpdate = async () => {
+    setLoad(true);
+    await auth()
+      .currentUser.updateProfile({
+        displayName: username,
+        photoURL: image,
       })
-      .then(userRecord => {
-        // See the UserRecord reference doc for the contents of userRecord.
-        console.log('Successfully updated user', userRecord.toJSON());
-      })
-      .catch(error => {
-        console.log('Error updating user:', error);
-      });
+      .then(
+        function (val) {
+          console.log('hellooo g');
+          dispatch(saveUser(auth().currentUser));
+          setLoad(false);
+        },
+        function (error) {
+          console.log(error);
+          setLoad(false);
+        },
+      );
   };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.topView} />
-      <View style={styles.bottomView}>
-        <View style={{alignItems: 'center', marginTop: -70}}>
-          <View style={styles.imageWrapper}>
-            <Image source={{uri: image}} style={styles.image} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.topView}>
+          <View style={styles.topTab}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../../assets/icons/left.png')}
+                style={styles.iconLeft}
+              />
+            </TouchableOpacity>
+            <Text style={styles.title}>{'Edit Profile'}</Text>
+            <Image
+              source={require('../../assets/icons/left.png')}
+              style={{tintColor: 'transparent'}}
+            />
           </View>
-          <Text
-            style={styles.changeText}
-            onPress={() => {
-              gallery();
-            }}>
-            Change Photo
-          </Text>
         </View>
+        <View style={styles.bottomView}>
+          <View style={{alignItems: 'center', marginTop: -70}}>
+            <View style={styles.imageWrapper}>
+              <Image source={{uri: image}} style={styles.image} />
+            </View>
+            <Text
+              style={styles.changeText}
+              onPress={() => {
+                gallery();
+              }}>
+              Change Photo
+            </Text>
+          </View>
 
-        <TextInput
-          placeholder={
-            userData._user.displayName === null
-              ? 'Email'
-              : userData._user.displayName
-          }
-          placeholderTextColor={theme.color.seconndary}
-          style={styles.emailInput}
-          value={username}
-          onChangeText={setUsername}
-        />
+          <TextInput
+            placeholder={'Username'}
+            placeholderTextColor={theme.color.seconndary}
+            style={styles.emailInput}
+            value={username}
+            onChangeText={setUsername}
+          />
 
-        <TextInput
-          placeholder={
-            userData._user.email === null ? 'Email' : userData._user.email
-          }
-          placeholderTextColor={theme.color.seconndary}
-          keyboardType="email-address"
-          style={styles.emailInput}
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          placeholder={
-            userData._user.phoneNumber === null
-              ? 'Phone number'
-              : userData._user.phoneNumber
-          }
-          placeholderTextColor={theme.color.seconndary}
-          style={styles.emailInput}
-          value={number}
-          onChangeText={setNumber}
-        />
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor={theme.color.seconndary}
-          style={styles.emailInput}
-          value={password}
-          onChangeText={setPassword}
-        />
+          <TextInput
+            placeholder={'Email'}
+            placeholderTextColor={theme.color.seconndary}
+            keyboardType="email-address"
+            style={styles.emailInput}
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            placeholder={'Phone number'}
+            placeholderTextColor={theme.color.seconndary}
+            style={styles.emailInput}
+            value={number}
+            onChangeText={setNumber}
+          />
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor={theme.color.seconndary}
+            style={styles.emailInput}
+            value={password}
+            onChangeText={setPassword}
+          />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            updateUser();
-          }}>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.regular,
-              color: theme.color.seconndary,
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              handleUpdate();
             }}>
-            Login
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+                color: theme.color.seconndary,
+              }}>
+              Login
+            </Text>
+          </TouchableOpacity>
+
+          <View style={{height: isKeyboardOpen ? 200 : 0}} />
+        </View>
+      </ScrollView>
+      <Loading visible={load} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  topTab: {
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: 'space-between',
+    width: '95%',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  iconLeft: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    tintColor: 'white',
+  },
+  title: {
+    fontFamily: theme.fontFamily.bold,
+    fontSize: 24,
+    color: theme.color.primary,
+  },
   emailInput: {
     borderBottomWidth: 1,
     borderColor: theme.color.primary,
