@@ -35,20 +35,19 @@ const Splash = ({navigation}) => {
   useEffect(() => {
     // console.log(allRecipies);
     // // setLoading(true);
-    // const reference = database().ref('/allRecipies');
-    // reference
-    //   .once('value')
-    //   .then(snapshot => {
-    //     const pizzaCrustData = snapshot.val();
-    //     console.log('Pizza Crust Data:', pizzaCrustData);
-    //     console.log(pizzaCrustData);
-    //     dispatch(saveRecipies(pizzaCrustData));
-    //     setLoading(false);
-    //   })
-    //   .catch(error => {
-    //     console.log('Error fetching Pizza Crust data:', error);
-    //     setLoading(false);
-    //   });
+    const reference = database().ref('/users');
+    reference
+      .once('value')
+      .then(snapshot => {
+        const pizzaCrustData = snapshot.val();
+        console.log('Pizza Crust Data:', pizzaCrustData);
+        console.log(pizzaCrustData);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log('Error fetching Pizza Crust data:', error);
+        setLoading(false);
+      });
   }, []);
 
   const getData = () => {
