@@ -13,10 +13,13 @@ import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
 import allRecipieData from '../data/myRecipies.json';
 
-const AllCategories = () => {
+const AllCategories = ({navigation}) => {
   const renderItem = ({item, index}) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('CategoryRecipies', {data: item.data});
+        }}
         style={{
           borderWidth: 1,
           borderRadius: 25,
@@ -50,7 +53,7 @@ const AllCategories = () => {
             {item.total} different ideas
           </Text>
         </ImageBackground>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -78,6 +81,7 @@ const AllCategories = () => {
               title: ' Baking:\nOven Delights',
               image: require('../../assets/images/baking.jpeg'),
               total: allRecipieData.allRecipies.breakfast.length,
+              data: allRecipieData.allRecipies.breakfast,
             },
             {
               title: ' Breakfast:\nMorning Fuel',
@@ -88,27 +92,32 @@ const AllCategories = () => {
               title: ' Lunch:\nMidday Munchies',
               image: require('../../assets/images/lunch.jpeg'),
               total: allRecipieData.allRecipies.quickLunch.length,
+              data: allRecipieData.allRecipies.quickLunch,
             },
             {
               title: ' Dinner:\nEvening Feast',
               image: require('../../assets/images/dinner.jpeg'),
               total: allRecipieData.allRecipies.dinerToLunch.length,
+              data: allRecipieData.allRecipies.dinerToLunch,
             },
 
             {
               title: ' Healthy:\nNourish & Thrive',
               image: require('../../assets/images/healthy.jpeg'),
               total: allRecipieData.allRecipies.health.length,
+              data: allRecipieData.allRecipies.health,
             },
             {
               title: ' Budgeted:\nThrifty Eats',
               image: require('../../assets/images/budget.jpeg'),
               total: allRecipieData.allRecipies.budgeted.length,
+              data: allRecipieData.allRecipies.budgeted,
             },
             {
               title: ' Others:\nFood Adventures',
               image: require('../../assets/images/others.jpeg'),
               total: allRecipieData.allRecipies.others.length,
+              data: allRecipieData.allRecipies.others,
             },
           ]}
           showsVerticalScrollIndicator={false}

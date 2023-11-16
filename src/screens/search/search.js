@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 85,
     justifyContent: 'space-between',
+    marginTop: 10,
   },
 });
 
