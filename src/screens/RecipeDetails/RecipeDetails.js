@@ -22,9 +22,8 @@ import Animated, {
 
 const RecipeDetails = ({navigation, route}) => {
   const [tab, setTab] = useState('Ingredients');
-  const imageHeight = useSharedValue(0);
-
   const {item} = route.params;
+  const imageHeight = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {

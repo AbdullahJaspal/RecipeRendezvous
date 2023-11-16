@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,83 +13,138 @@ import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
 import auth from '@react-native-firebase/auth';
 import ShowSnackBar from '../../components/SnackBar';
+import Animated, {
+  useSharedValue,
+  interpolate,
+  useAnimatedScrollHandler,
+  Extrapolation,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
 // PK25UIL0109000299210904
 
 const Profile = ({navigation}) => {
+  const imageHeight = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: e => {
+      imageHeight.value = e.contentOffset.y;
+    },
+  });
+
+  const animatedStyles = useAnimatedStyle(() => {
+    const Image_Height = interpolate(
+      imageHeight.value,
+      [0, height / 2.3 - 100],
+      [height / 2.3, 100],
+      {
+        extrapolateRight: Extrapolation.CLAMP,
+      },
+    );
+
+    return {
+      height: Image_Height,
+    };
+  });
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <ImageBackground
-        source={require('../../assets/images/profileBg.png')}
-        style={styles.topBg}>
-        <View style={styles.overLay}>
-          <Image
-            source={require('../../assets/images/profile.png')}
-            style={styles.profileImage}
-          />
-          <Text style={styles.name}>Kelly Hudson</Text>
-          <Text style={styles.email}>KellyHudson@gmail.com</Text>
-        </View>
-      </ImageBackground>
-      <View style={styles.tabWrap}>
-        <View style={styles.iconWrap}>
-          <Image
-            source={require('../../assets/icons/edit.png')}
-            style={styles.icon}
-          />
-        </View>
+      <Animated.View style={[styles.imageWrap, animatedStyles]}>
+        <ImageBackground
+          source={require('../../assets/images/profileBg.png')}
+          style={styles.topBg}>
+          <View style={styles.overLay}>
+            <Image
+              source={require('../../assets/images/profile.png')}
+              style={styles.profileImage}
+            />
+            <Text style={styles.name}>Kelly Hudson</Text>
+            <Text style={styles.email}>KellyHudson@gmail.com</Text>
+          </View>
+        </ImageBackground>
+      </Animated.View>
+      <Animated.ScrollView
+        onScroll={scrollHandler}
+        contentContainerStyle={{
+          paddingTop: height / 2.3,
+        }}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.tabWrap}>
+          <View style={styles.iconWrap}>
+            <Image
+              source={require('../../assets/icons/edit.png')}
+              style={styles.icon}
+            />
+          </View>
 
-        <Text style={styles.tabTitle}>Edit profile</Text>
-        <Image
-          source={require('../../assets/icons/right.png')}
-          style={styles.rightIcon}
-        />
-      </View>
-      <View style={styles.tabWrap}>
-        <View style={styles.iconWrap}>
+          <Text style={styles.tabTitle}>Edit profile</Text>
           <Image
-            source={require('../../assets/icons/recipe.png')}
-            style={styles.icon}
-          />
-        </View>
-
-        <Text style={styles.tabTitle}>My Recipe</Text>
-        <Image
-          source={require('../../assets/icons/right.png')}
-          style={styles.rightIcon}
-        />
-      </View>
-
-      <View style={styles.tabWrap}>
-        <View style={styles.iconWrap}>
-          <Image
-            source={require('../../assets/icons/recipe.png')}
-            style={styles.icon}
+            source={require('../../assets/icons/right.png')}
+            style={styles.rightIcon}
           />
         </View>
+        <View style={styles.tabWrap}>
+          <View style={styles.iconWrap}>
+            <Image
+              source={require('../../assets/icons/recipe.png')}
+              style={styles.icon}
+            />
+          </View>
 
-        <Text style={styles.tabTitle}>My Recipe</Text>
-        <Image
-          source={require('../../assets/icons/right.png')}
-          style={styles.rightIcon}
-        />
-      </View>
+          <Text style={styles.tabTitle}>My Favorite Recipe</Text>
+          <Image
+            source={require('../../assets/icons/right.png')}
+            style={styles.rightIcon}
+          />
+        </View>
 
-      <TouchableOpacity
-        style={styles.buttoCont}
-        onPress={() => {
-          auth()
-            .signOut()
-            .then(() => ShowSnackBar('User signed out!'));
-          navigation.replace('Splash');
-        }}>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.regular,
-          }}>
-          Logout
-        </Text>
-      </TouchableOpacity>
+        <View style={styles.tabWrap}>
+          <View style={styles.iconWrap}>
+            <Image
+              source={require('../../assets/icons/recipe.png')}
+              style={styles.icon}
+            />
+          </View>
+
+          <Text style={styles.tabTitle}>My Recipe</Text>
+          <Image
+            source={require('../../assets/icons/right.png')}
+            style={styles.rightIcon}
+          />
+        </View>
+
+        <View style={{marginTop: 50, marginBottom: 50}}>
+          <TouchableOpacity
+            style={styles.buttoCont}
+            onPress={() => {
+              auth()
+                .signOut()
+                .then(() => ShowSnackBar('User signed out!'));
+              navigation.replace('Splash');
+            }}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+              }}>
+              Logout
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttoCont}
+            onPress={() => {
+              auth()
+                .signOut()
+                .then(() => ShowSnackBar('User signed out!'));
+              navigation.replace('Splash');
+            }}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+              }}>
+              Delete
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.ScrollView>
     </View>
   );
 };
@@ -96,13 +152,22 @@ const Profile = ({navigation}) => {
 const styles = StyleSheet.create({
   topBg: {
     width: '100%',
-    height: height / 2.555,
+    height: '100%',
   },
   overLay: {
     backgroundColor: 'rgba(0,0,0,0.28)',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  imageWrap: {
+    width: width,
+    height: height / 2.3,
+    position: 'absolute',
+    top: 0,
+    resizeMode: 'stretch',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   profileImage: {
     width: 120,
@@ -159,7 +224,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 50,
     borderWidth: 1,
-    marginVertical: 20,
+    marginTop: 10,
   },
 });
 
