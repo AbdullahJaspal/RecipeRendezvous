@@ -104,13 +104,13 @@ const Profile = ({navigation}) => {
         </View>
 
         <View style={styles.tabWrap}>
+          `
           <View style={styles.iconWrap}>
             <Image
               source={require('../../assets/icons/recipe.png')}
               style={styles.icon}
             />
           </View>
-
           <Text style={styles.tabTitle}>My Recipe</Text>
           <Image
             source={require('../../assets/icons/right.png')}
