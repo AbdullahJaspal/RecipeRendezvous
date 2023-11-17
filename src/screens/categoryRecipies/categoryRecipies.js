@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -33,10 +33,19 @@ const CategoryRecipies = ({navigation, route}) => {
     }
   };
 
+  console.log(data);
+
+  const _carousel = useRef();
+
   const _renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-        style={{width: width / 1.7, height: '90%', backgroundColor: 'white'}}
+        style={{
+          width: width / 1.7,
+          height: '90%',
+          backgroundColor: 'white',
+          borderRadius: 20,
+        }}
         onPress={() => {
           navigation.navigate('RecipeDetails', {item: item});
         }}>
@@ -44,9 +53,7 @@ const CategoryRecipies = ({navigation, route}) => {
           source={{uri: item.image}}
           style={styles.topImage}
           borderRadius={20}>
-          <LinearGradient
-            style={theme.color.gradient}
-            colors={styles.gradietColor}>
+          <LinearGradient style={styles.gradient} colors={theme.color.gradient}>
             <Text style={styles.topName}>{item.name}</Text>
           </LinearGradient>
         </ImageBackground>
@@ -95,9 +102,7 @@ const CategoryRecipies = ({navigation, route}) => {
         <Text style={styles.topTitle}>Top Recipies</Text>
         <View style={{height: '90%'}}>
           <Carousel
-            ref={c => {
-              this._carousel = c;
-            }}
+            ref={_carousel}
             data={data.slice(0, 5)}
             sliderWidth={width}
             itemWidth={width / 1.5}
@@ -106,7 +111,16 @@ const CategoryRecipies = ({navigation, route}) => {
         </View>
       </View>
       <View style={{}}>
-        <Text style={styles.bottomTitle}>All others</Text>
+        <View style={styles.bottomTitleCont}>
+          <Text style={styles.bottomTitle}>All others</Text>
+          <Text
+            style={{color: theme.color.primary}}
+            onPress={() => {
+              navigation.navigate('AllRecipies', {data: data, type: type});
+            }}>
+            View all
+          </Text>
+        </View>
         <View style={styles.bottomListWrap}>
           <FlatList
             renderItem={renderBottom}
@@ -164,10 +178,7 @@ const styles = StyleSheet.create({
   },
   bottomTitle: {
     fontFamily: theme.fontFamily.semiBBold,
-    marginLeft: 30,
     fontSize: 18,
-    marginTop: 20,
-    marginBottom: 10,
     color: theme.color.seconndary,
   },
   bottomListWrap: {width: '98%', alignSelf: 'center', marginBottom: 20},
@@ -206,6 +217,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: '80%',
     color: 'white',
+  },
+  bottomTitleCont: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    marginBottom: 10,
+    width: '90%',
+    alignSelf: 'center',
   },
 });
 

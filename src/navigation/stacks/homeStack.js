@@ -7,6 +7,7 @@ import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import Details from '../../screens/Details/Details';
 import AllCategories from '../../screens/allCategories/allCategories';
 import EditProfile from '../../screens/editProfile/editProfile';
+import AllRecipies from '../../screens/allRecipies/allRecipies';
 
 const HomeStack = () => {
   const Stack = createNativeStackNavigator();
@@ -21,6 +22,7 @@ const HomeStack = () => {
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="AllCategories" component={AllCategories} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="AllRecipies" component={AllRecipies} />
     </Stack.Navigator>
   );
 };

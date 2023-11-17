@@ -10,6 +10,7 @@ import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import HomeStack from '../stacks/homeStack';
 import Profile from '../../screens/profile/profile';
 import ProfileStack from '../stacks/profileStack';
+import AllCategories from '../../screens/allCategories/allCategories';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,8 +27,8 @@ function BottomTab({navigation}) {
             iconName = require('../../assets/icons/home.png');
           } else if (route.name === 'Search') {
             iconName = require('../../assets/icons/searchB.png');
-          } else if (route.name === 'MyCookBook') {
-            iconName = require('../../assets/icons/bookmark.png');
+          } else if (route.name === 'AllCategories') {
+            iconName = require('../../assets/icons/categories.png');
           } else {
             iconName = require('../../assets/icons/user.png');
           }
@@ -60,7 +61,7 @@ function BottomTab({navigation}) {
       })}>
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="Search" component={Search} />
-      {/* <Tab.Screen name="MyCookBook" component={MyCookBook} /> */}
+      <Tab.Screen name="AllCategories" component={AllCategories} />
       <Tab.Screen name="ProfileStack" component={ProfileStack} />
     </Tab.Navigator>
   );
