@@ -46,8 +46,6 @@ const belowData = [
 
 const MyCookBook = ({navigation}) => {
   const [sliderState, setSliderState] = useState({currentPage: 0});
-  const {currentPage} = sliderState;
-  const {currentPage: pageIndex} = sliderState;
 
   const Stars = ({rating, num}) => {
     return (

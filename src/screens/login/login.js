@@ -23,13 +23,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import useKeyboard from '../../components/Keyboard';
 import {isConnectedToInternet, validateEmail} from '../../utils/utils';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-
-import {firebase} from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const {width, height} = Dimensions.get('screen');
 

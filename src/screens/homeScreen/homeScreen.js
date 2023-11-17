@@ -12,16 +12,7 @@ import {
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import LinearGradient from 'react-native-linear-gradient';
-import database from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  saveAllRecipies,
-  saveBreakfastRecipies,
-  saveDinnerRecipies,
-  saveHotRecipies,
-  saveLunchRecipies,
-  saveRecipies,
-} from '../../redux/actions/auth';
 import {Loading} from '../../components/Loading';
 import allRecipieData from '../../data/myRecipies.json';
 
@@ -29,156 +20,11 @@ const {width, height} = Dimensions.get('screen');
 
 const HomeScreen = ({navigation}) => {
   const [load, setLoad] = useState(false);
-  const {breakfast, quickluch, dinerToLuch} = useSelector(state => state);
+  const {breakfast} = useSelector(state => state);
   const [category, setCategory] = useState('Breakfast');
 
-  const dispatch = useDispatch();
-
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={styles.bottomCont}
-        onPress={() => {
-          navigation.navigate('RecipeDetails');
-        }}>
-        <Image
-          source={require('../../assets/images/belowImg1.png')}
-          style={{
-            width: 70,
-            height: 70,
-            resizeMode: 'contain',
-            borderRadius: 20,
-          }}
-        />
-        <View
-          style={{height: '90%', justifyContent: 'space-evenly', width: '60%'}}>
-          <Text style={{fontFamily: theme.fontFamily.bold, fontSize: 18}}>
-            Chicken Salad
-          </Text>
-          <Text style={{fontFamily: theme.fontFamily.medium, fontSize: 14}}>
-            Special Diets
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '45%',
-              justifyContent: 'space-between',
-            }}>
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 1 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 2 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 3 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 4 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-            <Image
-              source={require('../../assets/icons/stars.png')}
-              style={{
-                tintColor: item.stars >= 5 ? '#FFE601' : '#C4C4C4',
-              }}
-            />
-          </View>
-        </View>
-        <Text
-          style={{
-            fontFamily: theme.fontFamily.regular,
-            textAlign: 'center',
-          }}>
-          {item.view}
-          {'\n'}
-          {'Cooked'}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
   console.log(breakfast);
-  useEffect(() => {
-    // getData();
-  }, []);
 
-  const getData = async () => {
-    console.log('start');
-    setLoad(true);
-    const all = database().ref('/allRecipies');
-    const breakfast = database().ref('/allRecipies/breakfast');
-    const lunch = database().ref('/allRecipies/quickLunch');
-    const dinner = database().ref('/allRecipies/dinerToLunch');
-    await breakfast
-      .once('value')
-      .then(snapshot => {
-        const pizzaCrustData = snapshot.val();
-        dispatch(saveBreakfastRecipies(pizzaCrustData));
-      })
-      .catch(error => {
-        console.log('Error fetching Pizza Crust data:', error);
-        setLoad(false);
-      });
-    await lunch
-      .once('value')
-      .then(snapshot => {
-        const pizzaCrustData = snapshot.val();
-        dispatch(saveLunchRecipies(pizzaCrustData));
-      })
-      .catch(error => {
-        console.log('Error fetching Pizza Crust data:', error);
-        setLoad(false);
-      });
-    await dinner
-      .once('value')
-      .then(snapshot => {
-        const pizzaCrustData = snapshot.val();
-        dispatch(saveDinnerRecipies(pizzaCrustData));
-        setLoad(false);
-      })
-      .catch(error => {
-        console.log('Error fetching Pizza Crust data:', error);
-        setLoad(false);
-      });
-  };
-  const belowData = [
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 4,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 3,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 2,
-    },
-    {
-      name: 'Chicken Salad',
-      des: 'Special Diets',
-      view: '6.6K',
-      stars: 55,
-    },
-  ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={{height: height / 4}}>
@@ -204,42 +50,6 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={{height: height - height / 4}}>
         <View style={{flexDirection: 'row'}}>
-          {/* <FlatList
-            data={['Breakfast', 'Lunch', 'Dinner']}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity
-                  style={{
-                    width: 100,
-                    height: 35,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: theme.color.grey,
-                    borderColor:
-                      category === item
-                        ? theme.color.primary
-                        : theme.color.seconndary,
-                    borderBottomWidth: category === item ? 1 : 0,
-                  }}
-                  onPress={() => {
-                    setCategory(item);
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: theme.fontFamily.medium,
-                      color:
-                        category === item
-                          ? theme.color.primary
-                          : theme.color.seconndary,
-                    }}>
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }}
-          /> */}
           {['Breakfast', 'Lunch', 'Dinner'].map(item => {
             return (
               <TouchableOpacity
@@ -277,13 +87,7 @@ const HomeScreen = ({navigation}) => {
                 : category === 'Lunch'
                 ? allRecipieData.allRecipies.quickLunch
                 : allRecipieData.allRecipies.dinerToLunch
-              // : []
-
-              // category === 'Baking'
-              // ? baking
-              // : others
             }
-            // horizontal
             numColumns={2}
             showsHorizontalScrollIndicator={false}
             maxToRenderPerBatch={12}
@@ -316,20 +120,6 @@ const HomeScreen = ({navigation}) => {
           />
         </View>
       </View>
-      {/* <View
-        style={{
-          height: category === 'Featured' ? height / 3 : height / 2,
-        }}>
-        <FlatList
-          renderItem={renderItem}
-          data={belowData}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={() => {
-            return <View style={{height: 140}}></View>;
-          }}
-          keyExtractor={(item, index) => item.index}
-        />
-      </View> */}
       <Loading visible={load} />
     </SafeAreaView>
   );
