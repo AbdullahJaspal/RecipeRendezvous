@@ -36,7 +36,6 @@ const {width, height} = Dimensions.get('screen');
 const ForgetPassword = ({navigation}) => {
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
 
   const imageHeight = useSharedValue(0);
   const isKeyboardOpen = useKeyboard();
@@ -93,28 +92,6 @@ const ForgetPassword = ({navigation}) => {
       } catch (error) {
         console.log(error);
       }
-
-      //   auth()
-      //     .sendPasswordResetEmail(email)
-      //     .then(() => {
-      //       setLoad(false);
-      //       //   navigation.navigate('BottomTab');
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //       if (error.code === 'auth/email-already-in-use') {
-      //         setLoad(false);
-      //         console.log('That email address is already in use!');
-      //       }
-
-      //       if (error.code === 'auth/invalid-login') {
-      //         setLoad(false);
-      //         ShowSnackBar('Invalid credetails');
-      //         setLoad(false);
-      //       }
-
-      //       setLoad(false);
-      //     });
     }
   };
 
