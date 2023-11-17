@@ -104,7 +104,6 @@ const Profile = ({navigation}) => {
         </View>
 
         <View style={styles.tabWrap}>
-          `
           <View style={styles.iconWrap}>
             <Image
               source={require('../../assets/icons/recipe.png')}
