@@ -9,8 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
-  Keyboard,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 const {width, height} = Dimensions.get('screen');
@@ -26,11 +24,7 @@ import Animated, {
 import {Loading} from '../../components/Loading';
 import useKeyboard from '../../components/Keyboard';
 import {validateEmail} from '../../utils/utils';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Signup = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -113,15 +107,6 @@ const Signup = ({navigation}) => {
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
       console.log(error);
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
     }
   };
 
