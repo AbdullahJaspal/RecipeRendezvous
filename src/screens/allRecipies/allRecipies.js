@@ -77,17 +77,6 @@ const AllRecipies = ({navigation, route}) => {
         <Text style={styles.title}>{type.replace('\n', ' ')}</Text>
         <Image source={require('../../assets/icons/left.png')} />
       </View>
-
-      {/* <Text style={styles.titleBlack}>Most Liked Recipes</Text>
-      <View style={{width: '90%', alignSelf: 'center', marginTop: 20}}>
-        <FlatList
-          renderItem={renderBottom}
-          showsHorizontalScrollIndicator={false}```
-          data={[{}, {}, {}, {}]}
-          horizontal
-        />
-      </View> */}
-
       <View style={{height: height / 1.22}}>
         <View style={styles.titleWrap}>
           <Text style={styles.titleBlack}>All Recipes</Text>

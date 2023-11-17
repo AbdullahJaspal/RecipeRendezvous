@@ -40,12 +40,7 @@ const CategoryRecipies = ({navigation, route}) => {
   const _renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-        style={{
-          width: width / 1.7,
-          height: '90%',
-          backgroundColor: 'white',
-          borderRadius: 20,
-        }}
+        style={styles.topWrap}
         onPress={() => {
           navigation.navigate('RecipeDetails', {item: item});
         }}>
@@ -169,6 +164,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
   },
   renderWrapBottom: {marginLeft: 14, width: width / 2.7},
+  topWrap: {
+    width: width / 1.7,
+    height: '90%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+  },
   topTitle: {
     fontFamily: theme.fontFamily.semiBBold,
     marginLeft: 30,

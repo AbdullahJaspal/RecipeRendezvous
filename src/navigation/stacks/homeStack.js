@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../../screens/homeScreen/homeScreen';
 import CategoryRecipies from '../../screens/categoryRecipies/categoryRecipies';
 import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
-import Details from '../../screens/Details/Details';
 import AllCategories from '../../screens/allCategories/allCategories';
 import EditProfile from '../../screens/editProfile/editProfile';
 import AllRecipies from '../../screens/allRecipies/allRecipies';
@@ -19,7 +18,6 @@ const HomeStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
       <Stack.Screen name="CategoryRecipies" component={CategoryRecipies} />
-      <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="AllCategories" component={AllCategories} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="AllRecipies" component={AllRecipies} />
