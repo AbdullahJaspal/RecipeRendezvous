@@ -110,7 +110,6 @@ const Profile = ({navigation}) => {
               style={styles.icon}
             />
           </View>
-
           <Text style={styles.tabTitle}>My Recipe</Text>
           <Image
             source={require('../../assets/icons/right.png')}
