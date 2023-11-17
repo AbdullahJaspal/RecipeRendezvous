@@ -138,13 +138,7 @@ const ForgetPassword = ({navigation}) => {
           onPress={() => {
             handleNav();
           }}>
-          <Text
-            style={{
-              fontFamily: theme.fontFamily.regular,
-              color: theme.color.seconndary,
-            }}>
-            Send
-          </Text>
+          <Text style={styles.buttonTitle}>Send</Text>
         </TouchableOpacity>
 
         <View style={{height: isKeyboardOpen ? 150 : 20}}></View>
@@ -228,6 +222,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     marginTop: 20,
+  },
+  buttonTitle: {
+    fontFamily: theme.fontFamily.regular,
+    color: theme.color.seconndary,
   },
   orWrapper: {
     flexDirection: 'row',
