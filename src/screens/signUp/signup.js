@@ -25,7 +25,10 @@ import Animated, {
 import {Loading} from '../../components/Loading';
 import useKeyboard from '../../components/Keyboard';
 import {validateEmail} from '../../utils/utils';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 const Signup = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -104,10 +107,25 @@ const Signup = ({navigation}) => {
       // Create a Google credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      // Sign-in the user with the credential
+      // Sign-in the user with the credential  // Link the user with the credential
+      const firebaseUserCredential =
+        await auth().currentUser.linkWithCredential(googleCredential);
+      // You can store in your app that the account was linked.
+      ShowSnackBar('User account created.', 'green');
+      navigation.navigate('Login');
+
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
       console.log(error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
 
@@ -156,10 +174,7 @@ const Signup = ({navigation}) => {
         <TouchableOpacity
           style={styles.belowButton}
           onPress={() => {
-            signupwithGoogle().then(() => {
-              ShowSnackBar('User account created.', 'green');
-              navigation.navigate('Login');
-            });
+            signupwithGoogle();
           }}>
           <Image
             source={require('../../assets/icons/google.png')}

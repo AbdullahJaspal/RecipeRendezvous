@@ -24,7 +24,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import useKeyboard from '../../components/Keyboard';
 import {isConnectedToInternet, validateEmail} from '../../utils/utils';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import {useDispatch} from 'react-redux';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -59,6 +63,8 @@ const Login = ({navigation}) => {
     };
   });
 
+  const dispatch = useDispatch();
+
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: e => {
       imageHeight.value = e.contentOffset.y;
@@ -76,54 +82,39 @@ const Login = ({navigation}) => {
       console.log('.............', net, '............');
       isConnectedToInternet().then(onResolved => {
         // Some task on success
-        if (onResolved) {
-          try {
-            auth()
-              .signInWithEmailAndPassword(email, pass)
-              .then(() => {
-                setLoad(false);
-                navigation.replace('BottomTab');
-              })
+        auth()
+          .signInWithEmailAndPassword(email, pass)
+          .then(() => {
+            setLoad(false);
+            navigation.replace('BottomTab');
+          })
+          .catch(error => {
+            console.log('error');
+            console.log(error);
+            if (error.code === 'auth/email-already-in-use') {
+              setLoad(false);
+              console.log('That email address is already in use!');
+            } else if (error.code === 'auth/invalid-login') {
+              ShowSnackBar('Invalid credetails');
+              setLoad(false);
+            } else if (error.code === 'auth/internal-error') {
+              ShowSnackBar('User not found.');
+              setLoad(false);
+            } else if (error.code === 'auth/wrong-password') {
+              ShowSnackBar('Invalid Password.');
+              setLoad(false);
+            }
 
-              .catch(error => {
-                console.log(error);
-                if (error.code === 'auth/email-already-in-use') {
-                  setLoad(false);
-                  console.log('That email address is already in use!');
-                }
-
-                if (error.code === 'auth/invalid-login') {
-                  setLoad(false);
-                  ShowSnackBar('Invalid credetails');
-                  setLoad(false);
-                }
-
-                setLoad(false);
-              });
-          } catch (err) {
-            // dispatch(authLoad(false));
-            console.log(err);
-          }
-        } else {
-          // dispatch(connectionCheck(false));
-          // dispatch(authLoad(false));
-        }
+            setLoad(false);
+          });
       });
     }
   };
-  const handleGoogleSignin = () => {
+  const handleGoogleSignin = async () => {
     const net = isConnectedToInternet();
     console.log('.............', net, '............');
-    isConnectedToInternet().then(onResolved => {
-      // Some task on success
-      if (onResolved) {
-        dispatch(connectionCheck(true));
-      } else {
-        dispatch(connectionCheck(false));
-        signupwithGoogle().then(() => {
-          navigation.navigate('BottomTab');
-        });
-      }
+    isConnectedToInternet().then(async onResolved => {
+      signupwithGoogle();
     });
   };
 
@@ -138,22 +129,23 @@ const Login = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
       // Sign-in the user with the credential  // Link the user with the credential
-      const firebaseUserCredential =
-        await auth().currentUser.linkWithCredential(googleCredential);
+      // const firebaseUserCredential =
+      // await auth().currentUser.linkWithCredential(googleCredential);
       // You can store in your app that the account was linked.
 
-      return auth().signInWithCredential(googleCredential);
+      await auth().signInWithCredential(googleCredential);
+      navigation.navigate('BottomTab');
     } catch (error) {
       console.log(error);
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
 

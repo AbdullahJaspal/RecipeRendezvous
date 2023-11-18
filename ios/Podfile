@@ -49,6 +49,7 @@ target 'RecipeRendezvous' do
   target 'RecipeRendezvousTests' do
     inherit! :complete
     # Pods for testing
+    pod 'RNFS', :path => '../node_modules/react-native-fs'
   end
 
   post_install do |installer|

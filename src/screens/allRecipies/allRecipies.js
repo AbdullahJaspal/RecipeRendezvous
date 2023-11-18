@@ -76,7 +76,7 @@ const AllRecipies = ({navigation, route}) => {
           />
         </TouchableOpacity>
         <Text style={styles.title}>{type.replace('\n', ' ')}</Text>
-        <Image source={require('../../assets/icons/left.png')} />
+        <Text style={styles.title}>{}</Text>
       </View>
       <View style={{height: height / 1.22}}>
         <View style={styles.titleWrap}>
@@ -89,7 +89,7 @@ const AllRecipies = ({navigation, route}) => {
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={2}
           ListFooterComponent={() => {
-            return <View style={{height: 20}}></View>;
+            return <View style={{height: 60}}></View>;
           }}
           keyExtractor={(item, index) => item.index}
         />
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     width: '95%',
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: Platform.OS === 'ios' ? 40 : 0,
   },
   iconLeft: {
     width: 25,
@@ -183,7 +182,6 @@ const styles = StyleSheet.create({
   image: {
     width: 70,
     height: 70,
-    resizeMode: 'contain',
     borderRadius: 20,
   },
   name: {

@@ -45,9 +45,9 @@ export const saveUser = data => {
   };
 };
 
-export const saveRecipies = data => {
+export const saveFavRecipies = data => {
   return {
-    type: types.SAVE_RECIPIES,
+    type: types.SAVE_FAV_RECIPIES,
     payload: data,
   };
 };
@@ -77,9 +77,9 @@ export const saveBreakfastRecipies = data => {
   };
 };
 
-export const saveHotRecipies = data => {
+export const addCounter = data => {
   return {
-    type: types.SAVE_HOT_RECIPIES,
+    type: types.ADD_COUNTER,
     payload: data,
   };
 };

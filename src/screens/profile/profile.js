@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  Alert,
   Dimensions,
   Image,
   ImageBackground,
@@ -25,7 +26,10 @@ import {useSelector} from 'react-redux';
 // PK25UIL0109000299210904
 
 const Profile = ({navigation}) => {
-  const {userData} = useSelector(state => state);
+  const {userData, favRecipe} = useSelector(state => state);
+  const [name, setame] = useState(userData._user.displayName);
+  const [email, setEmail] = useState(userData._user.email);
+
   const imageHeight = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -59,8 +63,8 @@ const Profile = ({navigation}) => {
               source={{uri: userData._user.photoURL}}
               style={styles.profileImage}
             />
-            <Text style={styles.name}>{userData._user.displayName}</Text>
-            <Text style={styles.email}>{userData._user.email}</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.email}>{email}</Text>
           </View>
         </ImageBackground>
       </Animated.View>
@@ -88,7 +92,14 @@ const Profile = ({navigation}) => {
             style={styles.rightIcon}
           />
         </TouchableOpacity>
-        <View style={styles.tabWrap}>
+        <TouchableOpacity
+          style={styles.tabWrap}
+          onPress={() => {
+            navigation.navigate('AllRecipies', {
+              data: favRecipe,
+              type: 'My Favorite Recipies',
+            });
+          }}>
           <View style={styles.iconWrap}>
             <Image
               source={require('../../assets/icons/recipe.png')}
@@ -101,9 +112,9 @@ const Profile = ({navigation}) => {
             source={require('../../assets/icons/right.png')}
             style={styles.rightIcon}
           />
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.tabWrap}>
+        {/* <View style={styles.tabWrap}>
           <View style={styles.iconWrap}>
             <Image
               source={require('../../assets/icons/recipe.png')}
@@ -115,7 +126,7 @@ const Profile = ({navigation}) => {
             source={require('../../assets/icons/right.png')}
             style={styles.rightIcon}
           />
-        </View>
+        </View> */}
 
         <View style={{marginTop: 50, marginBottom: 50}}>
           <TouchableOpacity
@@ -137,10 +148,26 @@ const Profile = ({navigation}) => {
           <TouchableOpacity
             style={styles.buttoCont}
             onPress={() => {
-              auth()
-                .signOut()
-                .then(() => ShowSnackBar('User signed out!'));
-              navigation.replace('Splash');
+              Alert.alert(
+                'Delete your account',
+                'Are you sure you want to delete your account.',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: async () => {
+                      navigation.replace('Login');
+                      await auth().currentUser.delete();
+                      ShowSnackBar('User account deleted successfully.', 'red');
+                    },
+                  },
+                ],
+                {cancelable: false},
+              );
             }}>
             <Text
               style={{

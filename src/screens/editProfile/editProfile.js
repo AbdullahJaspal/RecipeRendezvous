@@ -17,6 +17,8 @@ import ImagePicker from 'react-native-image-crop-picker';
 import auth from '@react-native-firebase/auth';
 import {Loading} from '../../components/Loading';
 import useKeyboard from '../../components/Keyboard';
+import ShowSnackBar from '../../components/SnackBar';
+import {saveUser} from '../../redux/actions/auth';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -47,10 +49,11 @@ const EditProfile = ({navigation}) => {
       .currentUser.updateProfile({
         displayName: username,
         photoURL: image,
+        phoneNumber: number,
       })
       .then(
         function (val) {
-          console.log('hellooo g');
+          ShowSnackBar('Profie updated successfully.', 'green');
           dispatch(saveUser(auth().currentUser));
           setLoad(false);
         },
@@ -60,7 +63,6 @@ const EditProfile = ({navigation}) => {
         },
       );
   };
-
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -127,14 +129,23 @@ const EditProfile = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              handleUpdate();
+              if (
+                username !== userData._user.displayName ||
+                image !== userData._user.photoURL ||
+                number !== userData._user.phoneNumber ||
+                email !== userData._user.email
+              ) {
+                handleUpdate();
+              } else {
+                ShowSnackBar('You have not updated anything.', 'red');
+              }
             }}>
             <Text
               style={{
                 fontFamily: theme.fontFamily.regular,
                 color: theme.color.seconndary,
               }}>
-              Login
+              Update
             </Text>
           </TouchableOpacity>
 

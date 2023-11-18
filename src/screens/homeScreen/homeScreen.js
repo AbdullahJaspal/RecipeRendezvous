@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,15 +13,25 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 import {Loading} from '../../components/Loading';
 import allRecipieData from '../../data/myRecipies.json';
+import database from '@react-native-firebase/database';
+import {saveFavRecipies} from '../../redux/actions/auth';
 
 const {width, height} = Dimensions.get('screen');
 
 const HomeScreen = ({navigation}) => {
   const [load, setLoad] = useState(false);
-  const {breakfast} = useSelector(state => state);
+  const {userData} = useSelector(state => state);
   const [category, setCategory] = useState('Breakfast');
+  const dispatch = useDispatch();
 
-  console.log(breakfast);
+  useEffect(() => {
+    database()
+      .ref(`/${userData._user.uid}/myFavs`)
+      .on('value', snapshot => {
+        console.log('favRecipy: ', snapshot.val());
+        snapshot.val() !== null && dispatch(saveFavRecipies(snapshot.val()));
+      });
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>

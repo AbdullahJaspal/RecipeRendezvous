@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -20,9 +20,13 @@ import Animated, {
   Extrapolation,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import database from '@react-native-firebase/database';
+import {useSelector} from 'react-redux';
 
 const RecipeDetails = ({navigation, route}) => {
+  const {userData, favRecipe} = useSelector(state => state);
   const [tab, setTab] = useState('Ingredients');
+  const [fav, setFav] = useState(false);
   const {item} = route.params;
   const imageHeight = useSharedValue(0);
 
@@ -46,6 +50,24 @@ const RecipeDetails = ({navigation, route}) => {
       height: Image_Height,
     };
   });
+
+  useEffect(() => {
+    favRecipe.map((val, index) => {
+      if (val.id === item.id) {
+        console.log('in here', index), setFav(true);
+      } else console.log('it not in here', index);
+    });
+  }, [favRecipe]);
+
+  function addFav(item) {
+    const reference = database().ref(`/${userData._user.uid}/myFavs`);
+
+    // Execute transaction
+    return reference.transaction(currentFavs => {
+      if (currentFavs === null) return [item];
+      else return [...currentFavs, item];
+    });
+  }
   return (
     <View style={{flex: 1}}>
       <Animated.ScrollView
@@ -55,7 +77,7 @@ const RecipeDetails = ({navigation, route}) => {
         }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.nameWrapper}>
-          <View>
+          <View style={{width: '80%'}}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.des}>
               by <Text style={{color: theme.color.primary}}>{item.author}</Text>
@@ -67,9 +89,31 @@ const RecipeDetails = ({navigation, route}) => {
               {item.vote_count}
               {'\n'}Cooked
             </Text>
-            <View style={styles.favButton}>
-              <Text style={styles.favButtonText}>Add to fav</Text>
-            </View>
+            {!fav ? (
+              <TouchableOpacity
+                style={styles.favButton}
+                onPress={() => {
+                  addFav(item).then(transaction => {
+                    console.log('New fav added: ', transaction.snapshot.val());
+                  });
+                  setFav(true);
+                }}>
+                <Text style={styles.favButtonText}>Add to fav</Text>
+              </TouchableOpacity>
+            ) : (
+              <View
+                style={{
+                  ...styles.favButton,
+                  backgroundColor: 'pink',
+                  borderColor: 'red',
+                }}
+                onPress={() => {}}>
+                <Text style={{...styles.favButtonText, color: 'red'}}>
+                  {' '}
+                  ♥︎ Favorite
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <View style={styles.timeCont}>
@@ -233,7 +277,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.medium,
     fontSize: 22,
     color: theme.color.primary,
-    width: '80%',
   },
   des: {
     fontFamily: theme.fontFamily.medium,

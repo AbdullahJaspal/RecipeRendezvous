@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2786A74B2B000B070075CCF0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2786A74A2B000B060075CCF0 /* GoogleService-Info.plist */; };
+		27330CAE2B0945AB00502C3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27330CAD2B0945AB00502C3A /* GoogleService-Info.plist */; };
 		278FDD420A6C4DFAA5E40B7C /* Syne-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CC487BCDE934CFD9523807D /* Syne-ExtraBold.ttf */; };
 		47EAADA3378D40A8BA06BCF5 /* Syne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */; };
 		48AB78A65AFC4F32B62CBDEA /* Syne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E96842827C3B4C95B82BC848 /* Syne-Regular.ttf */; };
@@ -42,7 +42,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RecipeRendezvous/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RecipeRendezvous/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = RecipeRendezvous/main.m; sourceTree = "<group>"; };
-		2786A74A2B000B060075CCF0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		27330CAD2B0945AB00502C3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		31E047D1CD864CE2823FA42C /* Syne-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Syne-SemiBold.ttf"; path = "../assets/fonts/Syne-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RecipeRendezvous.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous.debug.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous/Pods-RecipeRendezvous.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-RecipeRendezvous.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeRendezvous.release.xcconfig"; path = "Target Support Files/Pods-RecipeRendezvous/Pods-RecipeRendezvous.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				2786A74A2B000B060075CCF0 /* GoogleService-Info.plist */,
+				27330CAD2B0945AB00502C3A /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* RecipeRendezvous */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* RecipeRendezvousTests */,
@@ -270,7 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				2786A74B2B000B070075CCF0 /* GoogleService-Info.plist in Resources */,
+				27330CAE2B0945AB00502C3A /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F5DE98C2B3E94A848EB25D5F /* Syne-Bold.ttf in Resources */,
 				278FDD420A6C4DFAA5E40B7C /* Syne-ExtraBold.ttf in Resources */,

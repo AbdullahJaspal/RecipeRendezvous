@@ -11,7 +11,8 @@ const initialState = {
   dinerToLuch: [],
   health: [],
   others: [],
-  quickluch: [],
+  favRecipe: [],
+  count: 0,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -47,10 +48,10 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         quickluch: action.payload,
       };
-    case types.SAVE_DINNER_RECIPIES:
+    case types.SAVE_FAV_RECIPIES:
       return {
         ...state,
-        dinerToLuch: action.payload,
+        favRecipe: action.payload,
       };
     default:
       return state;
