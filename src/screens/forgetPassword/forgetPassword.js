@@ -9,6 +9,7 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 import {Loading} from '../../components/Loading';
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     height: 50,
     alignItems: 'center',
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
   },
   topTabIcon: {width: 18, height: 18, resizeMode: 'contain'},
   topTabText: {color: 'white', fontFamily: theme.fontFamily.medium},

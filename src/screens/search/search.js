@@ -73,12 +73,7 @@ const Search = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.topTab}>
-        <Image
-          source={require('../../assets/icons/left.png')}
-          style={styles.iconLeft}
-        />
         <Text style={styles.title}>Search</Text>
-        <Image source={require('../../assets/icons/left.png')} />
       </View>
       <View style={styles.searchBar}>
         <Image
@@ -133,16 +128,15 @@ const styles = StyleSheet.create({
   topTab: {
     flexDirection: 'row',
     height: 50,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '95%',
     alignSelf: 'center',
     alignItems: 'center',
   },
   iconLeft: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: 'contain',
-    tintColor: theme.color.primary,
   },
   title: {
     fontFamily: theme.fontFamily.bold,
@@ -214,7 +208,6 @@ const styles = StyleSheet.create({
   image: {
     width: 70,
     height: 70,
-    resizeMode: 'contain',
     borderRadius: 20,
   },
   name: {

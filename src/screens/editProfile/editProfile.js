@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -75,10 +76,7 @@ const EditProfile = ({navigation}) => {
               />
             </TouchableOpacity>
             <Text style={styles.title}>{'Edit Profile'}</Text>
-            <Image
-              source={require('../../assets/icons/left.png')}
-              style={{tintColor: 'transparent'}}
-            />
+            <Text style={styles.title}>{}</Text>
           </View>
         </View>
         <View style={styles.bottomView}>
@@ -156,12 +154,12 @@ const styles = StyleSheet.create({
     width: '95%',
     alignSelf: 'center',
     alignItems: 'center',
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
   },
   iconLeft: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: 'contain',
-    tintColor: 'white',
   },
   title: {
     fontFamily: theme.fontFamily.bold,

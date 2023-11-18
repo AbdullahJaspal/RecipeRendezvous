@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -208,8 +209,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     height: 50,
     alignItems: 'center',
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
   },
-  topTabIcon: {width: 18, height: 18, resizeMode: 'contain'},
+  topTabIcon: {width: 25, height: 25, resizeMode: 'contain'},
   topTabText: {color: 'white', fontFamily: theme.fontFamily.medium},
   bottomTitle: {
     color: theme.color.primary,

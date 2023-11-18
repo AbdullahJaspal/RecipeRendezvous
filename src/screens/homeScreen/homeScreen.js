@@ -26,7 +26,7 @@ const HomeScreen = ({navigation}) => {
   console.log(breakfast);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={{height: height / 4}}>
         <ImageBackground
           style={{height: '100%', width: '100%'}}
@@ -104,7 +104,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <ImageBackground
                     style={styles.upperBg}
-                    resizeMode="contain"
+                    // resizeMode="contain"
                     borderRadius={20}
                     source={{uri: item.image}}>
                     <LinearGradient
@@ -121,7 +121,7 @@ const HomeScreen = ({navigation}) => {
         </View>
       </View>
       <Loading visible={load} />
-    </SafeAreaView>
+    </View>
   );
 };
 

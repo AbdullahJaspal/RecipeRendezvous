@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -178,22 +179,8 @@ const RecipeDetails = ({navigation, route}) => {
           borderBottomLeftRadius={15}
           borderBottomRightRadius={15}
           source={{uri: item.image}}>
-          <View
-            style={{
-              width: '95%',
-              alignSelf: 'center',
-              justifyContent: 'center',
-              height: 50,
-            }}>
+          <View style={styles.topCont}>
             <TouchableOpacity
-              style={{
-                backgroundColor: 'white',
-                height: 25,
-                width: 25,
-                justifyContent: 'center',
-                borderBottomLeftRadius: 100,
-                borderTopLeftRadius: 100,
-              }}
               onPress={() => {
                 navigation.goBack();
               }}>
@@ -222,11 +209,17 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
+  topCont: {
+    width: '95%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    height: 50,
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
+  },
   icon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: 'contain',
-    tintColor: theme.color.primary,
   },
   nameWrapper: {
     flexDirection: 'row',

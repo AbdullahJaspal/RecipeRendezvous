@@ -92,7 +92,7 @@ const CategoryRecipies = ({navigation, route}) => {
             />
           </TouchableOpacity>
           <Text style={styles.title}>{type.replace('\n', ' ')}</Text>
-          <Image source={require('../../assets/icons/left.png')} />
+          <Text style={styles.title}></Text>
         </View>
         <Text style={styles.topTitle}>Top Recipies</Text>
         <View style={{height: '90%'}}>
@@ -139,10 +139,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconLeft: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: 'contain',
-    tintColor: theme.color.primary,
   },
   title: {
     fontFamily: theme.fontFamily.bold,

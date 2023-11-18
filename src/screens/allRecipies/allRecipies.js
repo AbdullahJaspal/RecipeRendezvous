@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {theme} from '../../theme/theme';
 
@@ -105,12 +106,12 @@ const styles = StyleSheet.create({
     width: '95%',
     alignSelf: 'center',
     alignItems: 'center',
+    marginTop: Platform.OS === 'ios' ? 40 : 0,
   },
   iconLeft: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: 'contain',
-    tintColor: theme.color.primary,
   },
   title: {
     fontFamily: theme.fontFamily.bold,
