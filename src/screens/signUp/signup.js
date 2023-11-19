@@ -245,6 +245,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 20,
     color: theme.color.seconndary,
+    fontFamily: theme.fontFamily.medium,
   },
   passwordInput: {
     borderBottomWidth: 1,
@@ -255,6 +256,7 @@ const styles = StyleSheet.create({
     padding: 0,
     marginVertical: 10,
     color: theme.color.seconndary,
+    fontFamily: theme.fontFamily.medium,
   },
   button: {
     backgroundColor: theme.color.lightPrimary,

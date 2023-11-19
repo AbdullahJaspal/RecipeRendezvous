@@ -68,6 +68,18 @@ const RecipeDetails = ({navigation, route}) => {
       else return [...currentFavs, item];
     });
   }
+
+  function removeFav(item) {
+    const reference = database().ref(`/${userData._user.uid}/myFavs`);
+
+    // Execute transaction
+    return reference.set(currentFavs => {
+      const array = currentFavs.filter(e => e !== item);
+      console.log('array......');
+      console.log(array);
+      return array;
+    });
+  }
   return (
     <View style={{flex: 1}}>
       <Animated.ScrollView
@@ -101,18 +113,23 @@ const RecipeDetails = ({navigation, route}) => {
                 <Text style={styles.favButtonText}>Add to fav</Text>
               </TouchableOpacity>
             ) : (
-              <View
+              <TouchableOpacity
                 style={{
                   ...styles.favButton,
                   backgroundColor: 'pink',
                   borderColor: 'red',
                 }}
-                onPress={() => {}}>
+                onPress={() => {
+                  removeFav(item).then(transaction => {
+                    console.log(' fav removed: ', transaction.snapshot.val());
+                  });
+                  setFav(false);
+                }}>
                 <Text style={{...styles.favButtonText, color: 'red'}}>
                   {' '}
                   ♥︎ Favorite
                 </Text>
-              </View>
+              </TouchableOpacity>
             )}
           </View>
         </View>

@@ -29,7 +29,9 @@ const HomeScreen = ({navigation}) => {
       .ref(`/${userData._user.uid}/myFavs`)
       .on('value', snapshot => {
         console.log('favRecipy: ', snapshot.val());
-        snapshot.val() !== null && dispatch(saveFavRecipies(snapshot.val()));
+        snapshot.val() === null
+          ? dispatch(saveFavRecipies([]))
+          : dispatch(saveFavRecipies(snapshot.val()));
       });
   }, []);
 

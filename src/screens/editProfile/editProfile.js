@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -29,7 +29,9 @@ const EditProfile = ({navigation}) => {
   const [username, setUsername] = useState(userData._user.displayName);
   const [image, setImage] = useState(userData._user.photoURL);
   const [number, setNumber] = useState(userData._user.phoneNumber);
-  const [password, setPassword] = useState('');
+  const [pass, setPass] = useState(false);
+  const [currentPass, setCurrentPass] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const isKeyboardOpen = useKeyboard();
 
   const gallery = () => {
@@ -63,6 +65,7 @@ const EditProfile = ({navigation}) => {
         },
       );
   };
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -118,37 +121,143 @@ const EditProfile = ({navigation}) => {
             value={number}
             onChangeText={setNumber}
           />
-          <TextInput
+          <TouchableOpacity
+            style={{
+              borderBottomWidth: 1,
+              borderColor: theme.color.primary,
+              width: '80%',
+              alignSelf: 'center',
+              padding: 0,
+              height: 40,
+              marginTop: 20,
+              color: theme.color.seconndary,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+            onPress={() => {
+              setPass(!pass);
+            }}>
+            <Text style={{fontFamily: theme.fontFamily.medium}}>
+              Change password
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 25,
+                color: 'black',
+                marginBottom: 10,
+              }}>
+              ⌄
+            </Text>
+          </TouchableOpacity>
+          {pass && (
+            <View style={{alignSelf: 'center', width: '100%'}}>
+              <TextInput
+                placeholder={'Current Password'}
+                placeholderTextColor={theme.color.seconndary}
+                style={styles.emailInput}
+                value={currentPass}
+                onChangeText={setCurrentPass}
+              />
+              <TextInput
+                placeholder={'New Password'}
+                placeholderTextColor={theme.color.seconndary}
+                style={styles.emailInput}
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+            </View>
+          )}
+          {/* <TextInput
             placeholder="Password"
             placeholderTextColor={theme.color.seconndary}
             style={styles.emailInput}
             value={password}
             onChangeText={setPassword}
-          />
+          /> */}
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (
-                username !== userData._user.displayName ||
-                image !== userData._user.photoURL ||
-                number !== userData._user.phoneNumber ||
-                email !== userData._user.email
-              ) {
-                handleUpdate();
-              } else {
-                ShowSnackBar('You have not updated anything.', 'red');
-              }
-            }}>
-            <Text
-              style={{
-                fontFamily: theme.fontFamily.regular,
-                color: theme.color.seconndary,
+          {pass ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (newPassword !== '' && currentPass !== '') {
+                  // auth().currentUser.updatePassword(password);
+                  setLoad(true);
+                  const emailCred = auth.EmailAuthProvider.credential(
+                    auth().currentUser._user.email,
+                    currentPass,
+                  );
+                  console.log(emailCred);
+                  auth()
+                    .currentUser.reauthenticateWithCredential(emailCred)
+                    .then(val => {
+                      console.log(' User successfully reauthenticated.');
+                      setLoad(false);
+                      // User successfully reauthenticated.
+                      auth()
+                        .currentUser.updatePassword(newPassword)
+                        .then(val => {
+                          console.log(val);
+                          ShowSnackBar(
+                            'Password updated successfully.',
+                            'green',
+                          );
+                          setPass(false);
+                          setLoad(false);
+
+                          setCurrentPass('');
+                          setNewPassword('');
+                        })
+                        .catch(error => {
+                          // Handle error.
+                          error.code === 'auth/weak-password' &&
+                            ShowSnackBar('Choose a strong password.');
+                          setLoad(false);
+                        });
+                    })
+                    .catch(error => {
+                      // Handle error.
+                      console.log('error:-', error);
+                      setLoad(false);
+                      ShowSnackBar('Current Password is incorrect');
+                    });
+                } else {
+                  ShowSnackBar('Enter both current and new password.', 'red');
+                }
               }}>
-              Update
-            </Text>
-          </TouchableOpacity>
-
+              <Text
+                style={{
+                  fontFamily: theme.fontFamily.regular,
+                  color: theme.color.seconndary,
+                }}>
+                Update Password
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (
+                  username !== userData._user.displayName ||
+                  image !== userData._user.photoURL ||
+                  number !== userData._user.phoneNumber ||
+                  email !== userData._user.email
+                ) {
+                  handleUpdate();
+                } else {
+                  ShowSnackBar('You have not updated anything.', 'red');
+                }
+              }}>
+              <Text
+                style={{
+                  fontFamily: theme.fontFamily.regular,
+                  color: theme.color.seconndary,
+                }}>
+                Update
+              </Text>
+            </TouchableOpacity>
+          )}
           <View style={{height: isKeyboardOpen ? 200 : 0}} />
         </View>
       </ScrollView>
@@ -186,6 +295,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 20,
     color: theme.color.seconndary,
+    fontFamily: theme.fontFamily.medium,
   },
   button: {
     backgroundColor: theme.color.lightPrimary,

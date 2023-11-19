@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   emailInput: {
     borderBottomWidth: 1,
     borderColor: theme.color.primary,
+    fontFamily: theme.fontFamily.medium,
     width: '80%',
     alignSelf: 'center',
     padding: 0,
@@ -178,6 +179,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: theme.color.primary,
     width: '80%',
+    fontFamily: theme.fontFamily.medium,
     alignSelf: 'center',
     height: 40,
     padding: 0,

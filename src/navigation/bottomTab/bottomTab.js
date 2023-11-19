@@ -11,6 +11,8 @@ import HomeStack from '../stacks/homeStack';
 import Profile from '../../screens/profile/profile';
 import ProfileStack from '../stacks/profileStack';
 import AllCategories from '../../screens/allCategories/allCategories';
+import CategoryStack from '../stacks/categoryStack';
+import SearchStack from '../stacks/search';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,9 +27,9 @@ function BottomTab({navigation}) {
           let iconName;
           if (route.name === 'HomeStack') {
             iconName = require('../../assets/icons/home.png');
-          } else if (route.name === 'Search') {
+          } else if (route.name === 'SearchStack') {
             iconName = require('../../assets/icons/searchB.png');
-          } else if (route.name === 'AllCategories') {
+          } else if (route.name === 'CategoryStack') {
             iconName = require('../../assets/icons/categories.png');
           } else {
             iconName = require('../../assets/icons/user.png');
@@ -60,8 +62,9 @@ function BottomTab({navigation}) {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="AllCategories" component={AllCategories} />
+      <Tab.Screen name="SearchStack" component={SearchStack} />
+      <Tab.Screen name="CategoryStack" component={CategoryStack} />
+      {/* <Tab.Screen name="AllCategories" component={AllCategories} /> */}
       <Tab.Screen name="ProfileStack" component={ProfileStack} />
     </Tab.Navigator>
   );

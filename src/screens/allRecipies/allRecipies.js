@@ -83,16 +83,38 @@ const AllRecipies = ({navigation, route}) => {
           <Text style={styles.titleBlack}>All Recipes</Text>
           <Text style={styles.num}>All ({data.length})</Text>
         </View>
-        <FlatList
-          renderItem={renderItem}
-          data={data}
-          showsVerticalScrollIndicator={false}
-          maxToRenderPerBatch={2}
-          ListFooterComponent={() => {
-            return <View style={{height: 60}}></View>;
-          }}
-          keyExtractor={(item, index) => item.index}
-        />
+        {data.length === 0 ? (
+          <View style={{flexGrow: 1, justifyContent: 'center'}}>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.extraBold,
+                color: theme.color.primary,
+                alignSelf: 'center',
+              }}>
+              Nothing here for you
+            </Text>
+            <Text
+              style={{
+                fontFamily: theme.fontFamily.regular,
+                color: theme.color.primary,
+                alignSelf: 'center',
+                fontSize: 6,
+              }}>
+              Fok Off
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            renderItem={renderItem}
+            data={data}
+            showsVerticalScrollIndicator={false}
+            maxToRenderPerBatch={2}
+            ListFooterComponent={() => {
+              return <View style={{height: 60}}></View>;
+            }}
+            keyExtractor={(item, index) => item.index}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

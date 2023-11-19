@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 0,
     height: 40,
+    fontFamily: theme.fontFamily.medium,
     marginTop: 20,
     color: theme.color.seconndary,
   },
@@ -273,6 +274,7 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 0,
     marginVertical: 10,
+    fontFamily: theme.fontFamily.medium,
     color: theme.color.seconndary,
   },
   forget: {
