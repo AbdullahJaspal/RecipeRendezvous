@@ -5,7 +5,6 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
