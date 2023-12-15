@@ -6,6 +6,7 @@
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+![Uploading iPhone 11 Pro Max - 1.png…]()
 
 To start Metro, run the following command from the _root_ of your React Native project:
 
@@ -79,4 +80,3 @@ To learn more about React Native, take a look at the following resources:
 =======
 # RecipeRendezvous
 Welcome to my recipe application, RecipeRendezvous! 🍽️🌟 This repo houses the code for a user-friendly recipe app that brings delicious dishes right to your fingertips. Browse through a wide range of mouthwatering recipes, save your favorites, and even contribute your own culinary creations. Get ready to embark on a flavorful journey with RecipeRendezvous!
->>>>>>> a92d45ae6de2ed0e0075385a68622b423c84377e
