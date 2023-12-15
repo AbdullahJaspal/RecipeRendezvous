@@ -182,7 +182,13 @@ const Signup = ({navigation}) => {
           />
           <Text style={styles.buttonTitle}>Sign Up with Google</Text>
         </TouchableOpacity>
-        <Text style={styles.terms}>Term of Use and Privacy Policy</Text>
+        <Text
+          style={styles.terms}
+          onPress={() => {
+            navigation.navigate('PrivacyPolicy');
+          }}>
+          Term of Use and Privacy Policy
+        </Text>
         <View style={{height: isKeyboardOpen ? 350 : 20}}></View>
       </Animated.ScrollView>
       <Animated.View style={[styles.topImage, animatedStyles]}>

@@ -8,6 +8,7 @@ import Signup from '../screens/signUp/signup';
 import BottomTab from './bottomTab/bottomTab';
 import RecipeDetails from '../screens/RecipeDetails/RecipeDetails';
 import ForgetPassword from '../screens/forgetPassword/forgetPassword';
+import PrivacyPolicy from '../screens/privacyPolicy/privacyPolicy';
 
 const MainNav = () => {
   const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ const MainNav = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
         <Stack.Screen name="BottomTab" component={BottomTab} />
       </Stack.Navigator>
     </NavigationContainer>

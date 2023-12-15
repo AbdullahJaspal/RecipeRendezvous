@@ -64,7 +64,7 @@ function BottomTab({navigation}) {
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="SearchStack" component={SearchStack} />
       <Tab.Screen name="CategoryStack" component={CategoryStack} />
-      {/* <Tab.Screen name="AllCategories" component={AllCategories} /> */}
+      <Tab.Screen name="AllCategories" component={AllCategories} />
       <Tab.Screen name="ProfileStack" component={ProfileStack} />
     </Tab.Navigator>
   );
