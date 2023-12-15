@@ -1,4 +1,17 @@
 
+# RecipeRendezvous
+
+![iPhone 11 Pro Max - 1](https://github.com/AbdullahJaspal/RecipeRendezvous/assets/77833394/a5719466-7116-4173-8dcf-9fd1b0b52631)
+
+
+
+
+
+
+
+
+
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
@@ -6,7 +19,6 @@
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-![Uploading iPhone 11 Pro Max - 1.png…]()
 
 To start Metro, run the following command from the _root_ of your React Native project:
 
