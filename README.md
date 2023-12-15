@@ -1,7 +1,9 @@
 
 # RecipeRendezvous
 
-![iPhone 11 Pro Max - 1](https://github.com/AbdullahJaspal/RecipeRendezvous/assets/77833394/a5719466-7116-4173-8dcf-9fd1b0b52631)  ![iPhone 11 Pro Max - 2](https://github.com/AbdullahJaspal/RecipeRendezvous/assets/77833394/255739e1-245f-4a20-9ea0-f7b3a1548e40)
+![iPhone 11 Pro Max - 1](https://github.com/AbdullahJaspal/RecipeRendezvous/assets/77833394/a5719466-7116-4173-8dcf-9fd1b0b52631)  ![iPhone 11 Pro Max - 2](https://github.com/AbdullahJaspal/RecipeRendezvous/assets/77833394/255739e1-245f-4a20-9ea0-f7b3a1548e40):height: 100px
+   :width: 200 px
+   :scale: 50 %
 
 
 
