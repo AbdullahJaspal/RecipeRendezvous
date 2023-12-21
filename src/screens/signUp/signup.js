@@ -108,11 +108,9 @@ const Signup = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
       // Sign-in the user with the credential  // Link the user with the credential
-      const firebaseUserCredential =
-        await auth().currentUser.linkWithCredential(googleCredential);
       // You can store in your app that the account was linked.
       ShowSnackBar('User account created.', 'green');
-      navigation.navigate('Login');
+      navigation.navigate('BottomTab');
 
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
